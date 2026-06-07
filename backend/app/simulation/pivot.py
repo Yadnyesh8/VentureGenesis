@@ -1,85 +1,60 @@
-"""Pivot Generation + Simulation + Optimization (Phase 7).
+"""Pivot Generation + Optimization (Phase 7) — LLM-driven, no simulated values.
 
-- Generation: LLM (or template) produces >= 3 pivot options from the current model.
-- Simulation: each pivot gets revenue_impact, risk_reduction, customer_growth, funding_probability.
-- Optimization: rule-based weighted scoring (weights from config.json) selects the best.
+- Generation: the LLM proposes >= 3 pivots AND estimates each pivot's
+  revenue_impact / risk_reduction / customer_growth / funding_probability.
+- Optimization: rule-based weighted scoring (weights from config.json) ranks them and
+  derives success_probability / risk_score / roi from the LLM's estimates.
 """
 from __future__ import annotations
 
-import hashlib
 from typing import Any
 
 from app.core import llm
 from app.core.config import get_config, render_prompt
 
 
-def _seed(text: str) -> float:
-    h = int(hashlib.md5(text.encode()).hexdigest(), 16)
-    return (h % 1000) / 1000.0
+def _f(v, default=0.0) -> float:
+    try:
+        return float(v)
+    except (TypeError, ValueError):
+        return default
 
 
 def generate_pivots(context: dict[str, Any]) -> list[dict[str, Any]]:
-    prompt = render_prompt("pivot_generation", context=context)
-
-    def fallback():
-        industry = context.get("industry", "SaaS")
-        bm = context.get("business_model", "B2C")
-        templates = [
-            {"pivot_name": f"{bm}→B2B {industry} SaaS", "description": f"Repackage core tech as a B2B {industry} platform.",
-             "rationale": "Higher ACV and stickier revenue than consumer."},
-            {"pivot_name": f"AI Copilot for {industry}", "description": f"Embed an AI assistant into the {industry} workflow.",
-             "rationale": "Rides AI tailwind; expands willingness to pay."},
-            {"pivot_name": f"{industry} Marketplace", "description": "Become the transaction layer connecting supply and demand.",
-             "rationale": "Network effects create a defensible moat."},
-            {"pivot_name": f"Usage-based {industry} API", "description": "Expose capabilities as a developer-first API.",
-             "rationale": "Bottom-up adoption and viral distribution."},
-        ]
-        return {"pivots": templates}
-
-    result = llm.complete(prompt, mock_fn=fallback)
-    pivots = result.get("pivots") or fallback()["pivots"]
-    return pivots[: max(3, len(pivots))]
+    result = llm.complete(render_prompt("pivot_generation", context=context))
+    pivots = result.get("pivots") or []
+    if not pivots:
+        raise ValueError("Pivot agent returned no pivots")
+    return pivots
 
 
-def simulate_pivot(pivot: dict[str, Any], context: dict[str, Any]) -> dict[str, Any]:
-    name = pivot.get("pivot_name", "Pivot")
-    s = _seed(name + str(context.get("industry", "")))
-    base_growth = context.get("customer_growth", 0.05) or 0.05
-    revenue_impact = round(0.1 + s * 0.6, 3)            # +10%..+70%
-    risk_reduction = round(0.05 + ((s * 7) % 1) * 0.5, 3)
-    customer_growth = round(base_growth + 0.05 + s * 0.25, 3)
-    funding_probability = round(0.3 + ((s * 13) % 1) * 0.6, 3)
-    return {
-        **pivot,
-        "revenue_impact": revenue_impact,
-        "risk_reduction": risk_reduction,
-        "customer_growth": customer_growth,
-        "funding_probability": funding_probability,
-    }
-
-
-def optimize(simulated: list[dict[str, Any]]) -> dict[str, Any]:
+def optimize(pivots: list[dict[str, Any]]) -> dict[str, Any]:
     w = get_config()["pivot_scoring"]
     scored = []
-    for p in simulated:
+    for p in pivots:
+        rev = _f(p.get("revenue_impact"))
+        risk_red = _f(p.get("risk_reduction"))
+        cust = _f(p.get("customer_growth"))
+        fund = _f(p.get("funding_probability"))
         score = (
-            p["revenue_impact"] * w["revenue_impact_weight"]
-            + p["risk_reduction"] * w["risk_reduction_weight"]
-            + p["customer_growth"] * w["customer_growth_weight"]
-            + p["funding_probability"] * w["funding_probability_weight"]
+            rev * w["revenue_impact_weight"]
+            + risk_red * w["risk_reduction_weight"]
+            + cust * w["customer_growth_weight"]
+            + fund * w["funding_probability_weight"]
         )
-        success_probability = round(min(0.97, 0.4 + score), 3)
-        risk_score = round(max(0.03, 1 - p["risk_reduction"]) * 100, 1)
-        roi = round(p["revenue_impact"] * 100 - risk_score * 0.3, 1)
         scored.append({
             **p,
+            "revenue_impact": round(rev, 3),
+            "risk_reduction": round(risk_red, 3),
+            "customer_growth": round(cust, 3),
+            "funding_probability": round(fund, 3),
             "score": round(score, 4),
-            "success_probability": success_probability,
-            "risk_score": risk_score,
-            "roi": roi,
+            "success_probability": round(min(0.97, 0.4 + score), 3),
+            "risk_score": round(max(0.03, 1 - risk_red) * 100, 1),
+            "roi": round(rev * 100 - max(0.03, 1 - risk_red) * 30, 1),
         })
     scored.sort(key=lambda x: x["score"], reverse=True)
-    best = scored[0] if scored else {}
+    best = scored[0]
     return {
         "recommended_pivot": best.get("pivot_name"),
         "success_probability": best.get("success_probability"),
@@ -90,6 +65,4 @@ def optimize(simulated: list[dict[str, Any]]) -> dict[str, Any]:
 
 
 def run_pivot_pipeline(context: dict[str, Any]) -> dict[str, Any]:
-    pivots = generate_pivots(context)
-    simulated = [simulate_pivot(p, context) for p in pivots]
-    return optimize(simulated)
+    return optimize(generate_pivots(context))

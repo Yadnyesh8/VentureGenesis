@@ -39,32 +39,6 @@ def _stance_for(role: str, context: dict[str, Any]) -> str:
     return "bullish" if growth > 0.08 else "neutral"
 
 
-def _fallback_message(role: str, rnd: int, context: dict[str, Any], prior: str) -> dict[str, Any]:
-    stance = _stance_for(role, context)
-    growth = context.get("customer_growth", 0) or 0
-    runway = context.get("runway", 0) or 0
-    lines = {
-        ("Founder", 1): f"We're growing {growth*100:.0f}% with a clear product wedge; conviction is high.",
-        ("Investor", 1): f"Traction is {'compelling' if growth>0.1 else 'unproven'}; I'd {'lean in' if growth>0.1 else 'wait for more signal'}.",
-        ("Financial", 1): f"Runway is {runway:.0f} months — {'tight' if runway<8 else 'workable'}; burn discipline is the priority.",
-        ("Customer", 1): f"Retention is the swing factor; churn at {(context.get('churn_rate',0) or 0)*100:.0f}% needs attention.",
-        ("Market", 1): "The market tailwind is real, but timing and positioning decide the winner.",
-        ("Competitor", 1): "Well-funded incumbents will respond fast; our moat must deepen quickly.",
-    }
-    base = lines.get((role, 1), f"As the {role} voice, my read leans {stance}.")
-    if rnd == 2:
-        base = f"Pushing back on the room: {base} The optimism (or caution) others showed misses the {role.lower()} angle."
-    elif rnd == 3:
-        base = f"Toward consensus: {base}"
-    out = {"role": role, "message": base, "stance": stance}
-    if rnd == 3:
-        out["final_recommendation"] = (
-            "Invest in growth" if stance == "bullish" else
-            "Fix fundamentals first" if stance == "bearish" else "Proceed cautiously"
-        )
-    return out
-
-
 def _agent_turn(role: str, rnd: int, context: dict[str, Any], prior: str) -> dict[str, Any]:
     if rnd == 1:
         prompt = render_prompt("debate_round_1", role=role, context=context)
@@ -72,9 +46,9 @@ def _agent_turn(role: str, rnd: int, context: dict[str, Any], prior: str) -> dic
         prompt = render_prompt("debate_round_2", role=role, prior=prior)
     else:
         prompt = render_prompt("debate_round_3", role=role, prior=prior)
-    result = llm.complete(prompt, mock_fn=lambda: _fallback_message(role, rnd, context, prior))
+    result = llm.complete(prompt)
     result.setdefault("role", role)
-    result.setdefault("stance", _stance_for(role, context))
+    result.setdefault("stance", "neutral")
     result.setdefault("message", "")
     return result
 
@@ -88,7 +62,12 @@ def run_debate(context: dict[str, Any]) -> Iterator[dict[str, Any]]:
         yield {"type": "round_start", "round": rnd}
         prior = "\n".join(f"{m['role']}: {m['message']}" for m in transcript[-len(ROLES):])
         for role in ROLES:
-            msg = _agent_turn(role, rnd, context, prior)
+            # One agent failing (e.g. a transient upstream error) must not abort the debate.
+            try:
+                msg = _agent_turn(role, rnd, context, prior)
+            except Exception as exc:
+                yield {"type": "agent_skipped", "round": rnd, "role": role, "error": str(exc)[:120]}
+                continue
             transcript.append({"round": rnd, **msg})
             yield {"type": "message", "round": rnd, **msg}
         yield {"type": "round_end", "round": rnd}

@@ -28,7 +28,9 @@ export type Ref = {
   scenario?: string;
 };
 
-const BASE = "";
+// Call the backend directly (CORS enabled) so long-running agent requests aren't killed
+// by the Next.js dev proxy's idle-socket timeout. Falls back to relative (proxy) if unset.
+const BASE = process.env.NEXT_PUBLIC_API_BASE_URL ?? "";
 
 async function post<T = any>(path: string, body: any): Promise<T> {
   const res = await fetch(`${BASE}/api${path}`, {
@@ -73,9 +75,9 @@ export const api = {
   debate: (ref: Ref) => post("/debate", ref),
 };
 
-// Stream the debate over SSE. Calls onEvent for each parsed event.
-export async function streamDebate(ref: Ref, onEvent: (ev: any) => void) {
-  const res = await fetch(`${BASE}/api/debate/stream`, {
+// Generic SSE consumer for our POST streaming endpoints.
+async function streamSSE(path: string, ref: Ref, onEvent: (ev: any) => void) {
+  const res = await fetch(`${BASE}/api${path}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(ref),
@@ -101,4 +103,14 @@ export async function streamDebate(ref: Ref, onEvent: (ev: any) => void) {
       }
     }
   }
+}
+
+// Stream the debate over SSE.
+export function streamDebate(ref: Ref, onEvent: (ev: any) => void) {
+  return streamSSE("/debate/stream", ref, onEvent);
+}
+
+// Stream the full board pipeline (every agent) over SSE.
+export function streamBoard(ref: Ref, onEvent: (ev: any) => void) {
+  return streamSSE("/board/stream", ref, onEvent);
 }

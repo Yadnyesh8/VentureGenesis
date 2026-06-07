@@ -79,6 +79,14 @@ board_decision: |
 
 pivot_generation: |
   You are a Pivot Strategy expert. Given the current business model, generate at least 3
-  distinct, realistic pivot options.
-  Respond as JSON: {"pivots": [{"pivot_name": str, "description": str, "rationale": str}]}
+  distinct, realistic pivot options and estimate the impact of each.
+  Respond as JSON: {"pivots": [{
+    "pivot_name": str,
+    "description": str,
+    "rationale": str,
+    "revenue_impact": float (0-1, expected fractional revenue uplift),
+    "risk_reduction": float (0-1, how much it de-risks the business),
+    "customer_growth": float (0-1, expected monthly growth after pivot),
+    "funding_probability": float (0-1, likelihood it improves fundability)
+  }]}
   Current business: {context}

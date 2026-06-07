@@ -14,6 +14,15 @@ from typing import Any
 
 import yaml
 
+# Load the project .env (repo root) so OPENROUTER_* etc. are available to uvicorn.
+try:
+    from dotenv import load_dotenv
+
+    _ENV_PATH = Path(__file__).resolve().parent.parent.parent.parent / ".env"
+    load_dotenv(_ENV_PATH)
+except Exception:
+    pass
+
 CONFIG_DIR = Path(__file__).resolve().parent.parent / "config"
 CONFIG_PATH = CONFIG_DIR / "config.json"
 PROMPTS_PATH = CONFIG_DIR / "prompts.yaml"
@@ -83,6 +92,8 @@ class Settings:
     REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379/0")
     ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "")
     OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
+    OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY", "")
+    OPENROUTER_MODEL = os.getenv("OPENROUTER_MODEL", "google/gemma-2-9b-it:free")
     PINECONE_API_KEY = os.getenv("PINECONE_API_KEY", "")
     NEO4J_URI = os.getenv("NEO4J_URI", "")
     NEO4J_USER = os.getenv("NEO4J_USER", "neo4j")

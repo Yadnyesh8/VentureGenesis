@@ -1,8 +1,9 @@
 "use client";
 import { useRef, useState } from "react";
-import { api, streamDebate } from "@/lib/api";
+import { streamBoard } from "@/lib/api";
 import { useStore } from "@/lib/store";
-import { Card, Loading, PageHeader, Pill } from "@/components/ui";
+import { Card, PageHeader, Pill } from "@/components/ui";
+import AgentPipeline, { StepState } from "@/components/AgentPipeline";
 
 const ROLE_ICON: any = {
   Founder: "🚀", Investor: "💼", Financial: "💰", Customer: "👥", Market: "🌐", Competitor: "⚔",
@@ -10,117 +11,135 @@ const ROLE_ICON: any = {
 
 export default function BoardPage() {
   const { ref } = useStore();
+  const [steps, setSteps] = useState<StepState[]>([]);
   const [messages, setMessages] = useState<any[]>([]);
-  const [streaming, setStreaming] = useState(false);
-  const [consensus, setConsensus] = useState<string | null>(null);
-  const [round, setRound] = useState(0);
   const [decision, setDecision] = useState<any>(null);
-  const [decLoading, setDecLoading] = useState(false);
+  const [running, setRunning] = useState(false);
+  const [elapsed, setElapsed] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const timerRef = useRef<any>(null);
 
-  async function startDebate() {
+  function patch(key: string, updates: Partial<StepState>) {
+    setSteps((prev) => prev.map((s) => (s.key === key ? { ...s, ...updates } : s)));
+  }
+
+  async function convene() {
     setMessages([]);
-    setConsensus(null);
     setDecision(null);
-    setStreaming(true);
-    setRound(0);
+    setRunning(true);
+    setElapsed(0);
+    const t0 = Date.now();
+    timerRef.current = setInterval(() => setElapsed(Math.floor((Date.now() - t0) / 1000)), 1000);
     try {
-      await streamDebate(ref(), (ev) => {
-        if (ev.type === "round_start") setRound(ev.round);
-        if (ev.type === "message") {
-          setMessages((m) => [...m, ev]);
-          setTimeout(() => scrollRef.current?.scrollTo({ top: 1e9, behavior: "smooth" }), 50);
+      await streamBoard(ref(), (ev) => {
+        switch (ev.type) {
+          case "start":
+            setSteps(ev.steps.map((s: any) => ({ ...s, status: "pending" })));
+            break;
+          case "agent_start":
+            patch(ev.key, { status: "running" });
+            break;
+          case "agent_done":
+            patch(ev.key, { status: "done", ms: ev.ms });
+            if (ev.key === "board") setDecision(ev.result);
+            break;
+          case "agent_error":
+            patch(ev.key, { status: "error", ms: ev.ms });
+            break;
+          case "debate_message":
+            setMessages((m) => [...m, ev]);
+            setTimeout(() => scrollRef.current?.scrollTo({ top: 1e9, behavior: "smooth" }), 40);
+            break;
+          case "complete":
+            if (ev.decision) setDecision(ev.decision);
+            break;
         }
-        if (ev.type === "consensus") setConsensus(ev.consensus);
       });
+    } catch (e) {
+      /* surfaced via step error states */
     } finally {
-      setStreaming(false);
+      clearInterval(timerRef.current);
+      setRunning(false);
     }
   }
 
-  async function getDecision() {
-    setDecLoading(true);
-    try {
-      const res = await api.board(ref());
-      setDecision(res.data.board_decision_obj);
-    } finally {
-      setDecLoading(false);
-    }
-  }
+  const fmtT = `${Math.floor(elapsed / 60)}:${String(elapsed % 60).padStart(2, "0")}`;
 
   return (
     <div>
       <PageHeader
         title="Board of Directors"
-        desc="Six AI agents debate across 3 rounds, then the Chair issues a decision."
+        desc="Every agent runs live (real LLM calls). This genuinely takes a few minutes — watch each agent work."
         action={
-          <div className="flex gap-2">
-            <button className="btn-ghost" onClick={startDebate} disabled={streaming}>{streaming ? "Debating…" : "Run Debate"}</button>
-            <button className="btn" onClick={getDecision} disabled={decLoading}>{decLoading ? "Deciding…" : "Board Decision"}</button>
-          </div>
+          <button className="btn" onClick={convene} disabled={running}>
+            {running ? `Deliberating · ${fmtT}` : "Convene the Board"}
+          </button>
         }
       />
 
-      <div className="grid lg:grid-cols-3 gap-4">
-        <div className="lg:col-span-2">
-          <Card title={`Live debate ${round ? `· Round ${round}/3` : ""}`} right={consensus && <Pill tone={consensus}>{consensus} consensus</Pill>}>
-            <div ref={scrollRef} className="space-y-3 max-h-[520px] overflow-y-auto pr-1">
-              {messages.length === 0 && !streaming && <div className="text-muted text-sm">Click "Run Debate" to begin the live multi-agent debate.</div>}
-              {messages.map((m, i) => (
-                <div key={i} className="flex gap-3 animate-[fadeIn_0.3s_ease]">
-                  <div className="text-2xl">{ROLE_ICON[m.role] || "🤖"}</div>
-                  <div className="flex-1 bg-panel2 border border-edge rounded-xl p-3">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="font-semibold text-sm">{m.role}</span>
-                      <Pill tone={m.stance}>{m.stance}</Pill>
-                      <span className="text-[10px] text-muted ml-auto">Round {m.round}</span>
-                    </div>
-                    <div className="text-sm text-gray-200">{m.message}</div>
-                    {m.final_recommendation && <div className="text-xs text-accent mt-1">→ {m.final_recommendation}</div>}
-                  </div>
-                </div>
-              ))}
-              {streaming && <Loading label="Agents are deliberating…" />}
-            </div>
-          </Card>
-        </div>
+      {steps.length === 0 && !running && (
+        <Card><div className="text-text-dim text-sm">Click "Convene the Board" to run all 16 agents live. Each lights up as it works; the boardroom debate streams in real time.</div></Card>
+      )}
 
-        <div>
-          <Card title="Board decision">
-            {decLoading ? <Loading label="SYNTHESIZING VERDICT" /> : decision ? (
-              <div className="space-y-3">
-                <div className="text-center">
-                  <div className="display-hero text-[clamp(28px,4vw,48px)]">{decision.board_decision}</div>
+      {steps.length > 0 && (
+        <div className="grid lg:grid-cols-5 gap-4">
+          <div className="lg:col-span-2">
+            <Card>
+              <AgentPipeline steps={steps} />
+            </Card>
+          </div>
+
+          <div className="lg:col-span-3 space-y-4">
+            <Card title={`Boardroom debate ${running ? "· live" : ""}`} right={messages.length > 0 && <Pill tone="neutral">{messages.length} statements</Pill>}>
+              <div ref={scrollRef} className="space-y-3 max-h-[420px] overflow-y-auto pr-1">
+                {messages.length === 0 && <div className="text-text-mute text-sm label-mono">AWAITING DEBATE…</div>}
+                {messages.map((m, i) => (
+                  <div key={i} className="flex gap-3 animate-[fadeIn_0.3s_ease]">
+                    <div className="text-2xl">{ROLE_ICON[m.role] || "🤖"}</div>
+                    <div className="flex-1 bg-surface2 border border-line rounded-xl p-3">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="font-semibold text-sm">{m.role}</span>
+                        <Pill tone={m.stance}>{m.stance}</Pill>
+                        <span className="label-mono text-[9px] ml-auto">ROUND {m.round}</span>
+                      </div>
+                      <div className="text-sm text-text">{m.message}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </Card>
+
+            {decision && (
+              <Card title="Board verdict">
+                <div className="text-center mb-3">
+                  <div className="display-hero text-aqua text-[clamp(36px,5vw,60px)]">{decision.board_decision}</div>
                   <div className="label-mono mt-1">CONFIDENCE {Math.round((decision.confidence || 0) * 100)}%</div>
                   <div className="tick-ruler mt-3 mx-auto w-1/2" />
                 </div>
                 <Section title="Strategic actions" items={decision.strategic_actions} />
                 <Section title="Growth roadmap" items={decision.growth_roadmap} />
                 <Section title="Risk mitigation" items={decision.risk_mitigation} />
-                <div>
-                  <div className="card-h">Funding strategy</div>
-                  <p className="text-sm text-muted">{decision.funding_strategy}</p>
-                </div>
-                <p className="text-xs text-muted border-t border-edge pt-2">{decision.summary}</p>
-              </div>
-            ) : (
-              <div className="text-muted text-sm">Run the board decision to aggregate all agents into one verdict.</div>
+                {decision.funding_strategy && (
+                  <div className="mt-2"><div className="card-h">Funding strategy</div><p className="text-sm text-text-dim">{decision.funding_strategy}</p></div>
+                )}
+                {decision.summary && <p className="text-xs text-text-mute border-t border-line pt-2 mt-2">{decision.summary}</p>}
+              </Card>
             )}
-          </Card>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
 
-function Section({ title, items }: { title: string; items: string[] }) {
+function Section({ title, items }: { title: string; items?: string[] }) {
   if (!items?.length) return null;
   return (
-    <div>
+    <div className="mb-2">
       <div className="card-h">{title}</div>
       <ul className="space-y-1">
         {items.map((it, i) => (
-          <li key={i} className="text-sm flex gap-2"><span className="text-brand">•</span>{it}</li>
+          <li key={i} className="text-sm flex gap-2"><span className="text-violet">•</span>{it}</li>
         ))}
       </ul>
     </div>

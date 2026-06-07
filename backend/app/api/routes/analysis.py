@@ -90,22 +90,24 @@ def api_health(ref: StartupRef, db: Session = Depends(get_db)):
     return {"ok": True, "data": result}
 
 
+# Note: metrics already carry industry/business_model/stage from the questionnaire, so we
+# pass them straight to the agent — no extra understand() LLM round-trip (halves latency).
 @router.post("/competitor")
 def api_competitor(ref: StartupRef, db: Session = Depends(get_db)):
     m = resolve_metrics(ref, db)
-    return {"ok": True, "data": intel.competitor({**m, **understand(m)})}
+    return {"ok": True, "data": intel.competitor(m)}
 
 
 @router.post("/market")
 def api_market(ref: StartupRef, db: Session = Depends(get_db)):
     m = resolve_metrics(ref, db)
-    return {"ok": True, "data": intel.market_opportunity({**m, **understand(m)})}
+    return {"ok": True, "data": intel.market_opportunity(m)}
 
 
 @router.post("/strategy")
 def api_strategy(ref: StartupRef, db: Session = Depends(get_db)):
     m = resolve_metrics(ref, db)
-    return {"ok": True, "data": intel.founder_strategy({**m, **understand(m)})}
+    return {"ok": True, "data": intel.founder_strategy(m)}
 
 
 @router.post("/simulate")
@@ -127,7 +129,7 @@ def api_simulate(req: SimulateRequest, db: Session = Depends(get_db)):
 @router.post("/pivots")
 def api_pivots(ref: StartupRef, db: Session = Depends(get_db)):
     m = resolve_metrics(ref, db)
-    result = run_pivot_pipeline({**m, **understand(m)})
+    result = run_pivot_pipeline(m)
     if ref.startup_id is not None:
         try:
             for p in result.get("all_pivots", [])[:5]:
