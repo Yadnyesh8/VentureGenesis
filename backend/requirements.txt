@@ -1,0 +1,31 @@
+# Core API
+fastapi==0.115.5
+uvicorn[standard]==0.32.1
+python-multipart==0.0.12
+pydantic==2.10.3
+PyYAML==6.0.2
+
+# Data / DB
+SQLAlchemy==2.0.36
+psycopg2-binary==2.9.10
+pandas==2.2.3
+numpy==2.1.3
+redis==5.2.0
+
+# ML (optional at runtime — code falls back gracefully if a wheel is unavailable)
+scikit-learn==1.5.2
+joblib==1.4.2
+xgboost==2.1.3
+lightgbm==4.5.0
+catboost==1.2.7
+prophet==1.1.6
+shap==0.46.0
+
+# LLM / Agents (optional at runtime)
+anthropic==0.40.0
+langchain==0.3.9
+langgraph==0.2.53
+
+# Sentiment (optional — large; FinBERT). Uncomment to enable live FinBERT.
+# transformers==4.46.3
+# torch==2.5.1

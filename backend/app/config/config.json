@@ -1,0 +1,65 @@
+{
+  "mock_mode": true,
+  "llm": {
+    "provider": "anthropic",
+    "model": "claude-opus-4-8",
+    "temperature": 0.4,
+    "max_tokens": 1024
+  },
+  "health_weights": {
+    "revenue_strength": 0.25,
+    "growth_rate": 0.25,
+    "funding_readiness": 0.20,
+    "customer_health": 0.15,
+    "market_position": 0.15
+  },
+  "industries": [
+    "B2B",
+    "Consumer",
+    "Fintech",
+    "Finances",
+    "Healthcare",
+    "Health",
+    "Education",
+    "Industrials",
+    "e-Commerce",
+    "Entertainment",
+    "Social Media",
+    "Marketing",
+    "Analytics",
+    "Productivity",
+    "Design",
+    "Food & Beverage",
+    "Transportation",
+    "Travel",
+    "Music",
+    "Software & Hardware",
+    "Real Estate and Construction",
+    "Government",
+    "Unspecified"
+  ],
+  "business_models": ["B2B", "B2C", "B2B2C", "Marketplace", "SaaS", "Subscription", "Transactional", "Freemium"],
+  "stages": ["Idea", "Pre-Seed", "Seed", "Early", "Series A", "Series B", "Growth", "Late"],
+  "simulation_multipliers": {
+    "marketing_increase": { "revenue": 0.10, "burn_rate": 0.05, "customer_growth": 0.08 },
+    "hiring_increase": { "growth_rate": 0.07, "expenses": 0.12, "burn_rate": 0.10 },
+    "product_launch": { "customer_growth": 0.18, "revenue": 0.12, "burn_rate": 0.06 },
+    "cost_cutting": { "expenses": -0.15, "burn_rate": -0.18, "growth_rate": -0.03 }
+  },
+  "pivot_scoring": {
+    "revenue_impact_weight": 0.30,
+    "risk_reduction_weight": 0.25,
+    "customer_growth_weight": 0.25,
+    "funding_probability_weight": 0.20
+  },
+  "outlier_detection": {
+    "z_score_threshold": 3.0,
+    "iqr_multiplier": 1.5,
+    "isolation_forest_contamination": 0.05
+  },
+  "failure_thresholds": {
+    "critical_runway_months": 6,
+    "high_burn_ratio": 0.8,
+    "high_churn_rate": 0.15
+  }
+}

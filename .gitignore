@@ -1,0 +1,25 @@
+# Python
+backend/.venv/
+__pycache__/
+*.pyc
+*.db
+
+# Node
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+
+# Env / secrets
+.env
+
+# OS
+.DS_Store
+
+# Graphify artifacts
+graphify-out/
+
+# Local prompt notes
+venturegenesis_cursor_prompt.md
+
+# Root dev deps
+node_modules/

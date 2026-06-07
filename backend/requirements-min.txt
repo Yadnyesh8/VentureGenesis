@@ -1,0 +1,12 @@
+# Minimal deps to run the API with rule-based fallbacks (works on Python 3.12-3.14).
+# Heavy ML/LLM libs are optional; the app degrades gracefully without them.
+fastapi
+uvicorn[standard]
+python-multipart
+pydantic
+PyYAML
+SQLAlchemy
+pandas
+numpy
+scikit-learn
+joblib
