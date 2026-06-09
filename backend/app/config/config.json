@@ -12,6 +12,15 @@
     "customer_health": 0.15,
     "market_position": 0.15
   },
+  "health_norms": {
+    "revenue_scale": 5000000,
+    "growth_offset": 0.1,
+    "growth_range": 0.4,
+    "runway_norm_months": 18,
+    "valuation_scale": 50000000,
+    "growth_norm": 0.2,
+    "default_churn": 0.1
+  },
   "industries": [
     "B2B",
     "Consumer",
@@ -58,7 +67,48 @@
   },
   "failure_thresholds": {
     "critical_runway_months": 6,
+    "warning_runway_months": 9,
     "high_burn_ratio": 0.8,
-    "high_churn_rate": 0.15
+    "high_churn_rate": 0.15,
+    "critical_churn_rate": 0.25
+  },
+  "failure_adjustment": {
+    "runway_weight": 0.20,
+    "churn_weight": 0.12,
+    "churn_cap_multiple": 1.5,
+    "negative_growth_weight": 0.16,
+    "burn_weight": 0.08,
+    "healthy_baseline_credit": 0.05,
+    "delta_min": -0.25,
+    "delta_max": 0.45
+  },
+  "failure_horizons": {
+    "six_month_multiplier": 1.12,
+    "two_year_multiplier": 0.88
+  },
+  "funding_adjustment": {
+    "growth_weight": 0.15,
+    "growth_norm": 0.2,
+    "runway_weight": 0.08,
+    "runway_norm_months": 18,
+    "revenue_weight": 0.07,
+    "revenue_norm": 5000000,
+    "low_runway_penalty": 0.03,
+    "delta_min": -0.2,
+    "delta_max": 0.3
+  },
+  "risk_detection": {
+    "category_weights": {
+      "financial": 0.35,
+      "customer": 0.25,
+      "market": 0.15,
+      "team": 0.10,
+      "execution": 0.15
+    },
+    "valuation_revenue_multiple_max": 100,
+    "stagnation_years": 4,
+    "min_team_for_growth_stage": 5,
+    "low_funding_probability": 0.35,
+    "high_failure_probability": 0.6
   }
 }

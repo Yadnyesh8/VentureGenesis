@@ -85,14 +85,20 @@ npm run dev                             # http://localhost:3000  (proxies /api �
 
 ## The ML models (trained on real data — no synthetic training)
 
-`python -m app.ml_training.train` trains two **GradientBoosting** classifiers on the
-**6,089 real YC + Failory companies** bundled in `data/`, using only features a founder
-can supply (team size, company age, industry, stage):
+`python -m app.ml_training.train` trains two **calibrated HistGradientBoosting**
+pipelines on the **6,089 real YC + Failory companies** bundled in `data/`, using only
+features a founder can supply (team size, company age, industry, stage, plus derived
+stagnation and hiring-velocity signals). The pipeline includes leakage-safe target
+encoding of industry, a hyperparameter grid search (5-fold stratified CV), and isotonic
+probability calibration so the output probabilities are trustworthy:
 
-| Model | Target | Holdout |
-|---|---|---|
-| `failure_model` | status == Inactive (dead) | **AUC ≈ 0.84** |
-| `funding_model` | Acquired / Public / top-company | **AUC ≈ 0.79** |
+| Model | Target | 5-fold CV AUC | Holdout AUC | PR-AUC | Brier |
+|---|---|---|---|---|---|
+| `failure_model` | status == Inactive (dead) | **0.863 ± 0.014** | 0.842 | 0.570 | 0.112 |
+| `funding_model` | Acquired / Public / top-company | **0.784 ± 0.024** | 0.784 | 0.442 | 0.102 |
+
+Inspect calibration and permutation importances any time with
+`python -m app.ml_training.evaluate`, and run the test suite with `pytest tests/`.
 
 At inference, the trained model produces a data-driven **base probability**, which is
 then adjusted by a transparent financial-risk layer using your *own* numbers (runway,

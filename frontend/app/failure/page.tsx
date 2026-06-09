@@ -15,7 +15,7 @@ export default function FailurePage() {
 
   return (
     <div>
-      <PageHeader title="Failure Prediction" desc="XGBoost + LightGBM ensemble with SHAP explainability (rule-based fallback)." />
+      <PageHeader title="Failure Prediction" desc="Calibrated gradient boosting trained on 6,089 real YC/Failory outcomes, with a transparent financial-risk layer." />
       {fail.error && <ErrorBox error={fail.error} />}
       {fail.loading ? <Loading /> : d && (
         <>

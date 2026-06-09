@@ -16,6 +16,7 @@ from app.agents.ml.revenue_forecast import forecast_revenue
 from app.agents.ml.funding_readiness import predict_funding
 from app.agents.ml.sentiment import analyze_sentiment
 from app.agents.ml.health import compute_health
+from app.agents.ml.risk_detection import detect_risks
 from app.agents.intelligence import agents as intel
 from app.agents.debate_engine import run_debate_blocking
 from app.simulation.pivot import run_pivot_pipeline
@@ -40,6 +41,7 @@ def gather_all(metrics: dict[str, Any], reviews: list[str] | None = None,
 
     funding_prob = out.get("funding", {}).get("funding_probability")
     safe("health", lambda: compute_health(metrics, funding_prob))
+    safe("risk", lambda: detect_risks(metrics, out.get("failure", {}).get("failure_12m"), funding_prob))
 
     ctx = {**metrics, **out.get("understanding", {})}
     safe("root_cause", lambda: intel.root_cause(out.get("failure", {}).get("feature_importance", []), metrics))
@@ -61,6 +63,8 @@ def _compact(aggregate: dict[str, Any]) -> dict[str, Any]:
         "health_score": a.get("health", {}).get("health_score"),
         "failure_12m": a.get("failure", {}).get("failure_12m"),
         "funding_probability": a.get("funding", {}).get("funding_probability"),
+        "risk_level": a.get("risk", {}).get("risk_level"),
+        "top_risks": [f.get("message") for f in a.get("risk", {}).get("top_risks", [])][:4],
         "forecast_12m": a.get("forecast", {}).get("forecast_12m"),
         "sentiment": a.get("sentiment", {}).get("sentiment"),
         "root_causes": [c.get("cause") for c in a.get("root_cause", {}).get("causes", [])][:4],

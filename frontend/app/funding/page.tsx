@@ -15,7 +15,7 @@ export default function FundingPage() {
 
   return (
     <div>
-      <PageHeader title="Funding Readiness" desc="XGBoost classifier scores investability (rule-based fallback)." />
+      <PageHeader title="Funding Readiness" desc="Calibrated gradient boosting scores investability from real funding outcomes, adjusted by your traction." />
       {fund.error && <ErrorBox error={fund.error} />}
       {fund.loading ? <Loading /> : d && (
         <div className="grid lg:grid-cols-2 gap-4">

@@ -9,6 +9,7 @@ from app.agents.ml.revenue_forecast import forecast_revenue
 from app.agents.ml.funding_readiness import predict_funding
 from app.agents.ml.sentiment import analyze_sentiment
 from app.agents.ml.health import compute_health
+from app.agents.ml.risk_detection import detect_risks
 from app.agents.intelligence import agents as intel
 from app.agents.startup_understanding import understand
 from app.agents.board import board_decision
@@ -76,6 +77,19 @@ def api_customer(ref: StartupRef, db: Session = Depends(get_db)):
     m = resolve_metrics(ref, db)
     sentiment = analyze_sentiment(ref.customer_reviews)
     return {"ok": True, "data": {"sentiment": sentiment}}
+
+
+@router.post("/risk")
+def api_risk(ref: StartupRef, db: Session = Depends(get_db)):
+    """Deterministic multi-category risk register, enriched with trained-model signals."""
+    m = resolve_metrics(ref, db)
+    failure_prob = funding_prob = None
+    try:
+        failure_prob = predict_failure(m)["failure_12m"]
+        funding_prob = predict_funding(m)["funding_probability"]
+    except Exception:
+        pass  # risk register still works from raw metrics alone
+    return {"ok": True, "data": detect_risks(m, failure_prob, funding_prob)}
 
 
 @router.post("/health")

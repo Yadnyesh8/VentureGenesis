@@ -30,8 +30,10 @@ except Exception:  # pragma: no cover
 
 
 def _financial_adjustment(metrics: dict[str, Any]) -> tuple[float, list[dict]]:
-    """Risk delta in [-0.25, +0.45] from the user's real financial inputs."""
-    cfg = get_config()["failure_thresholds"]
+    """Risk delta from the user's real financial inputs (weights/clamps in config.json)."""
+    cfg = get_config()
+    thr = cfg["failure_thresholds"]
+    adj = cfg["failure_adjustment"]
     runway = metrics.get("runway", 0) or 0
     churn = metrics.get("churn_rate", 0) or 0
     growth = metrics.get("customer_growth", 0) or 0
@@ -40,16 +42,18 @@ def _financial_adjustment(metrics: dict[str, Any]) -> tuple[float, list[dict]]:
     burn_ratio = (expenses - revenue) / (expenses + 1)
 
     contributions = {}
-    r = max(0.0, (cfg["critical_runway_months"] - runway) / cfg["critical_runway_months"]) * 0.20
+    r = max(0.0, (thr["critical_runway_months"] - runway) / thr["critical_runway_months"]) * adj["runway_weight"]
     contributions["runway"] = round(r, 3)
-    c = min(churn / max(cfg["high_churn_rate"], 0.01), 1.5) * 0.12
+    c = min(churn / max(thr["high_churn_rate"], 0.01), adj["churn_cap_multiple"]) * adj["churn_weight"]
     contributions["churn_rate"] = round(c, 3)
-    g = max(0.0, -growth) * 2.0 * 0.08
+    g = min(max(0.0, -growth) * 2.0, 1.0) * adj["negative_growth_weight"]
     contributions["customer_growth"] = round(g, 3)
-    b = max(0.0, burn_ratio) * 0.05
+    # Burn only penalized above the high_burn_ratio threshold, scaled to its max at ratio 1.0.
+    excess_burn = max(0.0, burn_ratio - thr["high_burn_ratio"]) / max(1.0 - thr["high_burn_ratio"], 0.01)
+    b = min(excess_burn, 1.0) * adj["burn_weight"]
     contributions["burn_rate"] = round(b, 3)
-    delta = sum(contributions.values()) - 0.05  # small healthy-baseline credit
-    delta = max(-0.25, min(0.45, delta))
+    delta = sum(contributions.values()) - adj["healthy_baseline_credit"]
+    delta = max(adj["delta_min"], min(adj["delta_max"], delta))
     fin_importance = [{"feature": k, "impact": v} for k, v in sorted(contributions.items(), key=lambda x: -x[1])]
     return delta, fin_importance
 
@@ -75,12 +79,18 @@ def predict_failure(metrics: dict[str, Any]) -> dict[str, Any]:
     delta, fin_importance = _financial_adjustment(metrics)
     base = min(max(base_ml + delta, 0.02), 0.98)
 
-    # Model feature importances (data-driven) + financial contributions.
-    importances = getattr(model, "feature_importances_", None)
+    # Model feature importances (permutation importances saved at train time for
+    # calibrated pipelines; raw tree importances for legacy bundles) + financial contributions.
     feature_importance = []
-    if importances is not None:
-        for name, imp in sorted(zip(FEATURE_NAMES, importances), key=lambda t: -t[1]):
+    saved = bundle.get("feature_importances")
+    if saved:
+        for name, imp in sorted(saved.items(), key=lambda t: -t[1]):
             feature_importance.append({"feature": name, "impact": round(float(imp), 4)})
+    else:
+        importances = getattr(model, "feature_importances_", None)
+        if importances is not None:
+            for name, imp in sorted(zip(FEATURE_NAMES, importances), key=lambda t: -t[1]):
+                feature_importance.append({"feature": name, "impact": round(float(imp), 4)})
     feature_importance.extend(fin_importance)
 
     shap_ok = False
@@ -96,10 +106,14 @@ def predict_failure(metrics: dict[str, Any]) -> dict[str, Any]:
         except Exception as exc:  # pragma: no cover
             logger.info("SHAP failed: %s", exc)
 
+    horizons = get_config().get("failure_horizons", {})
+    six_m = horizons.get("six_month_multiplier", 1.12)
+    two_y = horizons.get("two_year_multiplier", 0.88)
+
     return {
-        "failure_6m": round(min(base * 1.12, 0.99), 3),
+        "failure_6m": round(min(base * six_m, 0.99), 3),
         "failure_12m": round(base, 3),
-        "failure_24m": round(min(base * 0.88, 0.99), 3),
+        "failure_24m": round(min(base * two_y, 0.99), 3),
         "method": f"{bundle['model_type']} (trained on {bundle['n_samples']} real companies, AUC {bundle['metrics']['auc']})",
         "model_base_probability": round(base_ml, 3),
         "financial_adjustment": round(delta, 3),
