@@ -1,8 +1,7 @@
 """Config-driven architecture (Phase 10).
 
 Loads config.json and prompts.yaml. Supports hot reload so config/prompt changes
-reflect immediately without a restart. Environment variables override the mock_mode flag
-and supply secrets.
+reflect immediately without a restart. Environment variables supply secrets and config paths.
 """
 from __future__ import annotations
 
@@ -68,14 +67,6 @@ def render_prompt(name: str, **kwargs: Any) -> str:
     for key, value in kwargs.items():
         template = template.replace("{" + key + "}", str(value))
     return template
-
-
-def is_mock_mode() -> bool:
-    """Env var VG_MOCK_MODE overrides config.json mock_mode flag."""
-    env = os.getenv("VG_MOCK_MODE")
-    if env is not None:
-        return env.lower() == "true"
-    return bool(get_config().get("mock_mode", True))
 
 
 class Settings:

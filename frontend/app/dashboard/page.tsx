@@ -57,7 +57,7 @@ export default function Dashboard() {
               ["/failure", "Failure + SHAP"],
               ["/forecast", "Revenue Forecast"],
               ["/funding", "Funding Readiness"],
-              ["/customer", "Churn & Sentiment"],
+              ["/customer", "Customer Sentiment"],
               ["/competitor", "Competitor Map"],
               ["/market", "Market Opportunity"],
               ["/pivots", "Pivot Engine"],
@@ -88,7 +88,6 @@ export default function Dashboard() {
             ["Runway", `${metrics.runway ?? 0} mo`],
             ["Customers", (metrics.customer_count || 0).toLocaleString()],
             ["Growth", fmtPct(metrics.customer_growth || 0)],
-            ["Churn", fmtPct(metrics.churn_rate || 0)],
             ["Team", metrics.employee_count ?? 0],
           ].map(([k, v]) => (
             <div key={k as string}><div className="text-muted text-xs">{k}</div><div className="font-semibold">{v}</div></div>

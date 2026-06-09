@@ -1,6 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import Sidebar from "@/components/Sidebar";
+import TopNav from "@/components/TopNav";
 import ProfileGuard from "@/components/ProfileGuard";
 import { StoreProvider } from "@/lib/store";
 import { display, almarai, mono, instrumentSerif } from "./fonts";
@@ -15,12 +15,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${display.variable} ${almarai.variable} ${mono.variable} ${instrumentSerif.variable}`}>
       <body className="font-sans">
         <StoreProvider>
-          <div className="flex">
-            <Sidebar />
-            <main className="flex-1 min-h-screen p-6 md:p-10 max-w-[1400px] mx-auto w-full">
-              <ProfileGuard>{children}</ProfileGuard>
-            </main>
-          </div>
+          <TopNav />
+          <main className="max-w-[1500px] mx-auto w-full px-5 py-8 md:py-10">
+            <ProfileGuard>{children}</ProfileGuard>
+          </main>
         </StoreProvider>
       </body>
     </html>

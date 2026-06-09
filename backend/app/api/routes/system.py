@@ -6,14 +6,14 @@ import json
 from fastapi import APIRouter, Body
 
 from app.core import llm
-from app.core.config import CONFIG_PATH, get_config, is_mock_mode
+from app.core.config import CONFIG_PATH, get_config
 
 router = APIRouter()
 
 
 @router.get("/config")
 def read_config():
-    return {"config": get_config(), "mock_mode": is_mock_mode(), "llm_mode": llm.mode()}
+    return {"config": get_config(), "llm_mode": llm.mode()}
 
 
 @router.put("/config")
@@ -28,4 +28,4 @@ def update_config(patch: dict = Body(...)):
 
 @router.get("/status")
 def status():
-    return {"service": "VENTUREGENESIS", "ok": True, "mock_mode": is_mock_mode(), "llm_mode": llm.mode()}
+    return {"service": "VENTUREGENESIS", "ok": True, "llm_mode": llm.mode()}

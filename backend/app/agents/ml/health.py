@@ -15,8 +15,7 @@ def _clamp01(x: float) -> float:
     return max(0.0, min(1.0, x))
 
 
-def compute_health(metrics: dict[str, Any], funding_prob: float | None = None,
-                   churn_risk: float | None = None) -> dict[str, Any]:
+def compute_health(metrics: dict[str, Any], funding_prob: float | None = None) -> dict[str, Any]:
     w = get_config()["health_weights"]
 
     revenue = metrics.get("revenue", 0) or 0
@@ -30,7 +29,8 @@ def compute_health(metrics: dict[str, Any], funding_prob: float | None = None,
     funding_readiness = funding_prob if funding_prob is not None else _clamp01(
         (metrics.get("runway", 0) or 0) / 18
     )
-    customer_health = _clamp01(1 - (churn_risk if churn_risk is not None else (metrics.get("churn_rate", 0.1) or 0.1)))
+    # Customer health derives from the founder's reported churn rate (lower churn = healthier).
+    customer_health = _clamp01(1 - (metrics.get("churn_rate", 0.1) or 0.1))
     market_position = _clamp01(min(valuation / 50_000_000, 1) * 0.6 + min(growth / 0.2, 1) * 0.4)
 
     components = {

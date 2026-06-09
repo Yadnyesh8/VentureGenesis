@@ -17,7 +17,6 @@ from app.agents.startup_understanding import understand
 from app.agents.ml.failure_prediction import predict_failure
 from app.agents.ml.revenue_forecast import forecast_revenue
 from app.agents.ml.funding_readiness import predict_funding
-from app.agents.ml.churn import predict_churn
 from app.agents.ml.sentiment import analyze_sentiment
 from app.agents.ml.health import compute_health
 from app.agents.intelligence import agents as intel
@@ -43,7 +42,6 @@ STEPS = [
     ("failure", "Failure Prediction", "ml"),
     ("forecast", "Revenue Forecast", "ml"),
     ("funding", "Funding Readiness", "ml"),
-    ("churn", "Customer Churn", "ml"),
     ("sentiment", "Customer Sentiment", "ml"),
     ("health", "Startup Health", "ml"),
     ("root_cause", "Root Cause Analysis", "llm"),
@@ -90,11 +88,9 @@ def board_stream(ref: StartupRef, db: Session = Depends(get_db)):
         yield from step("failure", "Failure Prediction", "ml", lambda: predict_failure(metrics))
         yield from step("forecast", "Revenue Forecast", "ml", lambda: forecast_revenue(metrics, series))
         yield from step("funding", "Funding Readiness", "ml", lambda: predict_funding(metrics))
-        yield from step("churn", "Customer Churn", "ml", lambda: predict_churn(metrics))
         yield from step("sentiment", "Customer Sentiment", "ml", lambda: analyze_sentiment(reviews))
         fp = out.get("funding", {}).get("funding_probability") if isinstance(out.get("funding"), dict) else None
-        cr = out.get("churn", {}).get("churn_risk") if isinstance(out.get("churn"), dict) else None
-        yield from step("health", "Startup Health", "ml", lambda: compute_health(metrics, fp, cr))
+        yield from step("health", "Startup Health", "ml", lambda: compute_health(metrics, fp))
 
         fi = out.get("failure", {}).get("feature_importance", []) if isinstance(out.get("failure"), dict) else []
         yield from step("root_cause", "Root Cause Analysis", "llm", lambda: intel.root_cause(fi, metrics))

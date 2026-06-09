@@ -5,8 +5,9 @@ import { useStore } from "@/lib/store";
 import { Card, PageHeader, Pill } from "@/components/ui";
 import AgentPipeline, { StepState } from "@/components/AgentPipeline";
 
-const ROLE_ICON: any = {
-  Founder: "🚀", Investor: "💼", Financial: "💰", Customer: "👥", Market: "🌐", Competitor: "⚔",
+// Professional monogram codes (no emoji).
+const ROLE_CODE: any = {
+  Founder: "FND", Investor: "INV", Financial: "CFO", Customer: "CX", Market: "MKT", Competitor: "CMP",
 };
 
 export default function BoardPage() {
@@ -95,7 +96,9 @@ export default function BoardPage() {
                 {messages.length === 0 && <div className="text-text-mute text-sm label-mono">AWAITING DEBATE…</div>}
                 {messages.map((m, i) => (
                   <div key={i} className="flex gap-3 animate-[fadeIn_0.3s_ease]">
-                    <div className="text-2xl">{ROLE_ICON[m.role] || "🤖"}</div>
+                    <div className="w-11 h-11 shrink-0 rounded-lg border border-line bg-surface grid place-items-center">
+                      <span className="title-display text-[12px] text-aqua leading-none">{ROLE_CODE[m.role] || "AGT"}</span>
+                    </div>
                     <div className="flex-1 bg-surface2 border border-line rounded-xl p-3">
                       <div className="flex items-center gap-2 mb-1">
                         <span className="font-semibold text-sm">{m.role}</span>

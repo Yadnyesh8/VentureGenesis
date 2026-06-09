@@ -7,7 +7,6 @@ from sqlalchemy.orm import Session
 from app.agents.ml.failure_prediction import predict_failure
 from app.agents.ml.revenue_forecast import forecast_revenue
 from app.agents.ml.funding_readiness import predict_funding
-from app.agents.ml.churn import predict_churn
 from app.agents.ml.sentiment import analyze_sentiment
 from app.agents.ml.health import compute_health
 from app.agents.intelligence import agents as intel
@@ -73,19 +72,17 @@ def api_funding(ref: StartupRef, db: Session = Depends(get_db)):
 
 @router.post("/customer")
 def api_customer(ref: StartupRef, db: Session = Depends(get_db)):
-    """Churn risk + sentiment analysis combined."""
+    """Customer sentiment analysis (FinBERT)."""
     m = resolve_metrics(ref, db)
-    churn = predict_churn(m)
     sentiment = analyze_sentiment(ref.customer_reviews)
-    return {"ok": True, "data": {"churn": churn, "sentiment": sentiment}}
+    return {"ok": True, "data": {"sentiment": sentiment}}
 
 
 @router.post("/health")
 def api_health(ref: StartupRef, db: Session = Depends(get_db)):
     m = resolve_metrics(ref, db)
     funding = predict_funding(m)
-    churn = predict_churn(m)
-    result = compute_health(m, funding["funding_probability"], churn["churn_risk"])
+    result = compute_health(m, funding["funding_probability"])
     _persist_prediction(db, ref.startup_id, health_score=result["health_score"])
     return {"ok": True, "data": result}
 
@@ -112,9 +109,35 @@ def api_strategy(ref: StartupRef, db: Session = Depends(get_db)):
 
 @router.post("/simulate")
 def api_simulate(req: SimulateRequest, db: Session = Depends(get_db)):
+    """Scenario what-if engine: apply the scenario to the digital twin, then RE-RUN the
+    trained failure model + health/funding on the simulated company to show predicted impact."""
     m = resolve_metrics(req, db)
     state = digital_twin.build_state(m)
     after = digital_twin.apply_scenario(state, req.scenario)
+
+    sim_m = digital_twin.apply_scenario_to_metrics(m, req.scenario)
+
+    def predicted(metrics):
+        funding = predict_funding(metrics)
+        failure = predict_failure(metrics)
+        health = compute_health(metrics, funding["funding_probability"])
+        return {
+            "failure_12m": failure["failure_12m"],
+            "health_score": health["health_score"],
+            "funding_probability": funding["funding_probability"],
+        }
+
+    base_pred = predicted(m)
+    sim_pred = predicted(sim_m)
+    impact = {
+        k: {
+            "before": base_pred[k],
+            "after": sim_pred[k],
+            "change": round(sim_pred[k] - base_pred[k], 3),
+        }
+        for k in base_pred
+    }
+
     return {
         "ok": True,
         "data": {
@@ -122,6 +145,7 @@ def api_simulate(req: SimulateRequest, db: Session = Depends(get_db)):
             "before": state,
             "after": after,
             "diff": digital_twin.diff(state, after),
+            "predicted_impact": impact,
         },
     }
 

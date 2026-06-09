@@ -1,8 +1,8 @@
 """Board of Directors Agent (Phase 8).
 
 Aggregates ALL agent outputs into a single executive decision + full report.
-Orchestrates the full analysis pipeline, then has the Chairperson (LLM or rule-based)
-synthesize a board_decision and report.
+Orchestrates the full analysis pipeline, then has the Chairperson (live LLM) synthesize a
+board_decision and report. No mock/heuristic substitute.
 """
 from __future__ import annotations
 
@@ -14,7 +14,6 @@ from app.agents.startup_understanding import understand
 from app.agents.ml.failure_prediction import predict_failure
 from app.agents.ml.revenue_forecast import forecast_revenue
 from app.agents.ml.funding_readiness import predict_funding
-from app.agents.ml.churn import predict_churn
 from app.agents.ml.sentiment import analyze_sentiment
 from app.agents.ml.health import compute_health
 from app.agents.intelligence import agents as intel
@@ -37,12 +36,10 @@ def gather_all(metrics: dict[str, Any], reviews: list[str] | None = None,
     safe("failure", lambda: predict_failure(metrics))
     safe("forecast", lambda: forecast_revenue(metrics, revenue_series))
     safe("funding", lambda: predict_funding(metrics))
-    safe("churn", lambda: predict_churn(metrics))
     safe("sentiment", lambda: analyze_sentiment(reviews))
 
     funding_prob = out.get("funding", {}).get("funding_probability")
-    churn_risk = out.get("churn", {}).get("churn_risk")
-    safe("health", lambda: compute_health(metrics, funding_prob, churn_risk))
+    safe("health", lambda: compute_health(metrics, funding_prob))
 
     ctx = {**metrics, **out.get("understanding", {})}
     safe("root_cause", lambda: intel.root_cause(out.get("failure", {}).get("feature_importance", []), metrics))
@@ -65,7 +62,6 @@ def _compact(aggregate: dict[str, Any]) -> dict[str, Any]:
         "failure_12m": a.get("failure", {}).get("failure_12m"),
         "funding_probability": a.get("funding", {}).get("funding_probability"),
         "forecast_12m": a.get("forecast", {}).get("forecast_12m"),
-        "churn_risk": a.get("churn", {}).get("churn_risk"),
         "sentiment": a.get("sentiment", {}).get("sentiment"),
         "root_causes": [c.get("cause") for c in a.get("root_cause", {}).get("causes", [])][:4],
         "founder_actions": [r.get("action") for r in a.get("founder_strategy", {}).get("recommendations", [])][:4],

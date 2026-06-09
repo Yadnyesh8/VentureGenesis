@@ -1,5 +1,4 @@
 {
-  "mock_mode": false,
   "llm": {
     "provider": "openrouter",
     "model": "google/gemma-2-9b-it:free",

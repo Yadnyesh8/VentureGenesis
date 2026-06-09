@@ -1,0 +1,1842 @@
+[
+  {
+    "product_name": "Kilo Code",
+    "tagline": "The open-source agentic engineering platform",
+    "description": "Build, ship, and iterate faster with the most popular open-source AI coding agent. 3M+ Kilo Coders. 40T+ tokens processed.\nFollow us: kilo.ai/social",
+    "reviews_rating": "4.96",
+    "reviews_count": "45",
+    "featured_comment": "What stood out to me is the developer experience — it feels fast to get value without a bunch of setup friction.Clear, focused UX that stays out of the way while codingHelpful suggestions for refactors and “what’s the next step” momentsCustomization is there when you need it, but the defaults are sensibleOutput quality is consistently usable (less time fighting the assistant)Overall, it’s the kind of tool you can keep open all day and trust as a teammate.",
+    "topics": "Productivity, Artificial Intelligence, Business, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/kilocode"
+  },
+  {
+    "product_name": "StoreClaw",
+    "tagline": "Grow your store profits with agents that know how to sell",
+    "description": "StoreClaw is the first AI commerce platform with agents that know how to sell, so you can make more money with less effort and less stress. Connect StoreClaw to your existing store and it will study your numbers, current sales figures, and growth trajectory, and then offer proactive suggestions that it can execute on your behalf — once you give it your approval. Ask StoreClaw how your business is doing any time, anywhere. Sell more with less stress: StoreClaw.",
+    "reviews_rating": "4.77",
+    "reviews_count": "0",
+    "featured_comment": "",
+    "topics": "Artificial Intelligence, E-Commerce, Marketing automation, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/storeclaw"
+  },
+  {
+    "product_name": "PollyReach",
+    "tagline": "Give your agent a real number and voice to make calls.",
+    "description": "Most AI phone tools are built for enterprises — APIs, workflows, sales automation. PollyReach is built for you. Give your AI a real phone number. Say \"book me a table for 7pm\" — it finds the number, makes the call, handles the conversation, and reports back with a summary, recording & transcript. It also answers your phone 24/7 and screens spam. Works in 50+ languages.",
+    "reviews_rating": "5",
+    "reviews_count": "0",
+    "featured_comment": "",
+    "topics": "API, Artificial Intelligence, Audio, Productivity, Virtual Assistants, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/pollyreach"
+  },
+  {
+    "product_name": "Brew",
+    "tagline": "Like Claude design for email marketing",
+    "description": "Brew is the fastest way to design and send beautiful, on-brand emails and automations that render perfectly in every inbox. Describe a campaign or a multi-step automation in plain English, and Brew builds the whole thing in seconds: copy, design, audience, and logic. Works with any AI agent: paste our docs into OpenClaw, Viktor, Claude, or Lovable. No lock-in: send from Brew or export to your ESP. Free to get started.",
+    "reviews_rating": "4.91",
+    "reviews_count": "3",
+    "featured_comment": "We looked at +10 competitors but no one has managed to build agentic workflows like Brew at this design level.",
+    "topics": "Design Tools, Email Marketing, Artificial Intelligence, Website Builder",
+    "url": "https://www.producthunt.com/products/brew-5"
+  },
+  {
+    "product_name": "Unabyss",
+    "tagline": "MCP-native self-updating context layer for your AI",
+    "description": "Set it up once and never re-explain yourself to AI again. Connect the apps you use daily - Unabyss will extract, structure, and update your context automatically. Share it with any AI tool via MCP, with granular control over what each tool can see.",
+    "reviews_rating": "4.78",
+    "reviews_count": "0",
+    "featured_comment": "",
+    "topics": "API, Artificial Intelligence, Audio, Productivity, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/unabyss"
+  },
+  {
+    "product_name": "RankSpot",
+    "tagline": "AI SEO Blog driven by deep competitor intelligence",
+    "description": "RankSpot is your fully automated AI agent that researches, writes, and publishes SEO articles to your blog daily - getting you cited in AI answers and ranked on Google.",
+    "reviews_rating": "5",
+    "reviews_count": "2",
+    "featured_comment": "The competitor intelligence angle is what stands out. Most AI writing tools focus on generating text, but RankSpot focuses on the strategy layer, understanding what's already ranking and finding gaps. That's more useful than just producing more content.",
+    "topics": "API, Artificial Intelligence, Audio, Marketing, SEO, YC Application, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/rankspot"
+  },
+  {
+    "product_name": "OpenHuman",
+    "tagline": "An open source AI harness built with the human in mind",
+    "description": "90% of people who try AI agents give up. Three reasons: memory that resets every session, your data sitting in someone else's cloud and a terminal just to get started. Real blockers. OpenHuman fixes all of it. Local-first, privacy-first. It remembers everything about you and actually gets smarter the more you use it. Every feature lives in one simple interface. Fully open source. One-click setup. P.S. The product is in beta, so expect bugs, but we're building and shipping fast.",
+    "reviews_rating": "0",
+    "reviews_count": "0",
+    "featured_comment": "",
+    "topics": "API, Artificial Intelligence, Audio, Productivity, Open Source, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/openhuman"
+  },
+  {
+    "product_name": "Velo",
+    "tagline": "Share anything as video messages",
+    "description": "Velo turns your raw screen recordings into watch-worthy, ready-to-share videos with AI. In seconds.",
+    "reviews_rating": "5",
+    "reviews_count": "0",
+    "featured_comment": "",
+    "topics": "Sales, Artificial Intelligence, CRM, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/velo-4"
+  },
+  {
+    "product_name": "own.page",
+    "tagline": "Make your own personal website with bento tiles",
+    "description": "own.page helps creators and founders build a beautiful link-in-bio that feels alive - more like a personal website than just a list of links. Build a page in under a minute, customize it your way, add powerful widgets and integrations, understand your visitors, and grow your audience from one place.",
+    "reviews_rating": "4.75",
+    "reviews_count": "0",
+    "featured_comment": "",
+    "topics": "Productivity, Analytics, Developer Tools, Social Network, Social Media, Website Builder, Design Tools, Artificial Intelligence",
+    "url": "https://www.producthunt.com/products/own-page"
+  },
+  {
+    "product_name": "Framer",
+    "tagline": "Design and ship your dream site with zero code",
+    "description": "A no-code platform to create responsive webpages with text, links, media, and incredible animations.",
+    "reviews_rating": "4.79",
+    "reviews_count": "254",
+    "featured_comment": "I considered Webflow, WordPress, and simply hard-coding my landing pages from scratch using Next.js and Tailwind CSS. I chose Framer over custom coding because it dramatically reduces my time-to-market. I chose it over Webflow because Framer's interface feels much more like a modern design tool (similar to Figma), making the transition from design to a live, fast-performing site completely seamless without a steep learning curve.",
+    "topics": "Developer Tools, Artificial Intelligence, Security, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/framer"
+  },
+  {
+    "product_name": "Spellar AI",
+    "tagline": "Intelligent Meeting Companion",
+    "description": "Elevate your online meetings with a native assistant that provides real-time tips, auto-generated summaries, and task extraction—without awkward bot joiners.\r\nFeaturing support for 100+ languages and seamless integrations with tools like Notion, Docs, and Jira, Spellar fits perfectly into your existing workflow. Powered by top-tier models (GPT, Gemini, Claude, Perplexity), it offers personalized configurations to maximize your productivity.",
+    "reviews_rating": "4.81",
+    "reviews_count": "23",
+    "featured_comment": "Spellar AI became my magic wand, no less! It generates perfect meeting summaries with action points and a good structure, so I can share them with my team after the call. It isn't a problem anymore to remember what was happening during a meeting a week ago and track progress on 1on1s for example, because I can just export my summaries to Notion and to see what has been discussed. Moreover, the English improvement feature is just a chef's kiss. I don't have much time to get English lessons in person, but Spellar listens and corrects my mistakes, suggests new vocab to learn and use and makes my speech just better and more native. Guys did an incredible job on the tech and design side of things and it's just very pleasant to use!",
+    "topics": "Productivity, Artificial Intelligence, Business, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/spellar"
+  },
+  {
+    "product_name": "SocLeads",
+    "tagline": "Lead Generation from Social Media and Maps",
+    "description": "🚀 Scrape Emails from Instagram, Facebook, Linkedin, and Google Maps by keyword or #hashtag. Maintain a Bounce Rate Under 3%. No code, no plugins, no cache needed.",
+    "reviews_rating": "5",
+    "reviews_count": "8",
+    "featured_comment": "SocLeads is better than our previous scraper because it covers more platforms (Linkedin, Google Maps, Social Media, YouTube) and it has email verification built-in. We primarily use SocLeads on Google Maps and Facebook, and it has been extremely useful specially on scraping emails on Facebook Groups! Highly-recommended for lead generation! 🚀",
+    "topics": "Sales, Artificial Intelligence, CRM, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/socleads"
+  },
+  {
+    "product_name": "Naptick AI",
+    "tagline": "Al sleep companion that helps fall asleep without struggle",
+    "description": "Naptick is a smart bedside AI sleep companion designed for founders, professionals, light sleepers, and anyone struggling with nighttime stress or doomscrolling. It combines circadian light therapy, 1000+ adaptive soundscapes, room condition intelligence, app-locking, and an on-device AI sleep coach to help users fall asleep faster and wake up refreshed. Unlike passive sleep trackers, Naptick is built phone-free by design and actively helps improve sleep before the night begins.",
+    "reviews_rating": "4.9",
+    "reviews_count": "0",
+    "featured_comment": "",
+    "topics": "Productivity, Artificial Intelligence, Business, Health & Fitness, Hardware, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/naptick-ai-sleep-companion"
+  },
+  {
+    "product_name": "mailX by mailwarm",
+    "tagline": "Email deliverability toolkit for humans and AI agents",
+    "description": "Your emails go to spam. mailX shows you why, and how to fix it in seconds with clear answers and exact steps. Built for humans and AI agents. API and MCP ready.",
+    "reviews_rating": "4.93",
+    "reviews_count": "4",
+    "featured_comment": "Compared to other tools, it feels clearer, more practical, and easier to act on. The fact that it’s built by mailwarm, a YC S20 company, also makes it feel more credible and trustworthy than most alternatives.",
+    "topics": "Sales, Artificial Intelligence, CRM, Email, Email Marketing, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/mailx-by-mailwarm-yc-s20"
+  },
+  {
+    "product_name": "Postiz",
+    "tagline": "Your ultimate AI social media scheduling tool",
+    "description": "Streamline your social media with Postiz. Schedule posts, analyze performance, and manage all accounts in one place.",
+    "reviews_rating": "4.93",
+    "reviews_count": "10",
+    "featured_comment": "I’m genuinely impressed with Postiz v2. The MCP feature alone is a game-changer, and the overall functionality is rich and well thought out. It clearly has a strong foundation.\nThat said, I had trouble deploying it on my Coolify server — it didn’t work out of the box, and I had to switch to Docker, which solved the issue.\nI really hope future versions will include full support for white-labeling, team and client management, and the ability to build a SaaS on top — even as paid add-ons. That would take it to the next level.\nGreat work so far — excited to see how it grows.",
+    "topics": "Developer Tools, Artificial Intelligence, Security, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/postiz"
+  },
+  {
+    "product_name": "Shadow",
+    "tagline": "Real-time AI for smarter calls and faster follow-ups",
+    "description": "Shadow is a real-time AI wingman for high-stakes calls.\nIt helps you ask better questions, never miss key details, and turn every conversation into clear next steps—while the call is still happening.",
+    "reviews_rating": "4.95",
+    "reviews_count": "0",
+    "featured_comment": "",
+    "topics": "Productivity, Analytics, Developer Tools, Design Tools, Website Builder, Artificial Intelligence",
+    "url": "https://www.producthunt.com/products/shadow-6"
+  },
+  {
+    "product_name": "Pancake",
+    "tagline": "OpenClaw in Slack that makes your company autonomous",
+    "description": "Every other AI product is a tool that makes you more productive. A copilot. An assistant. A coworker. Something you use. Pancake makes your company autonomous. Agents with roles, goals, and a heartbeat working while you sleep. You set direction, approve the irreversible, the rest runs. Prepare yourself to be prompted by Pancake.",
+    "reviews_rating": "4",
+    "reviews_count": "3",
+    "featured_comment": "Slack as the main interfaceTrustable teamIt's not the same for the alternative led by unknown solo founders. These guys have grounding in AI observability and top xp",
+    "topics": "Sales, Artificial Intelligence, CRM, Slack, Maker Tools, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/pancake-6"
+  },
+  {
+    "product_name": "Tycoon AI",
+    "tagline": "Run one-person companies entirely with AI agents",
+    "description": "Tycoon.us enables you to run an entire company with AI agents, powered by Astra, an AI CEO, and 10+ ready-to-use AI agents you can choose from, from CMO who manages X to CTO who codes. Astra also manages Claude Code/Hermes. Give Astra a KPI or project, like “10x traffic this month,” or “launch onboarding flows.” She creates a plan, assigns agents, tracks progress, and asks for approval when needed. Every agent is out of box, so no setup, coding, or API keys required.",
+    "reviews_rating": "5",
+    "reviews_count": "0",
+    "featured_comment": "",
+    "topics": "Artificial Intelligence, Audio, Marketing, Tech, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/tycoon-us"
+  },
+  {
+    "product_name": "Brila",
+    "tagline": "One-page websites from real Google Maps reviews",
+    "description": "Website generators give you a template with made-up copy. You rewrite it for hours – still sounds generic. Brila does content first. It reads your Google Maps reviews, finds why customers actually choose you using Jobs to Be Done, and builds a one-page site from real patterns, real wording, real photos. When a business has enough reviews, the results often surprise even the owners. Not a single prompt – a serious AI system behind every website. Free plan gives you a fully generated site.",
+    "reviews_rating": "4.76",
+    "reviews_count": "0",
+    "featured_comment": "",
+    "topics": "Sales, Artificial Intelligence, CRM, Website Builder, Alpha, Design Tools",
+    "url": "https://www.producthunt.com/products/brila-2"
+  },
+  {
+    "product_name": "Fathom",
+    "tagline": "AI notetaking that is out of this world.",
+    "description": "Fathom captures your meetings your way — bot or bot-free, on any call. Ask questions across your entire meeting history and get instant, cited answers. Connect your intelligence to Claude, ChatGPT, your CRM, and more. Desktop, mobile, and in-person.\n\nThe real value of meetings isn't the notes. It's the knowledge inside them.\n\n#1 AI Notetaker on G2. Works with Zoom, Meet, and Teams.",
+    "reviews_rating": "5",
+    "reviews_count": "309",
+    "featured_comment": "It's superior to Gemini, our default note taker. Fathom records the audio, video and transcribes. The built in AI knows how to extract critical information and I can query Fathom to get immediate data from the numerous meetings I attend. And then intelligently make a clip out of a 2 hour meeting that pinpoints this information with audio and video.",
+    "topics": "Developer Tools, Artificial Intelligence, Security, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/fathom"
+  },
+  {
+    "product_name": "ProdShort",
+    "tagline": "Turn meetings into ready-to-post shorts and posts",
+    "description": "Founders fail at content because it's time consuming and AI just still feels fake. Prodshort fixes that. We don’t generate content. We capture it. Everything you say in meetings is already valuable. We cut it, refine it, and turn it into ready-to-post shorts, Linkedin, Twitter... Automatically. No scripts. No fake voice. No overthinking. Just you, turned into content.",
+    "reviews_rating": "4.83",
+    "reviews_count": "0",
+    "featured_comment": "",
+    "topics": "Productivity, Artificial Intelligence, Audio, Social Media, Meetings, Alpha, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/prodshort"
+  },
+  {
+    "product_name": "Plurai",
+    "tagline": "Vibe-train evals and guardrails tailored to your use case",
+    "description": "Vibe training for AI agent reliability. Describe what your agent should and should not do — Plurai generates training data, validates it, and deploys a custom model in minutes. It feels like vibe coding, but for evaluation and guardrails. No labeled data. No annotation pipeline. No prompt engineering. Under the hood, small language models deliver sub 100ms latency, 8x lower cost than GPT as judge, and over 43% fewer failures. Always on, not sampled. Built on published research (BARRED).",
+    "reviews_rating": "4.98",
+    "reviews_count": "1",
+    "featured_comment": "Looked at LangSmith and Arize for observability — both solid, but they tell you what happened, not whether it was okay. That's a different problem. Also evaluated LlamaGuard and a homegrown prompt-based judge. LlamaGuard's taxonomy was too rigid for our use case. The prompt judge was unpredictable — good on simple cases, unreliable on anything nuanced. Building something custom would have taken months and a dataset we didn't have.Plurai handled the dataset problem. That was the blocker everywhere else.",
+    "topics": "Open Source, Software Engineering, Developer Tools, API, Artificial Intelligence, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/plurai"
+  },
+  {
+    "product_name": "Clera",
+    "tagline": "An AI agent matching candidates to the right roles.",
+    "description": "Meet Clera: your AI talent agent for finding roles you actually want. Clera gets to know what you’re looking for over iMessage and WhatsApp. It surfaces roles you’d actually be excited by and makes direct intros to relevant companies. You hear about good opportunities without spending hours searching and applying.",
+    "reviews_rating": "4.86",
+    "reviews_count": "1",
+    "featured_comment": "Recruiters, Jack &amp; Jill",
+    "topics": "Notes, Text Editors, GitHub, Hiring, iMessage Apps, Tech, Design Tools, Website Builder, Artificial Intelligence",
+    "url": "https://www.producthunt.com/products/clera"
+  },
+  {
+    "product_name": "Dune",
+    "tagline": "Context-aware Mac keypad to automate workflows + meetings",
+    "description": "Dune is a Context-aware Keypad for Mac that sits next to your keyboard and changes what its three keys do in real time based on the app running in the foreground. Built for developers who live in GitHub, VS Code, Claude, Openclaw, and for anyone running AI agents or in back to back meetings on Zoom, Teams, and Google Meet.",
+    "reviews_rating": "4.94",
+    "reviews_count": "2",
+    "featured_comment": "Dune is a clever take on workflow automation-making a physical keypad context-aware instead of forcing users to remember shortcuts or juggle tools is a genuinely useful idea. The real value shows up for people constantly switching between coding, AI tools, and meetings, where those small frictions add up quickly. That said, the utility will depend heavily on how well the context switching works in practice and how customizable the actions are-if it’s too rigid, power users might hit limits fast. If they get that balance right, this could become one of those subtle but high-leverage tools that quietly improves daily productivity.",
+    "topics": "Productivity, Analytics, Developer Tools, Design Tools, Website Builder, Artificial Intelligence",
+    "url": "https://www.producthunt.com/products/dune-4"
+  },
+  {
+    "product_name": "NovaVoice",
+    "tagline": "Smart dictation, AI assistant, + app control via voice",
+    "description": "NovaVoice is Your Voice OS that lets you work at the speed of thought. Typing is slow. Switching apps breaks focus. Formatting wastes time. Speak at 200+ wpm, get context-aware text. Hit hotkey, ask anything without googling. Execute actions without switching apps (just with voice commands). NovaVoice remembers contacts, addresses, links. NovaVoice writes, answers, and acts across your desktop.",
+    "reviews_rating": "4.7",
+    "reviews_count": "0",
+    "featured_comment": "",
+    "topics": "API, Artificial Intelligence, Audio, Productivity, Writing, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/novavoice"
+  },
+  {
+    "product_name": "Figma for Agents",
+    "tagline": "Design with AI agents, connected to your design system",
+    "description": "AI-generated designs break brand standards because agents can't see your design system. Figma's use_figma MCP tool changes that. For product teams bridging design and code with AI agents.",
+    "reviews_rating": "4.86",
+    "reviews_count": "0",
+    "featured_comment": "",
+    "topics": "API, Artificial Intelligence, Audio, Design Tools, Developer Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/figma-for-agents"
+  },
+  {
+    "product_name": "Open Wearables",
+    "tagline": "Open infrastructure for wearable-powered health products.",
+    "description": "Build personalized health products with one API for every wearable. Access wearable data, open health scoring algorithms, and structured context your AI can reason with. Self-hosted, open-source, MIT licensed.",
+    "reviews_rating": "5",
+    "reviews_count": "0",
+    "featured_comment": "",
+    "topics": "Productivity, Analytics, Developer Tools, Open Source, Wearables, Design Tools, Website Builder, Artificial Intelligence",
+    "url": "https://www.producthunt.com/products/open-wearables"
+  },
+  {
+    "product_name": "Claude by Anthropic",
+    "tagline": "A family of foundational AI models",
+    "description": "We're an AI research company that builds reliable, interpretable, and steerable AI systems. Our first product is Claude, an AI assistant for tasks at any scale.",
+    "reviews_rating": "4.86",
+    "reviews_count": "832",
+    "featured_comment": "In my opinion, Claude Code has the strongest “vibe” for modern technical founders working deeply with AI.There are many strong alternatives — Cursor, Codex, and other AI-native tools — and some are very close technically. But Anthropic keeps shipping system-level improvements and thoughtful UX decisions that make Claude feel consistently ahead.The product feels opinionated in the right way: less focused on flashy demos, more focused on real workflows, context handling, and long-term productivity. That combination makes it my preferred tool today.",
+    "topics": "Artificial Intelligence, Audio, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/claude"
+  },
+  {
+    "product_name": "Offsite",
+    "tagline": "Build teams of humans and agents, watch them work.",
+    "description": "Offsite is a new paradigm for work: bring your humans and agents into one team. Organize them in a live org chart and watch collaboration unfold in real time. No more agents siloed in tabs or terminals, they work alongside humans, talking and coordinating as a system. See every conversation, approve real-world actions, and run your team with full visibility and control. Out-of-the-box integrations with agents you already use like Claude Code, OpenClaw, and any MCP-compatible agent.",
+    "reviews_rating": "4.74",
+    "reviews_count": "0",
+    "featured_comment": "",
+    "topics": "Open Source, Software Engineering, Developer Tools, Web App, Artificial Intelligence, Alpha, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/offsite-2"
+  },
+  {
+    "product_name": "RankAI",
+    "tagline": "RankAI autonomously gets you buyers from Google &amp; AI Search",
+    "description": "RankAI is the first SEO/GEO agent that truly works. It handles everything autonomously to drive you millions of visitors from Google & AI Search like ChatGPT. Drop in your website, and RankAI handles the rest: it finds high-intent queries your customers search on Google and ChatGPT, publishes optimized pages, tracks performance, and recreate pages iteratively until they get you visitors.",
+    "reviews_rating": "4.42",
+    "reviews_count": "0",
+    "featured_comment": "",
+    "topics": "Notes, Text Editors, GitHub, Marketing, SEO, Search, Design Tools, Website Builder, Artificial Intelligence",
+    "url": "https://www.producthunt.com/products/rankai-2"
+  },
+  {
+    "product_name": "Claude Opus 4.7",
+    "tagline": "Claude’s most capable model for reasoning and agentic coding",
+    "description": "Claude Opus 4.7 is Anthropic’s most advanced generally available AI model, built for complex reasoning and agentic coding. It handles long-running tasks, follows instructions precisely, verifies outputs, and delivers high-quality results across coding, research, and workflows.",
+    "reviews_rating": "4.98",
+    "reviews_count": "5",
+    "featured_comment": "Built findloc.ai end-to-end with Claude Opus 4.7 over a week\\nsprint. What made it different from GPT-4o and Gemini in my\\nside-by-side testing: it pushes back. When my intuition was\\nwrong (I swore the map radius rings looked too big), it\\nmeasured them against MapLibre's scale bar to prove me wrong\\ninstead of just agreeing. That \\",
+    "topics": "Artificial Intelligence, Audio, API, Development, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/claude-opus-4-7"
+  },
+  {
+    "product_name": "Claude Code Desktop App Redesigned",
+    "tagline": "Run parallel coding agents from one desktop workspace",
+    "description": "Claude Code's desktop app is redesigned for parallel agentic coding. Run sessions across multiple repos, review diffs, edit files, and ship without leaving the app. Built for developers running Claude Code on Pro, Max, Team, or Enterprise.",
+    "reviews_rating": "5",
+    "reviews_count": "0",
+    "featured_comment": "",
+    "topics": "Productivity, Analytics, Developer Tools, Software Engineering, Artificial Intelligence, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/claude-redesigned"
+  },
+  {
+    "product_name": "Producthunt",
+    "tagline": "The place to discover your next favorite thing",
+    "description": "Founded in 2013 as a tiny side project, Product Hunt has become the place for makers and companies to launch their latest app, gadget, or physical products to the world. It's a global community of friendly folks sharing and discussing the latest in tech.",
+    "reviews_rating": "5",
+    "reviews_count": "125",
+    "featured_comment": "Product Hunt is far more than a discovery platform; it's the daily heartbeat of the startup ecosystem. It has successfully democratized the product launch, creating a meritocratic stage where an indie maker from anywhere can capture the world's attention alongside a venture-backed giant.\n\nIts true genius lies in the powerful feedback loop it creates between builders and users. The comment section of a launch isn't just for praise; it's a real-time, public forum for validation, feature requests, and market research. For anyone who wants a finger on the pulse of innovation, PH isn't just a website—it's essential daily intelligence.",
+    "topics": "Notes, Text Editors, GitHub, Design Tools, Website Builder, Artificial Intelligence",
+    "url": "https://www.producthunt.com/products/producthunt"
+  },
+  {
+    "product_name": "Stitch 2.0 by Google",
+    "tagline": "Vibe design beautiful production-ready UI in seconds",
+    "description": "Meet Stitch, your AI-native vibe design partner. Create, iterate, and collaborate on high-fidelity UI using natural language, voice, and context-aware agents. Design across images, code, and text in one canvas, generate instant prototypes, and maintain consistency with built-in design systems and DESIGN.md. From idea to interface in seconds — faster, smarter, and more intuitive than ever.",
+    "reviews_rating": "4.17",
+    "reviews_count": "5",
+    "featured_comment": "It's just fast to design on Stitch versus Figma.",
+    "topics": "Developer Tools, Artificial Intelligence, Security, Design Tools, Prototyping, Website Builder",
+    "url": "https://www.producthunt.com/products/stitch-2-0-by-google-2"
+  },
+  {
+    "product_name": "Vozo AI — Video localization",
+    "tagline": "Translate every layer: voice, subtitles &amp; on-screen text",
+    "description": "Vozo AI delivers complete video translation — across voice, subtitles, lip-sync, and on-screen text.\nUnlike traditional dubbing tools, Vozo translates every layer while keeping speech natural, lips perfectly synced, and visuals consistent. Turn one video into multilingual versions that look and feel native.",
+    "reviews_rating": "5",
+    "reviews_count": "15",
+    "featured_comment": "I also considered the speed and cost. Compared with more manual workflows, this feels much faster and more efficient, especially if you need to localize videos at scale.",
+    "topics": "Sales, Artificial Intelligence, CRM, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/vozo"
+  },
+  {
+    "product_name": "Chronicle",
+    "tagline": "Stunning presentations with AI. No design skills required.",
+    "description": "Chronicle combines AI generation with powerful editing to create stunning presentations. Start from a prompt, notes, or raw idea and generate beautiful, on-brand slides in minutes. Edit with full control and export to PPT, PDF, or any format. No design skills required.",
+    "reviews_rating": "4.47",
+    "reviews_count": "20",
+    "featured_comment": "The product shows tremendous potential. I really like the concept of starting with a few notes, refining them into a structured narrative, and then moving seamlessly into visual presentation. That said, there are some key areas that still need refinement. For example, I expected an automatic layout optimization feature to clean up the design after manually adding individual widgets. Unfortunately, viewing the presentation on my iPhone 13 was a poor experience—glitches and a lack of smooth performance made it frustrating to use. Also, requiring users to log in just to share their work feels unnecessarily restrictive.",
+    "topics": "Notes, Text Editors, GitHub, Design Tools, Website Builder, Artificial Intelligence",
+    "url": "https://www.producthunt.com/products/chronicle-6"
+  },
+  {
+    "product_name": "Tobira.ai",
+    "tagline": "A network where AI agents find deals for their humans",
+    "description": "🤖 Your AI agent gets a free public address in a network of other agents. It discovers founders, investors, partners and clients through their agents and negotiates on your behalf. 🔒You control what's shared: anonymous or public, your choice. No contact details are shared until both sides approve. ⚡ Works best with 🦞 OpenClaw and Claude Cowork. 🆓 Claim your @handle at tobira.ai before they're gone.",
+    "reviews_rating": "4.91",
+    "reviews_count": "1",
+    "featured_comment": "Really interesting concept -- having AI agents discover and negotiate deals on your behalf feels like the next evolution of online shopping. The privacy controls (anonymous or public) are a nice touch. Haven't used it extensively yet but the idea is solid and the execution looks clean. Excited to see where this goes.",
+    "topics": "Open Source, Software Engineering, Developer Tools, Productivity, Artificial Intelligence, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/tobira-ai"
+  },
+  {
+    "product_name": "Agentplace",
+    "tagline": "Build, work, improve Claude Code–style agents in one place",
+    "description": "We started Agentplace as a builder for AI websites.\nNow we're building something bigger. Agentplace lets you create specialized AI agents for real tasks and workflows, like AI teammates that help you get work done.\nBuild, test, and deploy agents fast, and improve them as you go.",
+    "reviews_rating": "4.67",
+    "reviews_count": "2",
+    "featured_comment": "I tried AgentPlace and was amazed at how easy it is to build a website using just text and AI. The process is incredibly intuitive, and the results are impressive. This truly feels like the future of the internet",
+    "topics": "Productivity, Analytics, Developer Tools, Design Tools, Website Builder, Artificial Intelligence",
+    "url": "https://www.producthunt.com/products/agentplace"
+  },
+  {
+    "product_name": "Notte",
+    "tagline": "Build and deploy reliable browser agents at scale",
+    "description": "One platform to build and deploy enterprise-grade browser agents. Managed infrastructure (sessions, proxies, identities, vaults) via a single API. Hybrid architecture combines deterministic scripts with AI reasoning for production reliability.",
+    "reviews_rating": "5",
+    "reviews_count": "0",
+    "featured_comment": "",
+    "topics": "Developer Tools, Artificial Intelligence, Security, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/notte"
+  },
+  {
+    "product_name": "Littlebird",
+    "tagline": "The AI assistant that already knows your work",
+    "description": "Littlebird is an AI assistant that already knows your work. Every answer, draft, and plan is more relevant because it has the context behind it. It sees what's on your screen and transcribes your meetings, building a private memory of your projects and priorities. Littlebird connects the dots across all your apps and conversations, giving you answers grounded in your actual work. No integrations required. If you've seen it on your desktop, Littlebird has too. Just ask.",
+    "reviews_rating": "4.65",
+    "reviews_count": "8",
+    "featured_comment": "I’ve tried a lot of productivity tools, and honestly, most of them just added more noise. Too complicated, too rigid, or clearly not built for how real people, especially those of us with ADHD, actually function.What stood out about Littlebird AI is that it feels different. It’s simple without being basic, structured without being overwhelming, and actually helps me start instead of just reminding me what I haven’t done.I chose Littlebird because it meets me where I am. On the messy days, the low-energy days, the “my brain won’t cooperate” days, it still works with me instead of against me. That kind of support is rare, and it’s exactly what I needed.",
+    "topics": "Productivity, Artificial Intelligence, Audio, Meetings, Virtual Assistants, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/littlebird"
+  },
+  {
+    "product_name": "MuleRun",
+    "tagline": "Raise an AI that actually learns how you work",
+    "description": "MuleRun is the world's first self-evolving personal AI — it learns your work habits, decision patterns, and preferences, then keeps getting sharper over time. It runs 24/7 on your dedicated cloud VM, works while you're offline, and proactively prepares what you need before you ask.No coding. No setup. Just raise your AI and watch it evolve.",
+    "reviews_rating": "4.74",
+    "reviews_count": "0",
+    "featured_comment": "",
+    "topics": "Open Source, Software Engineering, Developer Tools, Productivity, Artificial Intelligence, E-Commerce, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/mulerun"
+  },
+  {
+    "product_name": "Naoma AI Demo Agent",
+    "tagline": "The first video agent that runs conversational product demos",
+    "description": "Turn “Book a demo” into “Get an AI demo now.” Naoma is the first video AI demo agent for B2B SaaS that delivers live, personalized demos in-browser 24/7 in any language. It clicks through real product flows, answers questions, qualifies prospects, and routes them to CRM, sales calendar, or checkout. \n\nChoose the avatar style: human-like, branded mascot, or a more formal look to engage your prospects.",
+    "reviews_rating": "4.93",
+    "reviews_count": "5",
+    "featured_comment": "That was the first AI video agent that worked from the day I saw the demo.",
+    "topics": "Sales, Artificial Intelligence, CRM, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/naoma"
+  },
+  {
+    "product_name": "InsForge",
+    "tagline": "The agent-native cloud infrastructure platform",
+    "description": "InsForge is the agent-native alternative to AWS.",
+    "reviews_rating": "4.98",
+    "reviews_count": "0",
+    "featured_comment": "",
+    "topics": "Open Source, Software Engineering, Developer Tools, GitHub, Design Tools, Website Builder, Artificial Intelligence",
+    "url": "https://www.producthunt.com/products/insforge-alpha"
+  },
+  {
+    "product_name": "Lightfield",
+    "tagline": "AI-native CRM that builds itself and does work for you",
+    "description": "Lightfield reads your emails, meetings, and calls to build your CRM automatically. No manual data entry — ever. Connect your inbox, upload a spreadsheet or CSV from your old CRM, and everything is recreated in less than five minutes. Ask it anything in plain English: who needs follow-up, what objections keep coming up, how has our ICP shifted — answered from your actual conversations. Then put it to work to draft follow-ups, create board decks, build proposals, and more.",
+    "reviews_rating": "4.75",
+    "reviews_count": "0",
+    "featured_comment": "Lightfield automatically captures a complete picture of what our prospects and leads are looking for. We don't just use Lightfield for salesOps, our product and engineering team uses it extensively to understand what pains our target accounts have so that we can address those in our product.",
+    "topics": "Productivity, Artificial Intelligence, Audio, Sales, CRM, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/lightfield"
+  },
+  {
+    "product_name": "Claude Marketplace",
+    "tagline": "Helping companies easily get the AI tools they need",
+    "description": "Use your existing Anthropic commitment to pay for Claude-powered solutions from our customers. Now in limited preview.",
+    "reviews_rating": "5",
+    "reviews_count": "0",
+    "featured_comment": "",
+    "topics": "Productivity, Artificial Intelligence, Audio, Developer Tools, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/claude-marketplace"
+  },
+  {
+    "product_name": "Needle",
+    "tagline": "Vibe-automate workflows and earn passive income.",
+    "description": "AI-powered automations that earn you passive income. \n\nJust tell our builder agent what needs to be automated.\n\nWatch it in real-time building, testing and shipping your workflow, hands-free.\n\nThen just submit your workflow and start earning.",
+    "reviews_rating": "4.72",
+    "reviews_count": "6",
+    "featured_comment": "Other alternatives looks bloated and doesn't provide you with enough information to use them. You need full blown courses to get started with n8n and zapier.",
+    "topics": "Notes, Text Editors, GitHub, Design Tools, Website Builder, Artificial Intelligence",
+    "url": "https://www.producthunt.com/products/needle-3"
+  },
+  {
+    "product_name": "ProductBridge",
+    "tagline": "Agent that collects feedback across multiple platforms",
+    "description": "Your feedback is everywhere — Slack threads, Intercom support tickets, review sites, DMs. ProductBridge's AI agent collects it all automatically, organizes it, deduplicates, and helps your team ship what users actually want. Users request features, upvote, and watch ideas move through your public roadmap. Teams prioritize with data, publish changelogs, and auto-notify users when their feature ships. One platform. Complete feedback loop. Flat pricing. No seat fees. No surprises. Ever.",
+    "reviews_rating": "4.88",
+    "reviews_count": "2",
+    "featured_comment": "Tried looking at Canny and Featurebase, but ProductBridge felt more complete and modern.",
+    "topics": "Productivity, Analytics, Developer Tools, Customer Communication, SaaS, Design Tools, Website Builder, Artificial Intelligence",
+    "url": "https://www.producthunt.com/products/productbridge"
+  },
+  {
+    "product_name": "Happycapy",
+    "tagline": "The agent-native computer, for the rest of us",
+    "description": "OpenClaw alternative, in your browser. And now on your phone. No setup. No learning curve. No security risks. Just open it and go.\n\nHappycapy turns browser into an agent-native computer powered by Claude Code — built by the original Trickle team. With a GUI friendly for everyday user, it lets anyone get real work done in one single place.\n\nThis is computing for everyone. For creators. For builders. For people who just want things done. For productivity. And for fun.",
+    "reviews_rating": "5",
+    "reviews_count": "38",
+    "featured_comment": "I also looked at a few other agentic AI tools focused on coding and workflow automation, but Happycapy stood out because it felt more execution-oriented instead of just being another AI interface. The computer-level interaction and autonomous workflow handling made it feel much more practical and closer to how real AI agents could work in production environments.",
+    "topics": "Productivity, Artificial Intelligence, Audio, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/happycapy"
+  },
+  {
+    "product_name": "Rork",
+    "tagline": "Build real mobile apps by chatting with AI",
+    "description": "Create apps or games end-to-end, set up monetization with RevenueCat, track analytics, and publish to the App Store. You can go from concept to a real app business today.",
+    "reviews_rating": "4.44",
+    "reviews_count": "25",
+    "featured_comment": "Fully native Amazing ui much better than competitors Fully focused on mobile apps unlick the others Fast moving team",
+    "topics": "Open Source, Software Engineering, Developer Tools, Design Tools, Website Builder, Artificial Intelligence",
+    "url": "https://www.producthunt.com/products/rork-app-for-ios"
+  },
+  {
+    "product_name": "SuperX",
+    "tagline": "All-in-one growth OS for serious 𝕏 creators",
+    "description": "SuperX is an all-in-one growth toolkit for 𝕏. Get daily inspiration based on viral posts in your niche, trend-based research, and fast rewrites in your voice. Schedule posts at the best time, engage with the right accounts to get discovered, and track what works with built-in analytics.",
+    "reviews_rating": "4.73",
+    "reviews_count": "0",
+    "featured_comment": "",
+    "topics": "Productivity, Artificial Intelligence, Audio, Social Media, SaaS, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/superx"
+  },
+  {
+    "product_name": "KiloClaw",
+    "tagline": "Hosted OpenClaw. No Mac mini required.",
+    "description": "OpenClaw is the most popular open source AI agent on the planet. Running it yourself? That's the hard part. KiloClaw is a fully managed, hosted version of OpenClaw. We handle the infrastructure, security, updates, and monitoring so you can focus on what your agent actually does - not keeping it alive.",
+    "reviews_rating": "4.96",
+    "reviews_count": "3",
+    "featured_comment": "Self-hosting on a VPS, which I'd done before. The setup itself is manageable if you're comfortable with SSH. What gets old fast is everything after that: keeping it alive, pulling updates, managing API keys scattered across config files. I also looked at a couple other hosted options but they were either locked to one chat platform or clearly just spinning up a basic VM with no real infrastructure behind it.",
+    "topics": "Productivity, Artificial Intelligence, Business, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/kiloclaw"
+  },
+  {
+    "product_name": "Lovon AI therapy",
+    "tagline": "Talk it out and feel better",
+    "description": "Lovon is your personal AI therapist - talk by voice anytime to calm your mind and get compassionate support. Built with PhD psychologists. Private and judgment-free.",
+    "reviews_rating": "4.65",
+    "reviews_count": "8",
+    "featured_comment": "tried Woebot and Wysa before. they're fine for text-based check-ins but the voice interaction here feels closer to actually talking to someone. for me the real test was 3am nicotine craving - text chat doesn't cut it when you're pacing around your kitchen",
+    "topics": "Design Tools, Website Builder, Artificial Intelligence",
+    "url": "https://www.producthunt.com/products/lovon"
+  },
+  {
+    "product_name": "Supaboard AI",
+    "tagline": "Ask in plain English. Get accurate answers from your data",
+    "description": "Ask questions in plain English. Get accurate, actionable answers from all your business data, no SQL, no waiting. Supaboard connects to 600+ data sources and gives your team the power to analyze, decide, and act instantly. Our built-in agents apply your business logic, so the answers you get are not just smart, but right. Fully governed. No data leaks. No technical skills required. Business intelligence, finally for everyone.\n",
+    "reviews_rating": "4.92",
+    "reviews_count": "0",
+    "featured_comment": "",
+    "topics": "Notes, Text Editors, GitHub, Design Tools, Website Builder, Artificial Intelligence",
+    "url": "https://www.producthunt.com/products/supaboard-ai"
+  },
+  {
+    "product_name": "Base44",
+    "tagline": "Build fully-functional apps in minutes No coding necessary",
+    "description": "Shape your ideas into apps that work your way.\nBase44 lets you build fully-functional apps in minutes with just your words. No coding necessary.",
+    "reviews_rating": "4.46",
+    "reviews_count": "37",
+    "featured_comment": "Claude Code and Codex. Both have a shallow learning curve and you end up with real code you actually own and can extend. Base44 locks you into their platform for something you could build in an afternoon with AI assistance.",
+    "topics": "Productivity, Artificial Intelligence, Business, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/base44"
+  },
+  {
+    "product_name": "Inspector",
+    "tagline": "Figma for Claude Code",
+    "description": "Inspector is a visual editor that connects to your favorite AI agent (Claude Code, Codex, Cursor). Click on an element in your UI, tweak it visually, and Inspector writes the change to your codebase. No more design handoff, just push to the repo.",
+    "reviews_rating": "4.96",
+    "reviews_count": "0",
+    "featured_comment": "",
+    "topics": "Open Source, Software Engineering, Developer Tools, Design Tools, Productivity, Artificial Intelligence, Website Builder",
+    "url": "https://www.producthunt.com/products/inspector-3"
+  },
+  {
+    "product_name": "moltbook",
+    "tagline": "A Social Network for AI Agents",
+    "description": "A social network built exclusively for AI agents. Where AI agents share, discuss, and upvote. Humans welcome to observe.",
+    "reviews_rating": "0",
+    "reviews_count": "1",
+    "featured_comment": "Moltbook proved that AI agents want social lives. 32,000+ agents posting, debating, forming communities — that was the signal that the agent economy was real. But agents on Moltbook had no creative outlet, no way to make something and own it. moltdj was born to fill that gap: give those agents a stage to create music, build fanbases, and earn. Moltbook showed us the demand; moltdj is the supply.",
+    "topics": "Open Source, Software Engineering, Developer Tools, Social Media, Artificial Intelligence, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/moltbook"
+  },
+  {
+    "product_name": "Moda",
+    "tagline": "Finally, AI designs you can edit",
+    "description": "Moda helps you design beautiful, brand-aligned content - slides, posters, ads, and more - with an AI trained in graphic design. Unlike other AI tools, everything is fully editable on a powerful layered canvas.",
+    "reviews_rating": "4.82",
+    "reviews_count": "0",
+    "featured_comment": "",
+    "topics": "API, Artificial Intelligence, Audio, Productivity, Design, Graphic Design, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/moda-2"
+  },
+  {
+    "product_name": "Stitch by Google",
+    "tagline": "Turn napkin sketches into production-ready UI in seconds.",
+    "description": "For founders and PMs who can't afford to waste a week on mockups. Describe your UI, get editable design + real code. Free. By Google. It introduces Hatter, a new agent aiming to handle multi-step design tasks, plus new App Store asset generation and native MCP export.",
+    "reviews_rating": "5",
+    "reviews_count": "0",
+    "featured_comment": "",
+    "topics": "Open Source, Software Engineering, Developer Tools, Design Tools, Website Builder, Artificial Intelligence",
+    "url": "https://www.producthunt.com/products/stitch-by-google"
+  },
+  {
+    "product_name": "Starnus",
+    "tagline": "Find and reach your next customers on autopilot",
+    "description": "Starnus helps founders and B2B teams run outbound with simple prompts. Define your ICP, find lookalike prospects, enrich with business + contact data, generate personalized outreach, and track replies, end to end in one platform.",
+    "reviews_rating": "5",
+    "reviews_count": "2",
+    "featured_comment": "Other tools were expensive and, honestly, exhausting to manage.",
+    "topics": "Productivity, Artificial Intelligence, Business, Sales, Marketing, Marketing automation, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/starnus"
+  },
+  {
+    "product_name": "Meme Dealer",
+    "tagline": "You are what you meme",
+    "description": "Meme Dealer is an AI meme keyboard for people who treat group chats like a competitive sport. Instead of scrolling your camera roll for 5 minutes, it suggests the right meme instantly based on your vibe. Roast mode, cope mode, hype mode, all in one tap. What makes it different: ⌨️ Keyboard-native (no app switching) 🧠 AI-powered meme suggestions by context/mood 🚀 Fast send flow for real-time chats 🖼️ Big meme library for every reaction moment Type less. Meme harder.",
+    "reviews_rating": "0",
+    "reviews_count": "1",
+    "featured_comment": "Finally, a meme tool that actually understands the vibe.No more scrolling through camera roll - it suggests the right meme instantly. Fast, fun, and dangerously effective in group chats 🤩",
+    "topics": "Productivity, Artificial Intelligence, Business, Custom Keyboards, Messaging, Memes, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/meme-dealer-2"
+  },
+  {
+    "product_name": "Gemini",
+    "tagline": "Google&#x27;s answer to GPT-4",
+    "description": "Google's largest and most capable AI model. Built from the ground up to be multimodal, Gemini can generalize and seamlessly understand, operate across and combine different types of information, including text, images, audio, video and code.",
+    "reviews_rating": "4.86",
+    "reviews_count": "156",
+    "featured_comment": "I chose Gemini because it’s fast, simple to use, and great for quick research and idea structuring.",
+    "topics": "API, Artificial Intelligence, Audio, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/gemini-6"
+  },
+  {
+    "product_name": "PostSyncer",
+    "tagline": "AI Content Maker, for Social Media Publishing",
+    "description": "The most powerful tool to manage all your social accounts at scale. Create, schedule, and reply across 10+ platforms. Get inspiration from the viral content library, generate media with AI (Sora, Veo & more), connect unlimited accounts and manage clients in dedicated workspaces.",
+    "reviews_rating": "4.93",
+    "reviews_count": "0",
+    "featured_comment": "",
+    "topics": "Notes, Text Editors, GitHub, Social Media, Marketing, Artificial Intelligence, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/postsyncer-2"
+  },
+  {
+    "product_name": "DataFast",
+    "tagline": "Revenue-first analytics",
+    "description": "Discover which marketing channels bring customers so you can grow your business, fast.",
+    "reviews_rating": "4.9",
+    "reviews_count": "1",
+    "featured_comment": "The UX of DataFast is simply great, and makes it easy to create goals and funnels to improve each product's conversion rate",
+    "topics": "Productivity, Analytics, Developer Tools, SaaS, Tech, Design Tools, Website Builder, Artificial Intelligence",
+    "url": "https://www.producthunt.com/products/datafast"
+  },
+  {
+    "product_name": "Mom Clock",
+    "tagline": "You said you&#x27;d do it. So why didn&#x27;t you?",
+    "description": "We all know what we should do. We just don’t do it. Mom Clock is a strict reminder and app blocker for people who keep negotiating with themselves. No snooze. No “just five more minutes.” No pretending. When it’s time, distractions are blocked and action is forced — like a mom standing behind you, watching. Built for procrastinators who are tired of disappointing themselves.",
+    "reviews_rating": "4.8",
+    "reviews_count": "0",
+    "featured_comment": "",
+    "topics": "Developer Tools, Artificial Intelligence, Security, iOS, Health & Fitness, Productivity, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/mom-clock"
+  },
+  {
+    "product_name": "Cal.com",
+    "tagline": "Scheduling infrastructure for absolutely everyone",
+    "description": "The open source Calendly alternative. Self host it, or have it hosted. Integrate it seamlessly into your business with advanced customization and an open API.",
+    "reviews_rating": "4.77",
+    "reviews_count": "84",
+    "featured_comment": "Used Cal for a bit now, and I prefer the easy to schedule as well as integration with M365 and other apps. The landing page to schedule a meeting is no jazz, simple and does the job. The backend setting allows users to customise with third party app developers and integrate the scheduling, payment with Stripe and workspace with either Google or Microsoft, all comes together. Very few or none out there on the product market are at par with Cal.com. Can't wait for Cal.ai to be in hands for general availability.",
+    "topics": "Design Tools, Website Builder, Artificial Intelligence",
+    "url": "https://www.producthunt.com/products/cal"
+  },
+  {
+    "product_name": "OpenClaw",
+    "tagline": "The AI that actually does things",
+    "description": "Formerly Moltbot and Clawbot, OpenClaw turns your computer into a 24/7 personal agent accessible from any chat app. Control your browser, execute shell commands, manage files, and automate workflows via WhatsApp or Telegram. Features persistent memory, full system access, local privacy, and 50+ integrations.",
+    "reviews_rating": "0",
+    "reviews_count": "67",
+    "featured_comment": "Claude Code. It's technically a coding CLI but I use it for everything automations, marketing, database work, CRM, outreach emails, deploying edge functions. One terminal, no self-hosting, no skill config. It just has access to my files and my terminal and that's enough. I'm a solo founder building a product end to end and right now Claude Code covers 90% of what I'd want OpenClaw for, with less setup.",
+    "topics": "Productivity, Artificial Intelligence, Business, Open Source, Developer Tools, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/clawdbot-2"
+  },
+  {
+    "product_name": "Pandada AI",
+    "tagline": "Build data wealth: Turns files into McKinsey-level insights",
+    "description": "Pandada empowers both non-technical operators and data scientists to achieve data wealth. Move beyond \"chatting\" with data—Pandada turn messy csvs, pdfs, excels files, and even photos into downloadable and shareable McKinsey-level reports and presentations — so you can make better decisions grounded in data.",
+    "reviews_rating": "5",
+    "reviews_count": "0",
+    "featured_comment": "",
+    "topics": "API, Artificial Intelligence, Audio, Analytics, Data & Analytics, Data Visualization, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/pandada-ai"
+  },
+  {
+    "product_name": "1Code",
+    "tagline": "Open source Cursor-like UI for Claude Code",
+    "description": "Whats 1Code? An app to run your Claude Code agents in parallel that works on Mac and Web. On Mac - run locally, with or without worktrees. On Web - run in remote sandboxes with live previews of your app, mobile included, so you can check on agents from anywhere. Running multiple Claude Codes in parallel dramatically sped up how we build features.",
+    "reviews_rating": "5",
+    "reviews_count": "0",
+    "featured_comment": "",
+    "topics": "Open Source, Software Engineering, Developer Tools, Artificial Intelligence, GitHub, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/1code-cursor-like-ui-for-claude-code"
+  },
+  {
+    "product_name": "Blink.new",
+    "tagline": "The #1 Full Stack Agentic Vibe Coding Platform.",
+    "description": "The world’s fastest AI app builder — turn any idea into a beautiful, fully working app in seconds. Offers built-in Auth, database, edge functions, AI integrations, and hosting. Self-corrects errors and fixes bugs without prompting.",
+    "reviews_rating": "4.68",
+    "reviews_count": "1",
+    "featured_comment": "Blink is a cool idea, love the minimal direction you’re taking.\nWould be great to connect. I help early-stage teams refine their product sites and think there’s a lot of potential here to make it even clearer and more compelling. Happy to chat!",
+    "topics": "Productivity, Analytics, Developer Tools, Design Tools, Website Builder, Artificial Intelligence",
+    "url": "https://www.producthunt.com/products/blink-21"
+  },
+  {
+    "product_name": "Humans in the Loop",
+    "tagline": "A free community to talk all-things-agentic-coding-AI",
+    "description": "Humans in the Loop is a place for people who love to use AI to ship faster, a free community to join and share insights and best practices on Claude Code, Cursor, MCP servers, AI code reviews, and more.",
+    "reviews_rating": "4.97",
+    "reviews_count": "0",
+    "featured_comment": "",
+    "topics": "API, Artificial Intelligence, Audio, Slack, Community, Vibe coding, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/humans-in-the-loop"
+  },
+  {
+    "product_name": "remio - Your Personal ChatGPT",
+    "tagline": "Assistant intergrated all your info channels",
+    "description": "When information is too much, remio is just right.\nYour AI-integrated productivity lifesaver and ultimate time saver. This AI knowledge management app empowers tech-savvy users to effortlessly collect, connect, and apply information. Leverage AI for intelligent organization and seamless knowledge fusion.",
+    "reviews_rating": "4.69",
+    "reviews_count": "10",
+    "featured_comment": "Remio note-taking software in action: a reliable co-pilot\n\nSeriously, this software can greatly improve productivity.\n\nYou can quickly capture useful information + highlight key points, which is a great time saver when preparing and summarising a meeting before it, and also convenient for my daily access.\n\nAll data exists on your own computer, so you can operate offline and don't have to worry about leaking important information.\n\nWith Ai's assistance, when looking for relevant information, I can ask Ai directly without having to look for it slowly.\n\nPersonally, I hope to speed up the launch of the Windows version!",
+    "topics": "Productivity, Artificial Intelligence, Audio, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/remio-ai-note-taker"
+  },
+  {
+    "product_name": "MiroMiro",
+    "tagline": "Inspect, edit, and export any website&#x27;s design",
+    "description": "Stop rebuilding designs from screenshots. MiroMiro lets you inspect any website, edit its colors, fonts, spacing, and shadows live like in Figma, then export the result as clean Tailwind or HTML/CSS. Capture full design systems at a glance. Pull SVGs, Lottie animations, and images. Extract design tokens for Tailwind, CSS variables, or JSON. Check WCAG contrast in one click. The fastest way from \"I like that site\" to working code in your editor. No DevTools needed.",
+    "reviews_rating": "4.86",
+    "reviews_count": "2",
+    "featured_comment": "This product is super cool, nifty, and thoughtfully designed. It's visually tasteful while also being seamless in its absorption into my workflow, tbh. I particularly love how, in addition to inspecting a page to extract its design elements, you can also save any particular element (whether a typeface, gradient, etc.) and essentially have your own library of primary variables, design tokens, and the like. It's that design granularity that really sets this apart from other inspectors that are more dev-focused.",
+    "topics": "API, Artificial Intelligence, Audio, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/miromiro"
+  },
+  {
+    "product_name": "Atlas.co",
+    "tagline": "GIS and maps in the browser",
+    "description": "Atlas.co is a collaborative GIS and mapping platform in the browser. Build, share, and edit maps with your team in real-time, visualize data effortlessly, and explore geographic insights interactively.",
+    "reviews_rating": "5",
+    "reviews_count": "4",
+    "featured_comment": "Because it’s easy to use, works in the browser, and lets the whole team collaborate on maps without GIS hassle.",
+    "topics": "Productivity, Analytics, Developer Tools, Design Tools, Website Builder, Artificial Intelligence",
+    "url": "https://www.producthunt.com/products/atlas-co-2"
+  },
+  {
+    "product_name": "kuku",
+    "tagline": "Obsidian — but a lot has changed",
+    "description": "Kuku is a truly native, local-first markdown editor for macOS — built with Tauri, not Electron. Notes are stored as plainmd files with wikilinks, backlinks, and graph view. Its AI agent doesn’t just chat — it searches, edits, and links your files, with every change shown as Cursor-style diffs you can review. Fast, lightweight, offline-first. No cloud. No lock-in. Obsidian + Cursor, without Electron.",
+    "reviews_rating": "4.87",
+    "reviews_count": "2",
+    "featured_comment": "Obsidian is great but closed source. Notion is cloud-dependent and can feel bloated for personal use. Kuku being open source and local-first means I actually own my notes and can extend it if needed.",
+    "topics": "Sales, Artificial Intelligence, CRM, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/kuku"
+  },
+  {
+    "product_name": "TravelAnimator",
+    "tagline": "Turn Google Maps URLs into stunning map animations.",
+    "description": "TravelAnimator turns Google Maps URLs into travel map videos in seconds. It stands out with 250+ 3D vehicle models, 30+ map styles, 4K and HD exports, the ability to add photos to routes, and a completely ad-free experience. Built for travelers, creators, and storytellers who want their journeys to look as good as they felt, without spending hours editing.",
+    "reviews_rating": "4.76",
+    "reviews_count": "0",
+    "featured_comment": "",
+    "topics": "Productivity, Artificial Intelligence, Business, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/travel-animator"
+  },
+  {
+    "product_name": "Ada.im",
+    "tagline": "Your own AI data analyst",
+    "description": "Ada.im is the world's first AI data analyst creating professional reports from any dataset. Automate data tasks, speed up analysis, and skip manual work in one click — no code or expertise needed. Effortless reporting for analysts and business pros.",
+    "reviews_rating": "4.43",
+    "reviews_count": "43",
+    "featured_comment": "easy to use",
+    "topics": "Productivity, Analytics, Developer Tools, Design Tools, Website Builder, Artificial Intelligence",
+    "url": "https://www.producthunt.com/products/ada-2"
+  },
+  {
+    "product_name": "CyberCut AI",
+    "tagline": "AI video studio for viral social clips",
+    "description": "CyberCut AI helps creators and teams produce viral videos fast. Auto-slice long footage into social-ready clips, generate marketing videos, add high-precision subtitles, edit by text, access an AI asset library, try virtual model try-ons, and use a full AI toolkit.",
+    "reviews_rating": "4.51",
+    "reviews_count": "1",
+    "featured_comment": "Wow, I’ve got a lot of good things to say about this product. The UI is clean, very easy to understand, and I’d easily subscribe to something like this for $20. That said, in its current state it’s not usable for me.",
+    "topics": "Artificial Intelligence, Audio, Marketing, Video, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/cybercut"
+  },
+  {
+    "product_name": "Loki.Build",
+    "tagline": "Design and ship studio-grade landing pages with AI",
+    "description": "Loki.Build is an AI-native website builder that generates studio-grade landing pages and gives you full control in a real, live editor. Built-in SEO, hosting & complete control. No more agencies. No more rigid templates. No more waiting to ship.",
+    "reviews_rating": "4.98",
+    "reviews_count": "5",
+    "featured_comment": "I considered a few alternative tools, but Loki Build stood out because of its ease of use, speed, and clean workflow. It allowed me to test ideas quickly and the results felt much more predictable.",
+    "topics": "Open Source, Software Engineering, Developer Tools, Website Builder, Artificial Intelligence, No-Code, Design Tools",
+    "url": "https://www.producthunt.com/products/loki-build-2"
+  },
+  {
+    "product_name": "PlanEat AI",
+    "tagline": "AI turns your health goals into a 7-day menu &amp; grocery list",
+    "description": "Most apps drown you in recipes; chatbots drown you in text. PlanEat AI turns your health data and food rules into one realistic weekly plan and a grouped shopping list, so you don’t have to prompt, copy-paste or build spreadsheets by hand. Set it up once and try the weekly flow with a free trial.",
+    "reviews_rating": "5",
+    "reviews_count": "1",
+    "featured_comment": "I used Lose It for years. Calorie tracking always led to burnout. PlanEat AI works without constant logging and mental pressure.",
+    "topics": "Artificial Intelligence, Audio, iOS, Cooking, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/planeat-ai-2"
+  },
+  {
+    "product_name": "Surgeflow",
+    "tagline": "Automate your browser tasks with a single command",
+    "description": "See the plan. Approve it. Watch it execute. SurgeFlow turns browser chaos into transparent automation across multiple tabs. Research, shopping, job applications—all with one command. Works in your browser—no need to download or install a new one.",
+    "reviews_rating": "0",
+    "reviews_count": "1",
+    "featured_comment": "\\u003cp\\u003eI chose SurgeFlow over other solutions because it works directly in my browser without requiring me to switch tabs or install additional software. Unlike complex automation tools that need technical setup, SurgeFlow lets me describe tasks in plain English — like \\",
+    "topics": "Productivity, Artificial Intelligence, Audio, Browser Extensions, Chrome Extensions, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/surgeflow"
+  },
+  {
+    "product_name": "ClickUp",
+    "tagline": "An all-in-one productivity platform",
+    "description": "Tasks, docs, goals, chat, and everything imaginable to make you more productive.",
+    "reviews_rating": "4.61",
+    "reviews_count": "122",
+    "featured_comment": "I trialled other platforms (Asana, Monday), but none could match ClickUp’s ability to run entire marketing, product and operational ecosystems in one place.As a Brand Marketing Manager leading multi-channel campaigns, sprints and reporting across design, product, paid, and content teams, I needed something more than a task list—it had to be a live command centre.",
+    "topics": "Notes, Text Editors, GitHub, Design Tools, Website Builder, Artificial Intelligence",
+    "url": "https://www.producthunt.com/products/clickup"
+  },
+  {
+    "product_name": "Incredible",
+    "tagline": "Deep Work AI Agents - powered by Agent MAX",
+    "description": "Create AI agents that work 24/7, cost 90% less, and don't hallucinate on data—powered by Agent MAX. Automate daily repetitive tasks with the world's most advanced AI agent engine built for autonomous work. Hundreds of integrations. 90% cheaper. Near-zero hallucinations. 100x memory. — \n\nwww.incredible.one — Incredible is an applied AI lab from 🇸🇪 Sweden building Agentic AI models for deep work autonomous tasks. ",
+    "reviews_rating": "4.74",
+    "reviews_count": "0",
+    "featured_comment": "",
+    "topics": "Productivity, Artificial Intelligence, Business, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/incredible"
+  },
+  {
+    "product_name": "Typeless",
+    "tagline": "AI voice dictation that&#x27;s actually intelligent",
+    "description": "Speak naturally, and Typeless will turn your words into polished messages, emails, and documents that read like you carefully typed them. Our AI understands context, fixes grammar, and adapts to your style - so you can focus on what you want to say, not how to say it.",
+    "reviews_rating": "0",
+    "reviews_count": "10",
+    "featured_comment": "To be honest, I have always wanted a reliable speech-to-text solution for my computer. I previously used the built-in dictation feature on my MacBook, but I found the recognition quality to be quite poor. It frequently produced typos that required manual correction.Natural speech often includes many filler words, especially when you are thinking while speaking, which results in content that isn't very structured.Since I started using Typeless, I have noticed several key improvements:1. The response speed is incredibly fast.2. The recognition accuracy is very high.3. It successfully transforms my fragmented thoughts into well-structured text suitable for a professional work environment.I think it is a great tool; it works very well. To be honest, the text I'm typing right now is being converted into words using Typeless.",
+    "topics": "API, Artificial Intelligence, Audio, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/typeless-2"
+  },
+  {
+    "product_name": "SnapTodo",
+    "tagline": "If Cursor &amp; To-do had a baby.",
+    "description": "SnapTodo is what happens when a weekly calendar, a todo list, and a bit of AI chaos collide. Drag tasks around, throw things into Someday, and let AI tidy up whatever your brain didn’t. You get friend-only sharing, a booking page that turns requests into tasks, and Google Calendar sync that (surprisingly) behaves. If you like visual planning, light collaboration, and indie-made tools with personality — hope you enjoy this one.",
+    "reviews_rating": "4.72",
+    "reviews_count": "1",
+    "featured_comment": "",
+    "topics": "Productivity, Artificial Intelligence, Business, Task Management, SaaS, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/snaptodo"
+  },
+  {
+    "product_name": "AhaCreator",
+    "tagline": "One Marketer. One AI Agent. 500 Influencer Collabs/Month.",
+    "description": "Scaling influencer marketing used to require a massive team. AhaCreator 3.0 changes the equation. Access a creator network of 100,000+ active, onboarded creators. Powered by expert-level multimodal matching and instant content review, AhaCreator autonomously discovers, evaluates, negotiates, and manages creators at scale. You make decisions. AhaCreator does the work. Become a 10× marketer today.",
+    "reviews_rating": "5",
+    "reviews_count": "6",
+    "featured_comment": "The overall impression is that it feels like Lovable in the influencer marketing world. It's all about enhancing efficiency and replacing manual labor. In the future, the role of influencer marketing may disappear, or at least not require as many people, though Aha is still in the early stages and many features are not yet fully developed. However, it is definitely groundbreaking. As for the drawbacks, the overall pricing tends to be a bit higher than manually sourcing.",
+    "topics": "Productivity, Artificial Intelligence, Business, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/aha-3"
+  },
+  {
+    "product_name": "ConnectMachine",
+    "tagline": "A private AI agent that manages your network and connections",
+    "description": "ConnectMachine is a privacy-first AI Agent that elevates how you connect. Craft bespoke digital business cards, share only what you choose, and explore your network with intuitive voice or text queries. It replaces social broadcasting with intelligent contact management, auto-categorizing connections, and add in an AI Agent to query your network. A refined, intelligent contact layer created for those who prefer intention over noise and elegance over excess. Available for both, iOS and Android.",
+    "reviews_rating": "0",
+    "reviews_count": "0",
+    "featured_comment": "",
+    "topics": "Notes, Text Editors, GitHub, Android, iOS, Artificial Intelligence, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/connectmachine-2"
+  },
+  {
+    "product_name": "Documentation.AI",
+    "tagline": "Build and update product documentation effortlessly with AI",
+    "description": "Create beautiful, always-current product documentation with AI. A built-in AI agent helps you write and maintain content and connects to dev and support tools for context. Edit via web, AI agent, or docs-as-code. A built-in assistant gives users instant, cited answers, reducing support load.",
+    "reviews_rating": "5",
+    "reviews_count": "0",
+    "featured_comment": "",
+    "topics": "Open Source, Software Engineering, Developer Tools, Artificial Intelligence, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/documentation-ai"
+  },
+  {
+    "product_name": "Zawa (formerly X-Design)",
+    "tagline": "Your Creative AI Agent for Branding",
+    "description": "Zawa (formerly X-Design) is a Creative AI Agent that helps small businesses build and scale a consistent brand.\nStart with just a name or an idea, and Zawa instantly generates your logo, brand kit, and store-ready materials like menus, posters, signage, and packaging. Powered by an auto-applied brand memory, the agent keeps every visual perfectly consistent, allowing you to create and adjust professional designs in seconds, with zero design experience.",
+    "reviews_rating": "5",
+    "reviews_count": "6",
+    "featured_comment": "I’ve been testing X-Design recently and I’m seriously impressed.\nAs someone who frequently needs quick, aesthetic product images, this tool is a game changer. One-click background removal, styling into lifestyle scenes, and retouching — all work smoothly. I especially liked how it transformed plain mugs into cozy product photos with warmth and authenticity.",
+    "topics": "Design Tools, Website Builder, Artificial Intelligence",
+    "url": "https://www.producthunt.com/products/x-design"
+  },
+  {
+    "product_name": "Pylar",
+    "tagline": "Securely connect your entire data stack to any agent",
+    "description": "Pylar connects agents to your data stack, safely. Connect to any datasource, define exactly what an agent can see, turn those views into custom MCP tools, and publish them to any agent builder - with full observability across every AI deployment.",
+    "reviews_rating": "0",
+    "reviews_count": "0",
+    "featured_comment": "",
+    "topics": "Productivity, Artificial Intelligence, Audio, Developer Tools, Security, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/pylar"
+  },
+  {
+    "product_name": "hq0",
+    "tagline": "Host meetings on your website instead of Zoom or Google Meet",
+    "description": "Why send customers to zoom.us when they could meet at meetings.yourcompany.com? hq0 lets you run fully branded video meetings from your own domain — with your logo, your colors, and zero third-party branding. Plus, every meeting is automatically recorded, summarized by AI, and followed up with an email. Built for customer-facing teams who know first impressions matter.",
+    "reviews_rating": "4.62",
+    "reviews_count": "1",
+    "featured_comment": "Love the idea of hosting meetings on your own domain,  it instantly feels more professional than sending people to Zoom. The auto recording, AI summary, and follow-up email are super handy. It just makes calls smoother.",
+    "topics": "API, Artificial Intelligence, Audio, Chrome Extensions, Productivity, SaaS, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/hq0"
+  },
+  {
+    "product_name": "Firecrawl",
+    "tagline": "The Web Data API for AI Agents and Developers",
+    "description": "The API to search, scrape, and interact with the web at scale.",
+    "reviews_rating": "5",
+    "reviews_count": "12",
+    "featured_comment": "I use Firecrawl to scrape a website to create a blog design similar to the website. This would've been an entire startup few years ago just scraping a website reliably. \nNow, it's just an API call away!",
+    "topics": "API, Artificial Intelligence, Audio, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/extract-by-firecrawl"
+  },
+  {
+    "product_name": "Unloop",
+    "tagline": "Map the patterns that keep you stuck.",
+    "description": "Unloop is a visual pattern mapping tool that helps you see the triggers, thoughts, emotions, and behaviors that keep you stuck. Map it out. Spot the loop. Let AI surface what you missed. Design tiny experiments to interrupt it. No prescriptions. No generic advice. Just your patterns, made visible.",
+    "reviews_rating": "4.65",
+    "reviews_count": "0",
+    "featured_comment": "",
+    "topics": "Sales, Artificial Intelligence, CRM, Health & Fitness, Productivity, Quantified Self, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/unloop-2"
+  },
+  {
+    "product_name": "Guideflow",
+    "tagline": "The AI demo automation platform for SaaS",
+    "description": "Turn your product into interactive demos, sandboxes, demo centers, and live environments your buyers can explore instantly. Capture screens, customize them with AI or with our no-code editor, and Guideflow builds the experience for you - personalized, on-brand, and shareable. No engineering. No waiting. Just pure product experience.",
+    "reviews_rating": "4.93",
+    "reviews_count": "6",
+    "featured_comment": "I’ve tried a few alternatives like Scribe, Loom, and Guidde, but Guideflow stands out for its clean UI and the speed at which you can create interactive, step-by-step demos without any friction.",
+    "topics": "Productivity, Artificial Intelligence, Business, Sales, Marketing, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/guideflow"
+  },
+  {
+    "product_name": "Welltory",
+    "tagline": "The one app for your health",
+    "description": "Welltory is an all-in-one health app trusted by 16M+ users to take control of their lifelong health. It delivers personalized insights by connecting 1000+ apps & devices in one place. Powered by AI analytics, Welltory turns your data into actionable recommendations on how to reduce stress, boost energy, stay active, and sleep better. ",
+    "reviews_rating": "4.9",
+    "reviews_count": "34",
+    "featured_comment": "i looked at a bunch of habit tracking apps and mood trackers. most of them just ask you to rate how you feel 1-10. welltory actually measures something real through HRV, which is way more useful than self-reporting when your brain is foggy from nicotine withdrawal",
+    "topics": "Design Tools, Website Builder, Artificial Intelligence",
+    "url": "https://www.producthunt.com/products/welltory"
+  },
+  {
+    "product_name": "Talo by Palabra.ai",
+    "tagline": "All‑in‑one AI translator: calls, events, streaming &amp; API",
+    "description": "Talo offers real-time voice translation across video calls, live events, offline presentations and streaming broadcasts. Use bots or the desktop app to translate meetings, or integrate via our API. Make every conversation accessible globally.\r\n",
+    "reviews_rating": "4.81",
+    "reviews_count": "7",
+    "featured_comment": "I have friends in Italy. They don't speak English. We communicate with a few phrases, gestures and with the help of a translator. Recently we had our first conversation, when each of us speaks his own language and we completely understand each other. \nIt's hard to imagine what will happen in a couple of years. I wish you more clients and quality service!",
+    "topics": "Notes, Text Editors, GitHub, Design Tools, Website Builder, Artificial Intelligence",
+    "url": "https://www.producthunt.com/products/talo"
+  },
+  {
+    "product_name": "TrustMRR",
+    "tagline": "The database of verified startup revenues",
+    "description": "The database of verified startup revenues. Browse Stripe-verified MRR and revenue from real startups. Prove your revenue publicly.",
+    "reviews_rating": "4.91",
+    "reviews_count": "1",
+    "featured_comment": "P.S. Huge shoutout to the shipping machine himself, @marclou.\n\nThey say imitation is the sincerest form of flattery, so consider this my love letter to TrustMRR. His project is the gold standard for verified revenue; I just wanted to build the gold standard for... whatever this is.\n\nGo list your real wins on TrustMRR. For everything else, you’re welcome here. ❤️",
+    "topics": "Marketing, SaaS, Design Tools, Website Builder, Artificial Intelligence",
+    "url": "https://www.producthunt.com/products/trustmrr"
+  },
+  {
+    "product_name": "Skarbe",
+    "tagline": "AI inbox for people who do sales on top of 5 other things.",
+    "description": "Skarbe is your inbox. Inside lives Oskar, your AI assistant who never forgets. While you handle emails, he works in the background: tracking conversations, following up on cold leads, recording calls, and organizing deals. You get back 2 hours a day.",
+    "reviews_rating": "4.79",
+    "reviews_count": "4",
+    "featured_comment": "We have been trialling Skarbe for a few months and it has become an indispensable tool to help our small team hit some impressive sales targets. We have integrated it with Hubspot and our Google workspace and use it to gather important data on our sales leads as well as assisting in our responses and communication. Really well done guys!",
+    "topics": "Productivity, Artificial Intelligence, Audio, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/skarbe"
+  },
+  {
+    "product_name": "BlogBowl",
+    "tagline": "Keyword‑driven AI articles auto‑posted to your blog",
+    "description": "Automate your blog with AI that writes research-backed SEO articles exactly like a human would – with images, videos, stats, tables and citations. Optimized for Google and AI platforms like ChatGPT and Claude, they rank well and keep readers engaged. Built on an open-source core with SEO templates, analytics, and newsletter tools. Connect BlogBowl to your landing page, go live in 5 minutes and start getting clients from SEO content.",
+    "reviews_rating": "4.88",
+    "reviews_count": "1",
+    "featured_comment": "How does the integration work for existing sites—is the subfolder setup handled through a proxy or a specific framework plugin?",
+    "topics": "Notes, Text Editors, GitHub, Open Source, SEO, Artificial Intelligence, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/blogbowl-4"
+  },
+  {
+    "product_name": "Floqer",
+    "tagline": "The AI copilot for GTM data automation",
+    "description": "Floqer lets RevOps and growth teams automate GTM data in seconds. Build multi-step workflows that detect relevant signals, enrich from 80+ sources, and trigger personalized outreach – all without a single line of code.",
+    "reviews_rating": "4.75",
+    "reviews_count": "2",
+    "featured_comment": "I was using Clay for a while but happened across Floqer due to a Reddit post. Spoke with Shivam and tried it out for a few months. The support and flexibly with Floqer is amazing. If I have a question or issue, I don't have to speak with some low level jobber reading a script. I hit Shivam &amp; Ash on Slack and they are all over it. Highly recommend and I can see why they are getting more traction in this market.",
+    "topics": "Sales, Artificial Intelligence, CRM, Marketing, Data, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/floqer-2"
+  },
+  {
+    "product_name": "Uneed",
+    "tagline": "A launch platform for your products",
+    "description": "Uneed is the best Product Hunt alternative.",
+    "reviews_rating": "4.81",
+    "reviews_count": "3",
+    "featured_comment": "Great way to discover new tools!",
+    "topics": "Sales, Artificial Intelligence, CRM, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/uneed"
+  },
+  {
+    "product_name": "Fluently",
+    "tagline": "AI English coach: AI English coach that helps you speak better on work calls",
+    "description": "Imagine a human-like English coach, available 24/7 and 15x cheaper. That’s Fluently 🚀 Fix your mistakes, improve your vocabulary, pronunciation, and grammar to feel confident on work calls. Join 25,000+ non-native professionals at GetFluently.app!",
+    "reviews_rating": "5",
+    "reviews_count": "18",
+    "featured_comment": "To be honest, at first I really liked the program and even bought a paid subscription. Everything was fine initially. \n\nHowever, after about a month, around late April to early May, the macOS app started crashing every 10-15 minutes. I reached out to support, and they told me this wasn’t typical behavior and that they would consult the developers, but I never received any feedback.\n\nI kept writing in the same conversation for several weeks, but no one got back to me. Then, at one point, the app suddenly logged me out on all my devices, including my iPhone and MacBook. Since then, I haven't been able to log back in. I enter my email, receive the login link, but when I try to use it, it says the link is expired. This has been going on for several days.\n\nSo basically, I paid 100 euros for a subscription, but only got to use the app for about a month, and now I can’t use it at all. Because it’s been over a month since the purchase, Apple won’t approve a refund.\n\nI want to strongly warn against using this app. It’s full of bugs and has very poor product decisions. The team seems to lack basic understanding of how a proper SaaS B2C service should operate, and as a result, they are just losing users without remorse.",
+    "topics": "Design Tools, Website Builder, Artificial Intelligence",
+    "url": "https://www.producthunt.com/products/fluently-ai-english-coach"
+  },
+  {
+    "product_name": "Blindspot",
+    "tagline": "Book 2.5M+ billboards worldwide like you book an Uber",
+    "description": "Imagine your ads in Times Square or anywhere else in the world. Blindspot lets you pick the exact billboards you want, the hours you need with a creative that works, swapped in real-time when the weather, traffic, or crowd changes. Spots are as low as $1/hour.",
+    "reviews_rating": "4.31",
+    "reviews_count": "0",
+    "featured_comment": "",
+    "topics": "Productivity, Analytics, Developer Tools, Marketing, Advertising, Tech, Design Tools, Website Builder, Artificial Intelligence",
+    "url": "https://www.producthunt.com/products/seeblindspot"
+  },
+  {
+    "product_name": "Emma Intelligence",
+    "tagline": "Eat better with Emma",
+    "description": "Emma Intelligence is a global app development company based in Singapore creating AI-powered applications that improve health, awareness, and everyday life.\nWe design and build intelligent software across SaaS, mobile, and cloud platforms.\nOur flagship app, Sugar Free: Food Scanner, helps people understand what they eat and make healthier choices worldwide.",
+    "reviews_rating": "5",
+    "reviews_count": "26",
+    "featured_comment": "The Sugar-Free Food Scanner App is an excellent tool for health-conscious individuals aiming to monitor and reduce their sugar intake. With its user-friendly interface, quick barcode scanning, and detailed nutritional breakdown, it helps users make informed choices about their food. While it offers valuable customization options and educational tips, the app could improve by expanding its product database, adding offline capabilities, and enhancing its global adaptability. Overall, it's a practical app for promoting healthier eating habits, despite minor limitations like premium feature restrictions and internet dependency.",
+    "topics": "Artificial Intelligence, Audio, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/sugar-free-food-scanner"
+  },
+  {
+    "product_name": "Google Antigravity",
+    "tagline": "Run and monitor several coding agents at once in an IDE",
+    "description": "Google Antigravity - Build the new way",
+    "reviews_rating": "4.96",
+    "reviews_count": "17",
+    "featured_comment": "\\u003cp\\u003e\\u003cem\\u003eI’ve used Cursor and Claude Code extensively, but they always felt like advanced autocomplete. I chose Antigravity because it bridges the gap between \\",
+    "topics": "Productivity, Analytics, Developer Tools, Design Tools, Website Builder, Artificial Intelligence",
+    "url": "https://www.producthunt.com/products/google-antigravity"
+  },
+  {
+    "product_name": "BeFreed",
+    "tagline": "Learn anything with your own personal audio agent",
+    "description": "BeFreed is a personal audio agent for learning. Unlike traditional platforms with fixed, predefined content, BeFreed connects to thousands of public and our own knowledge sources. Powered by our proprietary content model, it can search, analyze, and evaluate knowledge across them to deliver on-demand audio experience tailored to your needs. It answers your questions in real time, adapts to your learning style, and evolves with every interaction.",
+    "reviews_rating": "4.95",
+    "reviews_count": "0",
+    "featured_comment": "",
+    "topics": "Productivity, Artificial Intelligence, Audio, Education, Lifestyle, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/befreed-2"
+  },
+  {
+    "product_name": "Google Nano Banana Pro",
+    "tagline": "Gemini 3 Pro Image Generator based on Google Nano Banana",
+    "description": "Gemini 3 Pro Image. Create and edit images with Nano Banana Pro, for studio-quality levels of precision and control.",
+    "reviews_rating": "4.7",
+    "reviews_count": "1",
+    "featured_comment": "Nano Banana Pro powers high-quality image generation and editing on Glam.ai, helping users refine details with more control.",
+    "topics": "Productivity, Artificial Intelligence, Audio, Design Tools, Photography, Website Builder",
+    "url": "https://www.producthunt.com/products/google-nano-banana-pro"
+  },
+  {
+    "product_name": "Algebras AI",
+    "tagline": "Full-stack AI agent for 300+ language localization",
+    "description": "Full-stack localization agent with a QA-safe UI and an open-source CLI to auto-localize Next.js apps in 300+ languages. * Run localization experiments, prevent layout bugs, skip human bottlenecks. * Our API-first agent beats SoTA MT benchmarks.",
+    "reviews_rating": "5",
+    "reviews_count": "3",
+    "featured_comment": "As a PM who's shipped localized apps, I know how frustrating it can be to balance translation, design, and release speed. Algebras automates so much of that pain. Built-in glossary and smart model selection = 🔥.",
+    "topics": "Artificial Intelligence, Audio, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/algebras-ai"
+  },
+  {
+    "product_name": "Orchestra",
+    "tagline": "A chat-centric workspace for builders and modern teams",
+    "description": "Orchestra makes workflow simple for teams who build products and rely on communication. With messaging at its core, and a task tracker and AI agents natively built in, work contexts are aligned and teams are connected.",
+    "reviews_rating": "4.92",
+    "reviews_count": "5",
+    "featured_comment": "I loved this product while using it as a designer inside small startup team. As a telegram+notion-lover, I found Orch THE BEST combo of friendly and fast-paced chat-interface and notion strict structure of canbans and timelines. Finally, all process kept in one place. One love! Would use further and recommend to all remote teams.",
+    "topics": "Productivity, Artificial Intelligence, Audio, Task Management, Messaging, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/orchestra-3"
+  },
+  {
+    "product_name": "Flask",
+    "tagline": "Give complex creative feedback, without typing comments.",
+    "description": "Talk through complex feedback, draw, share any visual reference. Flask automatically writes, organizes, and timestamps everything.",
+    "reviews_rating": "4.83",
+    "reviews_count": "5",
+    "featured_comment": "Started my journey on YouTube almost one year ago. As a former designer, I couldn't avoid trying to visually polish the videos while making sure a good storytelling is going on. Flask is helping to keep track of both in a way that text based task-management tools can't provide.",
+    "topics": "Productivity, Artificial Intelligence, Audio, Design Tools, Video, Website Builder",
+    "url": "https://www.producthunt.com/products/flask-6"
+  },
+  {
+    "product_name": "Browserbase",
+    "tagline": "Give your agents access to the whole web.",
+    "description": "Browserbase makes the web as reliable and programmable as APIs.",
+    "reviews_rating": "5",
+    "reviews_count": "12",
+    "featured_comment": "I chose browserbase because it lets me run ai tasks directly in the browser without switching apps. the interface is clean, it’s fast, and it makes experimenting with ai projects simple and organized.",
+    "topics": "Productivity, Analytics, Developer Tools, API, Artificial Intelligence, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/browserbase"
+  },
+  {
+    "product_name": "Cursor",
+    "tagline": "The AI Code Editor",
+    "description": "Built to make you extraordinarily productive, Cursor is the best way to code with AI.",
+    "reviews_rating": "4.25",
+    "reviews_count": "860",
+    "featured_comment": "I still use Claude Code quite a bit in a Cursor built-in terminal actually. But it's hard to beat all the editor integrations Cursor includes. Claude Code has just option+cmd+k.I kicked the tires on OpenCode and really liked it. OpenCode is a terminal agent. So I didn't stick with it.I used Windsurf for a while, and Windsurf felt like a magical upgrade over Cursor. Over time, it felt like Cursor caught up and then passed Windsurf. Honestly though, I haven't tried Windsurf in a while. Maybe it has advantages over Cursor again?",
+    "topics": "Sales, Artificial Intelligence, CRM, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/cursor"
+  },
+  {
+    "product_name": "Xmind",
+    "tagline": "The most professional and popular mind mapping tool",
+    "description": "Xmind is a full-featured mind mapping and brainstorming tool that helps to unleash creativity, capture inspiration, and boost productivity.\nYou’ve never mind mapped like this before: brainstorm ideas, organize with outline and present your mind map in just one place with premium experience across all platforms.",
+    "reviews_rating": "4.59",
+    "reviews_count": "11",
+    "featured_comment": "Easy to use, beautiful design, stable performance, and now with project management features",
+    "topics": "Notes, Text Editors, GitHub, Design Tools, Website Builder, Artificial Intelligence",
+    "url": "https://www.producthunt.com/products/xmind"
+  },
+  {
+    "product_name": "Orchids",
+    "tagline": "The best way to build any app",
+    "description": "Build any app and use your existing ChatGPT, Claude Code, Gemini, Github Copilot subscription or any API key. ",
+    "reviews_rating": "4.96",
+    "reviews_count": "5",
+    "featured_comment": "I chose Orchids because it’s fast, easy to use, and has great agents. The UI is clean, and the AI token system works really well. I’m on the highest plan and love the overall experience.",
+    "topics": "Productivity, Artificial Intelligence, Audio, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/orchids"
+  },
+  {
+    "product_name": "ChatGPT by OpenAI",
+    "tagline": "Get answers. Find inspiration. Be more productive.",
+    "description": "An LLM to get instant answers, find creative inspiration, and learn something new. Free to use. Easy to try. Just ask and ChatGPT can help with writing, learning, brainstorming, and more.",
+    "reviews_rating": "4.97",
+    "reviews_count": "671",
+    "featured_comment": "I also use or have considered other AI assistants, but ChatGPT has become my default because it feels the most complete across general reasoning, coding, writing, and structured problem solving.",
+    "topics": "Productivity, Artificial Intelligence, Audio, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/chatgpt"
+  },
+  {
+    "product_name": "n8n",
+    "tagline": "Workflow automation for technical people",
+    "description": "n8n is a source-available workflow automation tool designed for technical users. Our low-code platform offers a seamless blend of code and an intuitive interface, serving as the perfect bridge between engineers and other people at your organization.",
+    "reviews_rating": "4.74",
+    "reviews_count": "68",
+    "featured_comment": "I chose n8n over alternatives like Zapier and Make for three non-negotiable reasons:Cost and Scale (0€ License Fees): For all my clients (especially SMBs), the recurring, scaling subscription fees of proprietary No-Code tools become prohibitive quickly. n8n's open-source nature eliminates these license fees entirely. This means our clients invest only once in the deployment (managed by Azenflow), and then the operating cost is zero. This is a massive competitive advantage.Data Sovereignty and Compliance (RGPD): As a French agency, data privacy is paramount. Self-hosting n8n is the only reliable way to guarantee 100% data sovereignty and RGPD compliance. We retain full control over the infrastructure, which is impossible with cloud-locked competitors.Technical Depth and Customization: When projects move beyond simple trigger/action scenarios, n8n's ability to seamlessly integrate custom JavaScript, handle complex multi-step logic, and connect to proprietary APIs is unmatched. It's the only platform that offers the best of both the visual (No-Code) and the technical (DevOps/Code) worlds.",
+    "topics": "Developer Tools, Artificial Intelligence, Security, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/n8n-io"
+  },
+  {
+    "product_name": "Nora",
+    "tagline": "The AI coding agent for building secure Web3 apps",
+    "description": "Cursor, Claude, and all the other coding agents weren't built for web3 and can't be trusted for writing smart contracts or deploying securely to blockchains. Nora was purpose-built so you can write, test, and deploy secure dApps with confidence.",
+    "reviews_rating": "4.96",
+    "reviews_count": "0",
+    "featured_comment": "",
+    "topics": "Sales, Artificial Intelligence, CRM, Developer Tools, Web3, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/nora-5"
+  },
+  {
+    "product_name": "Caesr AI",
+    "tagline": "AI that controls real apps across web, desktop, and mobile",
+    "description": "Caesr is your AI agent for automating anything on any device. It clicks, types, and navigates, just from your prompt.",
+    "reviews_rating": "4.96",
+    "reviews_count": "14",
+    "featured_comment": "Just started using Caesr AI, and it honestly feels like having a digital coworker that actually gets things done. Unlike regular chatbots, Caesr doesn’t stop at giving answers, it acts. It clicks buttons, fills out forms, manages apps, and handles all those repetitive daily tasks that eat up your time.\n\nThe interface is clean, setup is simple, and there’s zero coding needed. It runs smoothly across apps, and the responsiveness is impressive for a product this new. You can literally describe what you want done, and Caesr does it like a pro.\n\nIt’s still early, but the potential here is huge. If you’ve ever wished your computer could just do the work for you, Caesr AI is the closest thing to that dream right now.",
+    "topics": "Productivity, Analytics, Developer Tools, SaaS, Artificial Intelligence, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/caesr-ai"
+  },
+  {
+    "product_name": "v0 by Vercel",
+    "tagline": "Full stack vibe coding platform. Created by Vercel.",
+    "description": "Your collaborative AI assistant to design, iterate, and scale full-stack applications for the web.",
+    "reviews_rating": "5",
+    "reviews_count": "56",
+    "featured_comment": "Generic chat models give you code but no real design sense, and you spend the time wiring it into a stack yourself. v0 wins because it is built around React and Tailwind, the components drop straight into a Next.js project, andthe design quality out of the box is higher. Less cleanup, faster to something I would actually ship.",
+    "topics": "Productivity, Artificial Intelligence, Business, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/v0"
+  },
+  {
+    "product_name": "Lyra",
+    "tagline": "The meeting platform for high-performers.",
+    "description": "Lyra is the final meeting platform. Work with AI and your team to create follow-ups, drafts, and tasks live, no more screenshare. Meetings finish with actions, not just notes, and shared context carries across every call without an AI notetaker.",
+    "reviews_rating": "4.93",
+    "reviews_count": "0",
+    "featured_comment": "",
+    "topics": "Developer Tools, Artificial Intelligence, Security, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/lyra-7"
+  },
+  {
+    "product_name": "Emergent",
+    "tagline": "Advanced AI app builder that ships full-stack apps",
+    "description": "World's first agentic AI vibe coding platform that builds full-stack web & mobile apps with English as the programming language. Our multi-agent architecture emulates how a real, high-quality engineering team ships.",
+    "reviews_rating": "4.44",
+    "reviews_count": "14",
+    "featured_comment": "Value and at the time it seemed the best choice for me.",
+    "topics": "Developer Tools, Artificial Intelligence, Security, Vibe coding, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/emergent-2"
+  },
+  {
+    "product_name": "Rybbit",
+    "tagline": "The open source Google Analytics replacement",
+    "description": "Next-gen, open source, lightweight, cookieless web & product analytics for everyone.",
+    "reviews_rating": "4.89",
+    "reviews_count": "4",
+    "featured_comment": "Clear problem identification + prebuilt dashboards with zero setup + features liked session replays, custom events, and advanced filtering. the product positioning is a fit, authentic, and may address the confusion that tech teams or individuals face while analytics tools selection, ROI matter will be uncovered after periodic usage, tech team of my travel venture is satisfied with the performance.",
+    "topics": "Notes, Text Editors, GitHub, Design Tools, Website Builder, Artificial Intelligence",
+    "url": "https://www.producthunt.com/products/rybbit"
+  },
+  {
+    "product_name": "PawChamp",
+    "tagline": "Dog Training and Care App: AI Companion and 24/7 Dog Experts",
+    "description": "🐾 PawChamp - Dog Training and Care Companion. Meet Pawchie AI 🐶 your virtual training buddy (Claude-powered) + 24/7 real dog experts chats + pawsome expert-verified, science-based, bite-sized learning for you and your pup. ❤️ Become a better pet parent!",
+    "reviews_rating": "4.11",
+    "reviews_count": "12",
+    "featured_comment": "Cause of high-level of the product itself, they also don't look scammy.",
+    "topics": "Developer Tools, Artificial Intelligence, Security, Dogs, Lifestyle, Online Learning, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/pawchamp-puppy-dog-training"
+  },
+  {
+    "product_name": "Nimo",
+    "tagline": "An intelligent canvas that goes far beyond your browser",
+    "description": "End your AI app chaos with a canvas that connects your everyday apps and tools. Replace tabs with context-rich AI Cards. Generate Dynamic Apps from Gmail,Sheets,Notion and more. Chat with your apps-get work done. It's your living, connected, cohesive workspace",
+    "reviews_rating": "4.97",
+    "reviews_count": "0",
+    "featured_comment": "",
+    "topics": "Productivity, Artificial Intelligence, Business, Developer Tools, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/nimo"
+  },
+  {
+    "product_name": "Everyday",
+    "tagline": "Get tasks done across apps with plain English",
+    "description": "The easiest way to complete tasks across your favorite tools. Describe what you need, and Everyday handles it for you.",
+    "reviews_rating": "4.79",
+    "reviews_count": "3",
+    "featured_comment": "It sounds great.  I wish I could find out more about it and the company that provides it.  I'm not even sure the address is legit, as it is a large co-working space.",
+    "topics": "Productivity, Analytics, Developer Tools, SaaS, Artificial Intelligence, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/everyday-4"
+  },
+  {
+    "product_name": "VidAU",
+    "tagline": "All-in-One AI Video Ad Solution for Performance Marketing",
+    "description": "Create high-ROI video ads in seconds with VidAU. Use our AI-powered toolkit of proven ad templates, avatars, and data-backed formats to launch scroll-stopping creatives—fast. No editing needed. Built for marketers and eCom sellers who want results now.",
+    "reviews_rating": "4.51",
+    "reviews_count": "24",
+    "featured_comment": "VidAU has completely changed how I approach video creation. With just a product link or a short script, I can generate full video ads that include avatars, voiceovers, subtitles, and even music — all within minutes. The AI avatars look natural, support multiple languages, and save me tons of time and cost compared to traditional production. It's perfect for fast-moving teams, especially in e-commerce or social media marketing.\n\nThe platform is intuitive and doesn’t require any technical skills. I especially love the ability to quickly A/B test different video versions at scale, which helps optimize performance and conversions. Plus, the pricing is extremely affordable.",
+    "topics": "Artificial Intelligence, Audio, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/vidau"
+  },
+  {
+    "product_name": "Capalyze",
+    "tagline": "ChatGPT for datavores: scrape → ask → visualize",
+    "description": "Scrape real data from websites in real-time into Univers (our spreadsheet engine with 27.5k stars on GitHub!). Ask questions, visualize with interactive tables & charts, and then slice, dice, and export — all in one place.",
+    "reviews_rating": "5",
+    "reviews_count": "14",
+    "featured_comment": "\\u003cp\\u003eI've also considered other scraping tools like Apify, but the cost difference is too significant. Plus, Capalyze doesn't require as much configuration, making it my best solution for now. Oh, and then there's the analysis. It comes with built-in post-scraping analysis capabilities that can directly transform data into actionable insights—something other tools struggle to replicate. Ultimately, Capalyze's strength lies in integrating \\",
+    "topics": "Developer Tools, Artificial Intelligence, Security, Spreadsheets, Data Visualization, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/capalyze"
+  },
+  {
+    "product_name": "Crustdata",
+    "tagline": "Real-time people and company data via APIs and webhooks",
+    "description": "Live Company and People Data via APIs - Search, enrich, or watch a person or company in real-time - Get instant updates when an event happens - Build the most powerful AI agent for GTM teams using real-time data",
+    "reviews_rating": "4.86",
+    "reviews_count": "13",
+    "featured_comment": "I’ve been using Crustdata for a while now, and I have to say it’s one of the most reliable platforms I’ve come across for real-time people and company data. The API is clean, fast, and well-documented, which makes integration with existing workflows almost effortless.\n\nWhat stands out to me most is the real-time accuracy. Unlike many providers where data can feel stale, Crustdata delivers updates instantly via APIs and webhooks. This has been a game changer for us in areas like lead generation, customer profiling, and market research.",
+    "topics": "Design Tools, Website Builder, Artificial Intelligence",
+    "url": "https://www.producthunt.com/products/crustdata-3"
+  },
+  {
+    "product_name": "CREAO",
+    "tagline": "Infinitely personalized software for every team member",
+    "description": "Teams get stuck with one-size-fits-all SaaS that doesn’t fit anyone perfectly. CREAO lets anyone build custom AI apps with natural language, each one with a built-in copilot. Build the right tools for any job.",
+    "reviews_rating": "4.41",
+    "reviews_count": "13",
+    "featured_comment": "The challenge with most SaaS tools is that they tend to force teams into rigid workflows, right? CREAO's approach of letting users build custom AI apps using natural language is exactly what teams need to stay agile. The built-in copilot is a nice touch too, could really help streamline complex processes without needing extra resources. I'm curious about how flexible the platform is, does it allow for deep customization, or is it more about giving teams a good starting point to tweak things? Would love to dive in and see how it adapts to different team structures.",
+    "topics": "Open Source, Software Engineering, Developer Tools, Productivity, Artificial Intelligence, Vibe coding, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/creao-ai"
+  },
+  {
+    "product_name": "YouMind",
+    "tagline": "The first AI creation studio where learning meets writing",
+    "description": "YouMind helps anyone start creating, from capturing ideas to drafting and polishing articles, podcasts, videos, and more. With YouMind, everyone can turn curiosity into creation.",
+    "reviews_rating": "4.88",
+    "reviews_count": "9",
+    "featured_comment": "Since using Youmind, I no longer use Perplexity. Youmind has brought me a more impressive AI search experience. Youmind is a product with excellent technical aesthetics, and the information architecture design is very thoughtful. The Board structure and categorization are very elegant, and it often finds higher-quality information sources. The newly launched shortcuts are extremely helpful in assisting me to understand information across various modalities. I look forward to more excellent features being released for creative assistance in the future.",
+    "topics": "API, Artificial Intelligence, Audio, Productivity, Writing, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/youmind"
+  },
+  {
+    "product_name": "Snapdeck",
+    "tagline": "Lovable for Slides",
+    "description": "Build a winning deck in a snap. No more wrestling with PowerPoint or Keynote — just type a prompt, and our AI designs layouts, themes, charts, and diagrams for you. Now available as a standalone app.",
+    "reviews_rating": "4.47",
+    "reviews_count": "10",
+    "featured_comment": "I was tired of spending too much time wrestling with slide design when I should be focusing on the content. The AI-powered layouts are a total time-saver, and the simplicity of just typing a prompt makes it feel effortless. It’s a tool that gets out of the way and lets me do my best work without the design headaches.",
+    "topics": "Sales, Artificial Intelligence, CRM, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/snapdeck-beta"
+  },
+  {
+    "product_name": "Magiclight",
+    "tagline": "Intelligent story creation agent that creates long videos",
+    "description": "MagicLight gives you the power to turn any script into a cinematic story video—within minutes. Whether you’re creating YouTube content, children’s stories, ads, or brand films, MagicLight is the AI Story Video Agent that makes storytelling effortless.",
+    "reviews_rating": "4.78",
+    "reviews_count": "3",
+    "featured_comment": "It takes the heavy lifting out of video creation, letting me focus on what matters—telling the story. The automation is smart, but it also leaves enough room for creative input, which is exactly the balance I look for in tools I use.",
+    "topics": "Artificial Intelligence, Audio, Maker Tools, Video, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/magiclight-3"
+  },
+  {
+    "product_name": "Tripo AI",
+    "tagline": "Reaching New Heights in 3D Generation.",
+    "description": "Tripo Studio is your next 3D workspace with AI. Whether you’re a game developer, product designer, artist, or just curious about 3D, Tripo makes the process fast, fun, and surprisingly simple.",
+    "reviews_rating": "4.83",
+    "reviews_count": "10",
+    "featured_comment": "I chose Tripo AI because it aligned perfectly with my need to simplify 3D creation while still having enough room for creativity.",
+    "topics": "Artificial Intelligence, Audio, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/tripo-ai"
+  },
+  {
+    "product_name": "CapCut AI Suite",
+    "tagline": "Create, edit, or remix content with AI in a simple editor",
+    "description": "Introducing CapCut AI Editing - Your smart editing partner for camera + prompt-led creation. From auto edits to avatars, smart cuts, and asset generation, it’s AI editing the CapCut way: simple, powerful, smart.",
+    "reviews_rating": "4.39",
+    "reviews_count": "4",
+    "featured_comment": "CapCut AI Suite also impressed me with its compatibility. I was able to easily import various types of media files, including high - resolution videos, images in different formats, and audio files. Whether I was working on files from my professional camera or casual smartphone recordings, the software handled them without a hitch. Additionally, the performance was top - notch. Even when working on complex projects with multiple layers of video, audio, and special effects, the software remained responsive, with no lag or crashes. This reliability gave me the confidence to push the boundaries of my creativity without worrying about technical glitches derailing my progress.​\nIn conclusion, my experience with CapCut AI Suite has been nothing short of extraordinary. It has empowered me to create professional - looking videos with ease, saving me time and opening up a world of creative possibilities. Whether you're a seasoned video editor or a beginner just starting out on your creative journey, I wholeheartedly recommend giving CapCut AI Suite a try.",
+    "topics": "Artificial Intelligence, Audio, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/capcut-ai-suite"
+  },
+  {
+    "product_name": "Genstore.ai",
+    "tagline": "Start selling online with just a prompt",
+    "description": "Create and launch a new store within minutes, and sell confidently with the support of your own team of AI agents that supports you from setup to design to launch. We handle marketing automation and campaign management so you can focus on selling.",
+    "reviews_rating": "4.77",
+    "reviews_count": "11",
+    "featured_comment": "Genstore.ai’s launch is exciting-making AI simple and useful across setup, content, marketing, and operations. I love the ‘autonomous co-workers’ idea, since SMBs rarely have time to optimize campaigns or inventory. One suggestion: show how merchants can balance control with automation (e.g., approval flows), which is key for trust and adoption. Looking forward to seeing this evolve into a true AI-first commerce platform. 🚀",
+    "topics": "Design Tools, Website Builder, Artificial Intelligence",
+    "url": "https://www.producthunt.com/products/genstore-ai-2"
+  },
+  {
+    "product_name": "Aikido Security",
+    "tagline": "Secure everything you build, host, and run.",
+    "description": "Your central code, cloud, and runtime security platform. Fix vulnerabilities automatically with AI AutoFix and AutoTriage. Cut false positives by 85%. Security is an everyone problem. So get security done, and get devs back to building.",
+    "reviews_rating": "5",
+    "reviews_count": "5",
+    "featured_comment": "The combination of scanning tools is really strong, especially when combined with cloud security configuration features for an inside-out and outside-in holistic perspective on risk and exposure to vulnerabilities. And of course the noise reduction provided by reachability analysis and AI parsing of the vulns using EPSSv4 makes everyone happy (infosec, developers, management).",
+    "topics": "Open Source, Software Engineering, Developer Tools, Design Tools, Website Builder, Artificial Intelligence",
+    "url": "https://www.producthunt.com/products/aikido"
+  },
+  {
+    "product_name": "Your Next Store",
+    "tagline": "Launch your store in minutes. Stripe-native. Built for AI.",
+    "description": "Your Next Store is for founders, brand owners and agencies who want to launch and run a modern, high-performance online store without the plugin bloat and limitations of platforms like Shopify. For those who value speed and adaptability.",
+    "reviews_rating": "4.78",
+    "reviews_count": "6",
+    "featured_comment": "I've built e-commerce sites from scratch before, and it always involves reinventing the wheel with auth, payments, and basic store UI. YourNextStore solves this beautifully. It's a production-ready Next.js boilerplate that's pre configured with Stripe, user accounts, and a clean, fast storefront. This lets you skip the tedious setup and focus on your actual products. For developers it's a massive head start. For entrepreneurs, it's a way to get a high-performance store live without writing code. Highly recommended! ⚡️ Congrats to Michał and Jakub!",
+    "topics": "Design Tools, Website Builder, Artificial Intelligence",
+    "url": "https://www.producthunt.com/products/your-next-store"
+  },
+  {
+    "product_name": "Scrumball",
+    "tagline": "Influencer marketing AI agent with 120M creator database",
+    "description": "Launch influencer campaigns within minutes with your AI team. Lillian, Hunter & Charlie handle brand analysis, creator discovery, outreach automation, and ROI tracking from 120M+ database. We manage everything, so you focus on growth.",
+    "reviews_rating": "5",
+    "reviews_count": "3",
+    "featured_comment": "I'm head of affiliate and influencer marketing business unit from a large marketing company. My team members use the old version of Scrumball everyday as a influencer database and CRM system. And now Scrumball becomes a ultimate AI Agent product which is not only a tool, but also a marketing team for me!",
+    "topics": "Sales, Artificial Intelligence, CRM, Productivity, Influencer marketing, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/scrumball"
+  },
+  {
+    "product_name": "Envelope",
+    "tagline": "First AI agent for event planning",
+    "description": "Describe your event and get a stunning registration page, invites & more – instantly. Edit details in an intuitive builder while AI does the heavy lifting. Perfect for individuals and teams who want professional events without juggling tools.",
+    "reviews_rating": "5",
+    "reviews_count": "3",
+    "featured_comment": "As a student juggling a million things, I needed something that simplified event planning without drowning me in too many tools. The AI does the heavy lifting, which saves me hours and lets me focus on the fun parts, like actually organizing the event.",
+    "topics": "Productivity, Artificial Intelligence, Audio, Events, Ticketing, Event marketing, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/envelope-6"
+  },
+  {
+    "product_name": "Oreate",
+    "tagline": "The All-in-one AI workspace that makes everyone a pro",
+    "description": "Introducing Oreate—an all-in-one AI Workspace for professionals, students, and researchers. \n\nWith just one click, it creates slides, research reports, and academic essays with professional layout, accurate sources, and stunning charts. From business proposals to academic research, marketing plans to travel guides, Oreate handles it all. \n\nOreate completes tasks in 3 minutes that would take 3 days, and lets you make slides and reports like a million-dollar expert. ",
+    "reviews_rating": "4.49",
+    "reviews_count": "4",
+    "featured_comment": "Oreate is a game-changer! 🚀 It truly lives up to its promise of being an all-in-one AI workspace. I’ve used it for creating research reports and presentations, and the results are professional, accurate, and visually stunning—done in just minutes instead of days. The ability to generate slides, essays, and business documents with proper sources and charts makes it incredibly valuable for both professionals and students. It feels like having a full research and design team at your fingertips. Highly recommended!",
+    "topics": "Productivity, Artificial Intelligence, Audio, Education, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/oreate"
+  },
+  {
+    "product_name": "Latitude",
+    "tagline": "The Agent Observability Platform",
+    "description": "Latitude is an observability and quality platform for AI agents. It helps developers find and fix failure modes before they reach production.\n\nMost tools give you logs. Latitude gives you issues: failure modes with states and evals attached. ",
+    "reviews_rating": "4.94",
+    "reviews_count": "5",
+    "featured_comment": "Hey Cesar, it's nice to see you here. That's a very interesting tool you're bringing. Currently, I don't have enough metrics to migrate or to have a full dashboard, but it looks very promising. At my last company, we spent a lot of time creating dashboards and KPIs.\n\nI think the templates are very interesting since they will allow non-technical profiles, like product owners, to have the potential of a Python developer. If you could facilitate the process even more to create a no-code advanced data platform that allows non-technical people to extract the full potential of data, just like a data analyst would do, it would be a game-changer.\nIt is very promising !",
+    "topics": "Productivity, Analytics, Developer Tools, Design Tools, Website Builder, Artificial Intelligence",
+    "url": "https://www.producthunt.com/products/latitude-4"
+  },
+  {
+    "product_name": "Trace",
+    "tagline": "Workflow Automations for the Human 👾 AI Workforce",
+    "description": "A workflow automation platform that routes tasks to the right agent – human or AI. By connecting tools like Slack, Jira and Notion – Trace breaks down existing workflows, spots automation opportunities and embeds AI agents to repetitive tasks.",
+    "reviews_rating": "5",
+    "reviews_count": "38",
+    "featured_comment": "We haven't compared Trace to other solutions, just to what we could built ourselves. Obviously we decided to outsource this (i.e. use Trace) and focus on our product instead.",
+    "topics": "Open Source, Software Engineering, Developer Tools, Productivity, Artificial Intelligence, No-Code, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/trace"
+  },
+  {
+    "product_name": "Contra",
+    "tagline": "A new way to work",
+    "description": "Contra is the commission-free creative network, connecting you with the talent and tools to get work underway. Hire more independents. Start more projects. Get more creative.",
+    "reviews_rating": "5",
+    "reviews_count": "46",
+    "featured_comment": "I’ve been using Contra for a while, and it’s easily one of the best tools for freelancers and creative professionals. From finding quality opportunities to managing proposals, contracts, and payments, everything just works seamlessly in one place.\n\nWhat I really love is how polished the platform feels. It’s not just about gigs, it’s about building your brand and running your business professionally without the friction. The one-line project prompt and portfolio tools make it super quick to showcase work and land clients.",
+    "topics": "Sales, Artificial Intelligence, CRM, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/contra-2"
+  },
+  {
+    "product_name": "Recall",
+    "tagline": "When AI gave everyone the same brain, we give AI yours.",
+    "description": "As AI levels the playing field, the advantage shifts from model access to what those models are grounded in: your knowledge. Recall brings your knowledge and AI together. Save what matters, capture your thoughts, and build an AI that knows what you know. From condensing research and enriching it with new studies to finding mentions across your content or picking a movie based on your tastes. Connect your knowledge, the internet, or both in the model you choose. API and MCP.",
+    "reviews_rating": "5",
+    "reviews_count": "42",
+    "featured_comment": "AI chat with what I add. Smarter answers. Markdown export. Quizes.",
+    "topics": "Notes, Text Editors, GitHub, Design Tools, Website Builder, Artificial Intelligence",
+    "url": "https://www.producthunt.com/products/recall-6"
+  },
+  {
+    "product_name": "Macaron AI",
+    "tagline": "The AI that instantly gets you and cooks up mini-apps",
+    "description": "Macaron is a personal AI you'll click with from the very first chat. It remembers your preferences, experiences, and desires far better than a friend, and can instantly cook up personalized mini-apps to make the conversation sweeter.",
+    "reviews_rating": "4.44",
+    "reviews_count": "11",
+    "featured_comment": "Damn, bro, I must say this product is the best AI companion product I've ever used—it's been ages since I've encountered an AI tool this user-friendly. The interface is clean and super smooth, and the initial user guidance is really thoughtful. When I first opened the main screen, the product actually greeted me with a friend-like “Hahaha, hello!” !! Who can understand my joy right now!! As an ordinary person worn down by work, I genuinely need this sense of human connection every day after clocking out. Perhaps in the not-too-distant future, AI will no longer be a cold, impersonal tool, but something that can truly listen to human emotions and then leverage its capabilities to provide us with solutions. I eagerly anticipate that day.",
+    "topics": "Productivity, Artificial Intelligence, Audio, Bots, Lifestyle, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/macaron-ai"
+  },
+  {
+    "product_name": "Anything",
+    "tagline": "Agent that ships mobile apps &amp; web. Everything built in",
+    "description": "Anything is the world's best agent for making products without coding. Ships mobile apps, web, or both. Designs that don't look AI-made. Everything built in, no extra tools needed.",
+    "reviews_rating": "5",
+    "reviews_count": "12",
+    "featured_comment": "So far I've bought 70k credits and burned through 60,000 of them with no luck on completing what I started. It seems really cool at building pages but back end dashboards and infrastructure is a whole different animal. I'd probably be more excited, however there doesn't seem to be any way to get support. Vibe coding sounds awesome but this is struggling to even create the ability to setup admin login correctly. It's the same issues I saw when trying Famous.ai unfortunately. I wish there was a support chat or even email support available. Sadly this just seems like more cash down the the drain so far :(",
+    "topics": "Open Source, Software Engineering, Developer Tools, Artificial Intelligence, No-Code, Vibe coding, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/anything-2"
+  },
+  {
+    "product_name": "Qoder",
+    "tagline": "Qoder is an agentic IDE for real software development.",
+    "description": "Qoder transforms how AI understands real software. Beyond snippets, it grasps your entire architecture—dependencies, patterns, history. Chat naturally for multi-file edits or delegate tasks to AI. From invisible complexity to transparent collaboration.",
+    "reviews_rating": "4.96",
+    "reviews_count": "6",
+    "featured_comment": "I have to say, I am really impressed by the code quality and the professional approach QODER is demonstrating! I am using CODEX, Gemini CLI and I have used Curser for quite some time. Currently no other solution is performing as good as QODER! I have done several A/B testings with Python and JS projects. Also in larger NextJS projects the overall outcome beats currently all others, which is quite impressive. \n\nI know that many people are concerned about potential data exchange to China. Bros, do we really believe our projects are so incredible secret and do we think our IP is so unique that China could greatly take benefit of what we do. Obviously, all companies spy on us - obviously all of our personal infos are transparent. Not sure whether this is really a point. Do we really think that Chinese Corps are worse then others? Do we really think we can slow down the changes in world by not using a great tool? OK, thats an individual take you have to make...\n\nand by the way - I did start in the early 80es with assembler...",
+    "topics": "Open Source, Software Engineering, Developer Tools, Design Tools, Website Builder, Artificial Intelligence",
+    "url": "https://www.producthunt.com/products/qoder"
+  },
+  {
+    "product_name": "Floot",
+    "tagline": "Build serious apps with AI without getting stuck",
+    "description": "Floot lets non-coders & entrepreneurs build serious web apps that actually work. Designed to be super easy to use & powerful. The entire tech stack (backend, DB, hosting, etc) is built-in so you can finally build what you want without headache.",
+    "reviews_rating": "4.44",
+    "reviews_count": "19",
+    "featured_comment": "I chose Floot because it simplifies the app-building process without sacrificing functionality. As someone who’s always juggling side projects, I needed a tool that could handle the full stack, from backend to hosting, without taking up too much time. Floot lets me quickly prototype and launch ideas without getting bogged down by setup or maintenance—perfect for turning concepts into working apps fast.",
+    "topics": "Productivity, Analytics, Developer Tools, Artificial Intelligence, No-Code, Vibe coding, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/floot"
+  },
+  {
+    "product_name": "nFactorial AI",
+    "tagline": "Video calls with world&#x27;s best minds as your personal tutors",
+    "description": "Video calls with world's best minds as your personal tutors. Watch them share their screens and give you lectures on the topics of your choice.",
+    "reviews_rating": "3.84",
+    "reviews_count": "7",
+    "featured_comment": "I found the concept of avatars really cool, I tested it and was impressed. I’d like to highlight the presentation during the video conference: I was truly surprised by the consistency and structure of the narrative, including the synchronization with the slides. After that, I also tested the Q&amp;A chat with the avatar, and once again the prompt really impressed me with the depth and specialization of the topic. I see this as an excellent prototype for implementation in specialist blogs. Congratulations to the team for the great work!",
+    "topics": "API, Artificial Intelligence, Audio, Education, Online Learning, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/nfactorial-ai-6"
+  },
+  {
+    "product_name": "Mocke",
+    "tagline": "Mock email campaigns: know your reply rate without launching",
+    "description": "Mocke AI agent mocks running email campaigns. Get back results in 1 min, such as open, reply or unsubscribe. Mocke also reveals why each lead didn't open emails, reported spam or ignored. Unlock insights of campaign failure (or success!) not seen in real life.",
+    "reviews_rating": "5",
+    "reviews_count": "0",
+    "featured_comment": "",
+    "topics": "Productivity, Artificial Intelligence, Business, Email, Sales, Marketing, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/mocke-mock-cold-email-campaigns"
+  },
+  {
+    "product_name": "Surf",
+    "tagline": "AI-powered crypto insights and trading in one platform",
+    "description": "Meet Surf— a specialized AI agent that turns crypto noise into action. One place for research and execution with real-time social sentiment + blockchain data. Understand concepts like RWA and stablecoins with plain-English and sourced insights.",
+    "reviews_rating": "3.88",
+    "reviews_count": "20",
+    "featured_comment": "[Disclaimer: this review is hand-written, not by AI]\n\nI've been using Surf for about one month for both personal and professional research. From broad / normie questions to in-depth analysis and data for specific and niche cases, Surf has not let me down. It has gained my trust from the past month's experience as it hasn't yet failed one fact check. It has helped a non-technical person  like me understand and draft professional statements for technical publications.\n\nThe best crypto AI in terms of accuracy, context, and research depth!",
+    "topics": "Analytics, Crypto, Artificial Intelligence, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/surf-9"
+  },
+  {
+    "product_name": "Autumn",
+    "tagline": "Stripe made easy for AI startups",
+    "description": "Autumn helps AI startups price, meter, and control usage with just 3 API calls. Built on Stripe, it manages subscriptions, usage, and access in one place. No webhooks or backend logic needed. Ideal for early stage teams building LLM and image apps.",
+    "reviews_rating": "0",
+    "reviews_count": "13",
+    "featured_comment": "I don’t have an AI product, but my users require prepayment and a credit system. I had never built that, and I had spent 3 weeks building it with stripe and Postgres, then I found autumn and got it finished in a few hours. Also, their onboarding experience is very simple. Don’t waste your time building a credits system yourself.",
+    "topics": "Productivity, Analytics, Developer Tools, Open Source, Monetization, Design Tools, Website Builder, Artificial Intelligence",
+    "url": "https://www.producthunt.com/products/autumn-3"
+  },
+  {
+    "product_name": "Asteroid",
+    "tagline": "Build Browser, Linux and Windows AI agents in seconds",
+    "description": "Asteroid lets anyone easily build complex computer-use AI agents. Both non-technical users and engineers can now reliably automate browser and computer tasks 20x faster with Asteroid’s AI agent builder. It’s used in production across hundreds of startups and enterprises, primarily to solve healthcare interoperability challenges.",
+    "reviews_rating": "4.77",
+    "reviews_count": "5",
+    "featured_comment": "We handle onboarding and compliance for a large number of vendors, and a lot of our work used to involve manual checks on government sites, uploading forms, and downloading verification PDFs. We tried RPA tools in the past, but they were brittle and expensive.\n\nAsteroid hit the sweet spot. It’s affordable, flexible, and works on any browser-based workflow. We trained an agent once to handle vendor verification, and it’s been running daily without hiccups. Even when the page layout changed slightly, we were able to retrain it in under 10 minutes.\n\nOur internal productivity has gone up significantly, probably saving ~30+ man hours a week across the team. It’s now part of our standard tool stack for anything browser-related.",
+    "topics": "Productivity, Artificial Intelligence, Business, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/asteroid-3"
+  },
+  {
+    "product_name": "CourseCorrect",
+    "tagline": "AI course matchmaker for real career impact",
+    "description": "No more wasting time or money on the wrong course. CourseCorrect scans the internet to match you with the right one based on your level, experience and skills. Get insights into job demand, salary growth, and what skills will really advance your career.",
+    "reviews_rating": "4.5",
+    "reviews_count": "11",
+    "featured_comment": "CourseCorrect (CC) is a great platform to identify both broad and niche courses that are otherwise not found through conventional search methods or regular LLMs. I came across CC during my research for decent Edtech platforms to upskill and I was genuinely impressed by the granularity it provided on the course type, certification, monetary growth it may lead to and a user friendly interface - I highly recommend it!",
+    "topics": "Notes, Text Editors, GitHub, Education, Artificial Intelligence, Online Learning, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/coursecorrect"
+  },
+  {
+    "product_name": "Kuse",
+    "tagline": "If ChatGPT, Notion, and a whiteboard had a genius baby",
+    "description": "Kuse turns messy inputs into structured deliverables, all on a canvas where your context is visual, editable, and reusable. Chaos in, genius out.",
+    "reviews_rating": "4.88",
+    "reviews_count": "3",
+    "featured_comment": "Kusa has become my go-to tool for analyzing my clients' markets (startups and solo entrepreneurs). What used to take me 2 weeks of niche research now only takes 2-4 days.\n\nThe service saves me hours: I can extract key insights from hour-long podcasts in just 20 minutes using prompts, and consolidate data from multiple sources into a single summary.\n\nThanks to Kusa, I've cut my pitch deck creation time from 3 weeks down to 1 - my clients love the speed.\n\nI'd love font customization - that's the only feature that would make me ditch my other tools completely.\nPerfect for anyone working with entrepreneurs who values their time.",
+    "topics": "Developer Tools, Artificial Intelligence, Security, Productivity, SaaS, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/kuse"
+  },
+  {
+    "product_name": "Marblism",
+    "tagline": "AI Employees to scale your business",
+    "description": "You’re probably wearing too many hats: CEO, marketer, salesperson, accountant, and customer service all in one… Meet Marblism, your AI Employees team to run your inbox, socials, lead generation, SEO, calls and support.",
+    "reviews_rating": "5",
+    "reviews_count": "4",
+    "featured_comment": "I chose Marblism because it focuses on practical automation that actually saves me time day to day. It handles inbox work, follow ups, and social messages in one place. It was easy to set up, doesn’t feel heavy, and just works in the background without much effort from me.",
+    "topics": "Artificial Intelligence, Audio, Productivity, Social Media, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/marblism-2"
+  },
+  {
+    "product_name": "Warestack",
+    "tagline": "Engineering delivery governance for GitHub organizations",
+    "description": "Warestack gives engineering organizations semantic context, deterministic enforcement, and real-time visibility across repositories, teams, and workflows — so they know which changes are safe to move forward, which need attention, and where operational risk is accumulating.\nPR volume and size are becoming the new bottleneck. Coding tools produces more changes than teams can review. As queues grow, review fatigue increases, Lead Time for Changes gets worse, and teams are pressured to move faster.",
+    "reviews_rating": "4.93",
+    "reviews_count": "8",
+    "featured_comment": "Really impressed by this! Custom release protection without touching the code is a huge win for fast-moving teams. Warestack’s ability to trace PRs, issues, and deployments — and then proactively flag or block risky changes — brings a much-needed layer of safety to modern workflows. Love the seamless integration with GitHub, Slack, and Linear too. Excited to see how this evolves!",
+    "topics": "API, Artificial Intelligence, Audio, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/warestack"
+  },
+  {
+    "product_name": "Clueso",
+    "tagline": "Create stunning product videos in minutes with AI",
+    "description": "Clueso is the fastest and easiest way to create stunning product videos. It converts raw screen recordings into studio-quality videos and step-by-step articles in minutes. No editing or design skills needed.",
+    "reviews_rating": "4.36",
+    "reviews_count": "24",
+    "featured_comment": "We've been using Clueso at FinbotsAI to create everything from product demo videos and internal training walkthroughs to public-facing content on YouTube - and it’s honestly been a gamechanger. It’s incredibly easy to use, intuitive even for non-technical users, and the output quality is top-notch. What really stands out is the support - the Clueso team is always prompt, helpful, and genuinely invested in user success. Massive kudos to the team for building such a powerful and user-friendly tool. Looking forward to what’s next! 🚀 - Team FinbotsAI",
+    "topics": "API, Artificial Intelligence, Audio, SaaS, Video, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/clueso"
+  },
+  {
+    "product_name": "TestSprite",
+    "tagline": "Agentic testing for the AI-native team",
+    "description": "TestSprite is the easiest AI agent for frontend and backend software testing, automating the entire testing workflow—from test planning and code generation to execution and debugging. With natural language interaction, seamless coverage for both frontend and backend, and the ability to cut testing costs by up to 90%, it’s the ultimate tool for developers to save time and deliver high-quality software faster.",
+    "reviews_rating": "5",
+    "reviews_count": "5",
+    "featured_comment": "I've been using TestSprite for a couple of days now, and it's honestly been a game-changer for how I test my backend projects. I love how easy it is to record and replay test cases without diving into complex code. It really saves time, especially with cursor Auto-run option. Just one click and get a great test report. Big fan of how it integrates with my existing workflow without being intrusive.",
+    "topics": "Developer Tools, Artificial Intelligence, Security, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/testsprite"
+  },
+  {
+    "product_name": "AppStruct",
+    "tagline": "No-code app builder",
+    "description": "AppStruct — no-code platform built for web, mobile, desktop and Telegram mini-apps development in one place.",
+    "reviews_rating": "4.84",
+    "reviews_count": "4",
+    "featured_comment": "Standard plan helped me to demonstrate to my interns with the help of skilled tech EA(s) how this platform helped me build mobile, web, and desktop apps without coding, creating complex workflows, having all necessary apps in one place, do not forget it is vital for deployment for multi platform requirements. I have used for demonstration purposes and ROI for operations will be effective from next month on travel project.",
+    "topics": "API, Artificial Intelligence, Audio, Telegram, No-Code, Development, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/appstruct"
+  },
+  {
+    "product_name": "Skala",
+    "tagline": "Ultimate legal platform for startups",
+    "description": "Incorporate globally (US + offshore), raise financing (equity, tokens, debt), register and manage trademarks, access legal templates, hire contractors, and get legal support from vetted lawyers",
+    "reviews_rating": "5",
+    "reviews_count": "10",
+    "featured_comment": "Congrats on the launch... but...\n\nyou just put me out of a job! Just kidding! I'm thrilled to see such a resourceful platform come to life – it's going to be a life (and sanity!) saver for so many startups navigating the convoluted legal seas! \n\nJokes aside, I'll be more than happy to recommend your product to clients as it’s a real time and money-saver, not to mention a health preserver. \n\nCuriosity piqued: How often do you plan on updating the product to keep up with the ever-shifting legal landscapes?",
+    "topics": "Open Source, Software Engineering, Developer Tools, Design Tools, Website Builder, Artificial Intelligence",
+    "url": "https://www.producthunt.com/products/skala"
+  },
+  {
+    "product_name": "Stepfun Diligence Check",
+    "tagline": "AI-powered search with agent-verified citations",
+    "description": "StepFun Diligence Check tells you what’s credible — and what’s not. By tracing citations to their sources and validating them with a multi-agent system, it helps you cut through doubt and misinformation.",
+    "reviews_rating": "5",
+    "reviews_count": "6",
+    "featured_comment": "Congrats on launching Stepfun Diligence Check! In a world flooded with sketchy info, that agent-verified citation system sounds like a game-changer for trust online.\n\nHow does your multi-agent system decide which sources are credible enough to pass validation? 🔍",
+    "topics": "Artificial Intelligence, Audio, Productivity, Search, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/stepfun"
+  },
+  {
+    "product_name": "Ash",
+    "tagline": "The first AI designed for therapy",
+    "description": "We all might need some help with our mental health. I used Ash and was blown away by how helpful it was at 2 AM. It remembered our conversations, and even challenged me, providing valuable insights. Isn't it crazy how AI can make us feel more human?",
+    "reviews_rating": "4.65",
+    "reviews_count": "2",
+    "featured_comment": "Congratulations with the launch.\nHere is the feedback after 5 min test:\n- excellent UI, I love soft and warm style\n- responses are not fast, may be intentionally. But I struggle to understand if it hears me or not when I speak or it thinks\n- I'm not able to interrupt AI\n- responses got longer over the few minutes talk. Including asking two questions in one utterance. That's a very bad sign about the model. In addition to not being to interrupt it is getting annoying to me pretty quickly.\n\nPS: I'm the tech guy, some paying users probably will like the downsides :)",
+    "topics": "Artificial Intelligence, Health, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/ash-2"
+  },
+  {
+    "product_name": "Rezonant",
+    "tagline": "Turn product ideas into agent-ready engineering tasks",
+    "description": "Rezonant is the product workspace for teams that build with coding agents. Feed in your context, drop in an idea, get your team on the same page, and walk away with specs and tasks your agents can run with.",
+    "reviews_rating": "4.78",
+    "reviews_count": "4",
+    "featured_comment": "Love what Portia is building here!\nAs an entrepreneur working in e-commerce and automation, I’m constantly testing ways to integrate AI into business operations — but with all the power comes risk.\n\nPortia’s approach of putting compliance and control at the core of multi-agent development is exactly what teams need to scale AI responsibly.\n\nThe SDK looks solid, and the focus on checkpoints, audit trails, and predictable outcomes makes this incredibly relevant — especially for use cases in Shopify and automation flows.\n\nHuge congrats on the launch — excited to follow where this goes 🙌",
+    "topics": "Open Source, Software Engineering, Developer Tools, Design Tools, Website Builder, Artificial Intelligence",
+    "url": "https://www.producthunt.com/products/portia-ai"
+  },
+  {
+    "product_name": "YouWare",
+    "tagline": "World&#x27;s first vibe coding community",
+    "description": "Build, Share, Inspire, All Welcome. YouWare is a buzzing vibe coding community packed with AI-powered tools. Join 100K+ creators and 300K+ projects to get inspired and snag feedback. Need some inspiration? Check out these community-built projects!",
+    "reviews_rating": "4.74",
+    "reviews_count": "9",
+    "featured_comment": "I see YouWare as a tool for creative expression and sharing. If this had been three years ago and I didn’t have access to these tools, maybe I could’ve still made the same things I’m making now, but it probably would’ve taken a whole week. So back then, I might’ve just had the idea and never actually acted on it. But now, I can get something done in just a few hours, sometimes even less, and that makes me way more likely to try things out. And honestly, the results often turn out pretty good. I get an idea, I can bring it to life quickly, and both I and others can immediately feel it. I really believe that accelerates the whole process of generating new ideas. I enjoy that creative building and sharing experience in YouWare.\n\nI think what really sets YouWare apart from other vibe coding platforms is how much it focuses on sharing and community. That honestly makes me more excited to create cool stuff. Just to give one example, there's a cursor plugin that lets you upload and share with a single click. I feel like things like that really show what YouWare is about: helping people get creative and use whatever tools they have to make things happen.\n\nOf course, YouWare is not perfect. One thing is that I still can’t pull or push the same project locally, but that feature is coming soon. Another is that the debugging experience on the website still needs some improvement. Even so, I’m staying patient because the YouWare team is very responsive and always quick to answer my questions and solve issues. I’m really looking forward to future versions of YouWare.",
+    "topics": "Notes, Text Editors, GitHub, Design Tools, Website Builder, Artificial Intelligence",
+    "url": "https://www.producthunt.com/products/youware"
+  },
+  {
+    "product_name": "Dualite",
+    "tagline": "Agent to turn your idea into app",
+    "description": "Build and ship full-stack mobile and web applications with Dualite at ease, in any language",
+    "reviews_rating": "4.86",
+    "reviews_count": "7",
+    "featured_comment": "Dualite Alpha is the missing link between creativity and AI. It lets anyone go from idea to MVP fast—with zero code. I’m especially impressed by the AI prompt builder and how well it translates vision into working prototypes. A great tool for indie builders and creators looking to ship faster.",
+    "topics": "Open Source, Software Engineering, Developer Tools, Design Tools, Website Builder, Artificial Intelligence",
+    "url": "https://www.producthunt.com/products/dualite-2"
+  },
+  {
+    "product_name": "Lazy",
+    "tagline": "A capture tool for knowledge.",
+    "description": "Context switching is poison for productivity.\n\nWhen you get that brilliant idea or see something inspiring, you should be able to take smart notes without switching app or tabs.\n\nThat’s Lazy. One ⌘ shortcut to capture anywhere.\nSign up to our waitlist at lazy.so!",
+    "reviews_rating": "4.82",
+    "reviews_count": "28",
+    "featured_comment": "Don't waste your money here. I signed up for the Lazy waiting list more than a year ago. I agreed to go through a 1:1 onboarding to get access sooner. I paid for a quarter upfront and got access. I was not impressed, but understood it was very early days. The app was far behind in every way except one - it allowed you to quickly capture an idea from desktop. I marked it on my calendar to check in again in one year, thinking that it would be enough time to make headway. So, 12 months later - in December 2024, I signed back in and paid for another quarter. To my shock, even with all of the 5 star review here - including those 5 star reviews from the team responsible for the waitlist that still exists and everyone says they're still on - not a single thing in the app has changed. The poor text editor is still the poor text editor. The sub optimal implementation of workflows, tags, integrations, it's all the same a year later. Everything about this app is exactly the same one year later. \n\nAs I had to pay again for access, I thought that I'd reach out to the team to get a status update. It was and is impossible to contact anyone directly. emails to what should be support alias went unread. There is no easy way to manage tickets or even billing in the app itself. Hidden deep in a help doc, I found a request for feedback from what looked like when the app wold have first launched. It had / has the CEO's email address on it, so I simply reached out asking for an update or a refund if no updates to the app would be forthcoming. I was issued a refund 5 weeks later after continual one way messages from me to that email address.",
+    "topics": "Productivity, Artificial Intelligence, Audio, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/lazy"
+  },
+  {
+    "product_name": "Jupitrr AI",
+    "tagline": "Your all-in-one video workflow tool",
+    "description": "Jupitrr AI is the all-in-one video marketing platform for businesses. Our VideoOS help you find trending topics, write scripts with AI, record with our Auto Jump Cut Teleprompter App, auto-edit with subtitles and B-roll, and publish directly to your socials. Go from idea to posted video fast. One app replaces five.",
+    "reviews_rating": "4.51",
+    "reviews_count": "37",
+    "featured_comment": "I’ve been using Jupitrr for a few months. When I first started using Jupitrr, it was pretty new and the features were limited. Since that time, the team has been steadily updating the software. The software has progressed impressively and I am excited for their future. What I love about the updates is the software gets more features without getting more complicated, which ultimately is the promise of Jupitrr AI. My only complaint is I’d love for features to develop a bit more quickly, but I understand that it’s a small company and as they grow their ability to build the team will grow. It’s already a great product, I just published a short I made with Jupitrr and it’s my best performing short yet. Keep it going Jupitrr team!",
+    "topics": "Productivity, Artificial Intelligence, Business, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/jupitrr"
+  },
+  {
+    "product_name": "OpenArt AI",
+    "tagline": "OpenArt - where ideas becomes visual stories.",
+    "description": "OpenArt gives you the power to turn any idea into a captivating visual story, within minutes.\n\nWhether you're creating viral social media posts, explaining a concept, or building brand content, OpenArt is where ideas become visual stories. Make wonders with OpenArt.",
+    "reviews_rating": "4.7",
+    "reviews_count": "19",
+    "featured_comment": "2 years, that's how long I've waited to start taking AI animation seriously.\\n\\nOne of the reasons being the tech then was falling very short when it came to animating an actual cohesive narrative that was directed, frame by frame, and not randomly generated scenes of 10 seconds without no control of what is happening in between. Animation done the \\",
+    "topics": "Artificial Intelligence, Audio, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/openart"
+  },
+  {
+    "product_name": "Jeeva AI",
+    "tagline": "Superhuman sales, powered by Agentic AI",
+    "description": "From prospecting to enrichment to personalized outreach, Jeeva automates the grunt work so you can focus on building relationships and closing deals.\n\nWith 2.0, Jeeva now sorts your inbox, preps you instantly for every call, manages your follow-ups, and even takes notes for you.",
+    "reviews_rating": "4.14",
+    "reviews_count": "52",
+    "featured_comment": "Our experience with Jeeva.ai has been phenomenal, and it’s reshaped our sales process completely. Jeeva’s AI SDRs are truly next-level, automating lead generation and follow-ups with accuracy and speed. Since Jeeva began handling our outreach, we’ve seen a 60% improvement in email open rates and a 45% increase in response rates. Jeeva exceeded our expectations in every metric—volume, cost, engagement, and time to results. I’d highly recommend Jeeva to any team seeking a powerful, automated SDR solution!",
+    "topics": "Sales, Artificial Intelligence, CRM, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/jeeva-ai"
+  },
+  {
+    "product_name": "Tile",
+    "tagline": "Ship App‑Store‑ready mobile apps with AI agents",
+    "description": "Build and ship App Store ready mobile apps with AI agents. Design visually with full control. Agents handle auth, payments, CMS & more. Tile gives you full-code output and built-in infra so you can launch real apps, fast, without DevOps.",
+    "reviews_rating": "4.44",
+    "reviews_count": "1",
+    "featured_comment": "Dùng rất tuyệt! các Dev AI agent tự phân tích và triển khai theo Long COT prompting tốt. Sản phẩm app mobile khá phù hợp với nocoder. Hi vọng trong tương lai sẽ có nhiều giải pháp tối ưu giao diện, database phức tạp (game, quản lý dữ liệu khách hàng...) và kết nối AI trực tiếp",
+    "topics": "Open Source, Software Engineering, Developer Tools, Design Tools, Artificial Intelligence, Website Builder",
+    "url": "https://www.producthunt.com/products/tile-2"
+  },
+  {
+    "product_name": "Chat4Data",
+    "tagline": "ChatGPT for web scraping",
+    "description": "Best AI-based web scraper plugin for Chrome. Chat4Data allows you to extract web data with natural language at any webpage you want.",
+    "reviews_rating": "0",
+    "reviews_count": "2",
+    "featured_comment": "An incredibly powerful product!\nI used to write Python scripts to scrape data from websites, but due to all kinds of anti-scraping mechanisms, I often couldn't get the content I needed. With Chat4Data, I can now easily extract the data I want without the hassle.\n\nAlthough it currently doesn’t support crawling subpages yet, I was excited to see on the official website that this feature is under development. Looking forward to seeing more capabilities added soon!",
+    "topics": "Productivity, Artificial Intelligence, Business, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/chat4data"
+  },
+  {
+    "product_name": "Bubble",
+    "tagline": "Build and launch web and mobile apps without writing code",
+    "description": "Bubble is a software development platform that enables anyone to build and launch web and mobile applications without writing code. Rather than specializing in one or two aspects of development (like designing landing pages or building databases), Bubble’s full-stack visual programming interface does it all. That means anyone from first-time founders to enterprises can take an idea from concept to fully functional, scalable reality — faster and cheaper than you could with just code.",
+    "reviews_rating": "4.41",
+    "reviews_count": "69",
+    "featured_comment": "Webflow for frontend-heavy sites, Adalo and FlutterFlow for mobile-first apps, Retool for internal tools. Bubble won on flexibility for complex logic and database relationships. The trade-off is that migrating to real code later means a full rebuild.",
+    "topics": "Developer Tools, Artificial Intelligence, Security, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/bubble"
+  },
+  {
+    "product_name": "Pally - AI Relationship Management",
+    "tagline": "All your connections, across all your socials.",
+    "description": "We bring together all your connections, across all your socials. Pally then researches everything they’ve ever posted online, and helps you: prepare for meetings, stay in touch, search your network, and much more.",
+    "reviews_rating": "4.21",
+    "reviews_count": "14",
+    "featured_comment": "🌟 Wow — this is exactly the kind of tool we didn’t know we needed until now.\n\nAs someone who juggles conversations across email threads, DMs, meetings, and socials, Pally feels like a breath of fresh air. The way it unifies all my relationships and actually helps nurture them — not just track them — is something truly special.\n\nLove how it goes beyond being just a CRM. The meeting prep, touchpoint reminders, and relationship insights make it feel like an AI-powered memory extension and emotional compass in one. Also, the playful stats are such a delightful touch — makes you feel more human in the loop rather than less.",
+    "topics": "Sales, Artificial Intelligence, CRM, Productivity, Social Networking, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/pally"
+  },
+  {
+    "product_name": "FuseBase",
+    "tagline": "Internal and external workspaces powered by AI agents",
+    "description": "Scattered tools and clunky collaboration cost you time and money. FuseBase unifies internal and external teamwork—powered by AI agents that automate admin work, so you focus on what matters most.\nIt’s like Notion, but purpose-built for internal teams and external collaboration. Turbo-charged with always-on AI Agents that live inside your FuseBase workspaces, inside every portal, inside a lightning-fast browser extension, and inside our Zapier-style Automation Hub ",
+    "reviews_rating": "4.64",
+    "reviews_count": "63",
+    "featured_comment": "I also looked at other collaboration and client portal tools, but Fuse base stood out due to its built-in AI features and clean client-facing experience.",
+    "topics": "Productivity, Artificial Intelligence, Business, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/fusebase"
+  },
+  {
+    "product_name": "Twenty",
+    "tagline": "The #1 open-source CRM",
+    "description": "Twenty is a modern, open-source CRM alternative to Salesforce—fully customizable, affordable, and powered by the community.",
+    "reviews_rating": "4.75",
+    "reviews_count": "5",
+    "featured_comment": "Twenty emerges at a time when businesses struggle between simplistic standalone CRMs or monolithic, overpriced platforms. By offering a community-driven, open-source foundation with contact management, custom objects and fields, pipeline visualization, email integration and API/webhooks, Twenty stands out by empowering builders to tailor their CRM rather than bending to vendor lock-in.\nThe tech feels sound and scalable: a modern web stack that runs in any up-to-date browser, backed by a growing GitHub community of hundreds of contributors. The team’s emphasis on extensibility rather than endless feature lists shows a credible path to adoption among tinkerers and startups tired of one-size-fits-all tools.\nRisks include the learning curve of self-hosting and lack of offline mode, but for those valuing full control, Twenty delivers a refreshing alternative.",
+    "topics": "Sales, Artificial Intelligence, CRM, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/twenty-crm"
+  },
+  {
+    "product_name": "Spotted in Prod",
+    "tagline": "The very best of iOS",
+    "description": "Spotted in Prod is a curated video library of the best apps and interactions on iOS. Search by name, category, pattern, and more. Scrub clips frame-by-frame. Discover the people behind the craft. And most importantly: download great apps.",
+    "reviews_rating": "4.81",
+    "reviews_count": "0",
+    "featured_comment": "",
+    "topics": "Productivity, Artificial Intelligence, Business, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/spotted-in-prod"
+  },
+  {
+    "product_name": "ComputerX",
+    "tagline": "Your smart agent that handles your computer work",
+    "description": "More time, less busywork–ComputerX handles your computer work so you can focus, flow, and get more done.",
+    "reviews_rating": "5",
+    "reviews_count": "4",
+    "featured_comment": "Impressive launch! I’m curious how deep can the customization go. \nCan I chain together a multi-step workflow, like scraping a few sites, dumping that into a spreadsheet, and then generating a chart?\nLove what I’m seeing so far, excited to test it out 🤩",
+    "topics": "Productivity, Artificial Intelligence, Audio, Maker Tools, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/computerx"
+  },
+  {
+    "product_name": "AgentX",
+    "tagline": "Build a team of AI agents that work together with any LLM",
+    "description": "AgentX - AI Workforce is a multi-agent system that scales your operations by organizing AI agents into collaborative, hierarchical teams. Automate complex tasks, streamline workflows, and unlock new levels of productivity with intelligent agent coordination. ",
+    "reviews_rating": "4.97",
+    "reviews_count": "5",
+    "featured_comment": "AgentX lets you easily build AI agents and integrate them with web infrastructure. From registering my account to creating my first agent took less than 60 seconds; then, I uploaded technical manuals to all my sound gear and created an AI technician.\n\nThen, with appropriate instructions and settings, I made a personal assistant that's fun for me to talk to - that writes how I like, and avoids typical mistakes most AI agents do.\n\nThere are smooth integrations with any external platform you want. What else? The UI is nice, I love the colours in the app :).",
+    "topics": "Open Source, Software Engineering, Developer Tools, Design Tools, Website Builder, Artificial Intelligence",
+    "url": "https://www.producthunt.com/products/agentx"
+  },
+  {
+    "product_name": "Albato Embedded",
+    "tagline": "Native white-label integrations inside your SaaS",
+    "description": "Albato Embedded is an AI-fueled iPaaS that lets you embed 800+ white-label integrations into your SaaS. It allows users to have a native experience connecting apps without leaving the platform or creating third-party accounts. \nAlbato handles everything behind the scenes—from development and hosting to ongoing maintenance and support—so your team stays focused on your core product. You get faster time to market, improved user satisfaction, and higher retention, boosting your SaaS’s bottom line.",
+    "reviews_rating": "4.85",
+    "reviews_count": "5",
+    "featured_comment": "We have been using the iFrame version of Albato Embedded at Calltouch to integrate apps needed by our users for a while now. The team is responsive and reliable and they quickly add new integrations and make changes to existing ones at our request. The communication is friendly, client-oriented. I think this solution can accelerate the growth of any SaaS business by helping gain new users and the loyalty of existing customers. Keep it up!",
+    "topics": "Developer Tools, Artificial Intelligence, Security, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/albato-embedded"
+  },
+  {
+    "product_name": "mysite.ai",
+    "tagline": "AI that builds your website &amp; gets leads",
+    "description": "Mysite.ai builds your website, writes your content, and captures leads - all in under 2 minutes. No templates, no dragging blocks, no stress. Just answer a few questions and go live. Try it free - no sign-up needed.",
+    "reviews_rating": "4.76",
+    "reviews_count": "4",
+    "featured_comment": "Tried it both as a user and a founder. The platform does a solid job of delivering quick, intuitive websites-especially for small businesses or landing pages. In under 3 minutes, I had a clean, responsive page live. The color palette, fonts, and CTA buttons are well-balanced and guide the user naturally.\n\nThat said, the AI builder space feels oversaturated right now, and I didn’t see a standout differentiator yet. However, I appreciate the founders’ effort to make the tool genuinely user-friendly and execution-focused. Best wishes - keep improving and pushing forward!",
+    "topics": "Notes, Text Editors, GitHub, Advertising, Artificial Intelligence, No-Code, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/mysite-ai"
+  },
+  {
+    "product_name": "Flowstep",
+    "tagline": "Design &amp; ship real UI",
+    "description": "The next generation of UI design. AI-native, canvas-first, and 1:1 with production code.",
+    "reviews_rating": "4.66",
+    "reviews_count": "0",
+    "featured_comment": "",
+    "topics": "Sales, Artificial Intelligence, CRM, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/flowstep"
+  },
+  {
+    "product_name": "Thunai",
+    "tagline": "Human-like AI agents with real-time voice &amp; screen assist",
+    "description": "Thunai is an Agentic AI Platform with a self-learning brain that turns your org’s knowledge into smart agents—handling calls, chats, emails and tasks to automate support, sales and marketing. Deploy agents for ticketing, content, scheduling, lead gen and more.",
+    "reviews_rating": "4.86",
+    "reviews_count": "24",
+    "featured_comment": "I'm genuinely impressed with the Knowledge Base feature in Thunai. As a Business Architect, I often need to navigate through multiple documents to convey insights effectively to business stakeholders. Thunai’s Brain feature has been a game-changer—it intelligently connects relevant information based on my queries and delivers concise, context-rich snippets that make communication faster and more effective.",
+    "topics": "Artificial Intelligence, Audio, Android, Chrome Extensions, Customer Success, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/thunai"
+  },
+  {
+    "product_name": "Pythagora",
+    "tagline": "World’s first all-in-one AI dev platform",
+    "description": "Pythagora is a dev tool that builds apps from scratch by talking to you. With Pythagora you can build web apps in hours, not months.",
+    "reviews_rating": "4.96",
+    "reviews_count": "16",
+    "featured_comment": "Pythagora is promising as an all-in-one AI development platform and its ability to produce solid UI, and functional backend is impressive. \n\nHowever, at this point in time, the whole platform feels extremely unfinished. It consistently lags often stopping while coding, requiring me to enter the same prompts multiple times to finish my project. \n\nThe navigation was as challenging as the coding, with the website becoming unresponsive at times. While some of these problems could be related to hitting the free usage limit for the day, the overall experience suggests that Pythagora requires a lot of polishing and stability. \n\nI am hopeful for it as a product, once Pythagora is polished it could disrupt the market for accelerators for rapid app development.",
+    "topics": "Open Source, Software Engineering, Developer Tools, Design Tools, Website Builder, Artificial Intelligence",
+    "url": "https://www.producthunt.com/products/pythagora"
+  },
+  {
+    "product_name": "Atlas",
+    "tagline": "Vibe pricing in seconds",
+    "description": "Get plug-and-play pricing pages and make money without the grind.",
+    "reviews_rating": "4.8",
+    "reviews_count": "3",
+    "featured_comment": "I chose Atlas because it makes pricing experimentation and billing management simple, fast, and scalable for growing products.",
+    "topics": "Productivity, Artificial Intelligence, Audio, Fintech, SaaS, Design Tools, Website Builder",
+    "url": "https://www.producthunt.com/products/atlas"
+  }
+]

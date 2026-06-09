@@ -5,7 +5,7 @@ company outcomes (see app/ml_training/train.py). That base is then adjusted by a
 transparent financial-risk layer using the founder's own questionnaire numbers
 (runway, churn, growth, burn) — neither of which is synthetic.
 
-Falls back to a pure rule-based scorer if the trained model is missing.
+There is no mock/heuristic substitute: if the trained model is missing the call raises.
 SHAP explainability is layered on the trained model when the `shap` package is present.
 """
 from __future__ import annotations
@@ -54,65 +54,56 @@ def _financial_adjustment(metrics: dict[str, Any]) -> tuple[float, list[dict]]:
     return delta, fin_importance
 
 
-def _rule_based(metrics: dict[str, Any]) -> dict[str, Any]:
-    delta, fin_importance = _financial_adjustment(metrics)
-    base = min(max(0.30 + delta, 0.02), 0.97)
-    return {
-        "failure_6m": round(min(base * 1.15, 0.99), 3),
-        "failure_12m": round(base, 3),
-        "failure_24m": round(min(base * 0.85, 0.99), 3),
-        "method": "rule_based",
-        "feature_importance": fin_importance,
-        "shap_available": False,
-        "trained": False,
-    }
-
-
 def predict_failure(metrics: dict[str, Any]) -> dict[str, Any]:
+    """Predict failure risk from the trained model + the founder's real financials.
+
+    No heuristic/mock substitute: if the trained model is unavailable, this raises so the
+    caller surfaces a real error instead of inventing numbers.
+    """
     bundle = loader.load_bundle("failure_model")
     if bundle is None:
-        return _rule_based(metrics)
-    try:
-        model = bundle["model"]
-        industry_map = bundle["industry_map"]
-        x = np.array([metrics_to_features(metrics, industry_map)])
-        base_ml = float(model.predict_proba(x)[0][1])
+        raise RuntimeError(
+            "failure_model not trained. Run: python -m app.ml_training.train"
+        )
 
-        delta, fin_importance = _financial_adjustment(metrics)
-        base = min(max(base_ml + delta, 0.02), 0.98)
+    model = bundle["model"]
+    industry_map = bundle["industry_map"]
+    x = np.array([metrics_to_features(metrics, industry_map)])
+    base_ml = float(model.predict_proba(x)[0][1])
 
-        # Model feature importances (data-driven) + financial contributions.
-        importances = getattr(model, "feature_importances_", None)
-        feature_importance = []
-        if importances is not None:
-            for name, imp in sorted(zip(FEATURE_NAMES, importances), key=lambda t: -t[1]):
-                feature_importance.append({"feature": name, "impact": round(float(imp), 4)})
-        feature_importance.extend(fin_importance)
+    # Real financial-risk layer over the founder's own numbers (not a fallback).
+    delta, fin_importance = _financial_adjustment(metrics)
+    base = min(max(base_ml + delta, 0.02), 0.98)
 
-        shap_ok = False
-        if _HAS_SHAP:
-            try:
-                explainer = shap.TreeExplainer(model)
-                vals = np.array(explainer.shap_values(x)).reshape(-1)
-                feature_importance = [
-                    {"feature": FEATURE_NAMES[i], "impact": round(float(vals[i]), 4)}
-                    for i in np.argsort(-np.abs(vals))
-                ] + fin_importance
-                shap_ok = True
-            except Exception as exc:  # pragma: no cover
-                logger.info("SHAP failed: %s", exc)
+    # Model feature importances (data-driven) + financial contributions.
+    importances = getattr(model, "feature_importances_", None)
+    feature_importance = []
+    if importances is not None:
+        for name, imp in sorted(zip(FEATURE_NAMES, importances), key=lambda t: -t[1]):
+            feature_importance.append({"feature": name, "impact": round(float(imp), 4)})
+    feature_importance.extend(fin_importance)
 
-        return {
-            "failure_6m": round(min(base * 1.12, 0.99), 3),
-            "failure_12m": round(base, 3),
-            "failure_24m": round(min(base * 0.88, 0.99), 3),
-            "method": f"{bundle['model_type']} (trained on {bundle['n_samples']} real companies, AUC {bundle['metrics']['auc']})",
-            "model_base_probability": round(base_ml, 3),
-            "financial_adjustment": round(delta, 3),
-            "feature_importance": feature_importance,
-            "shap_available": shap_ok,
-            "trained": True,
-        }
-    except Exception as exc:  # pragma: no cover
-        logger.warning("Trained failure predict failed (%s); rule-based", exc)
-        return _rule_based(metrics)
+    shap_ok = False
+    if _HAS_SHAP:
+        try:
+            explainer = shap.TreeExplainer(model)
+            vals = np.array(explainer.shap_values(x)).reshape(-1)
+            feature_importance = [
+                {"feature": FEATURE_NAMES[i], "impact": round(float(vals[i]), 4)}
+                for i in np.argsort(-np.abs(vals))
+            ] + fin_importance
+            shap_ok = True
+        except Exception as exc:  # pragma: no cover
+            logger.info("SHAP failed: %s", exc)
+
+    return {
+        "failure_6m": round(min(base * 1.12, 0.99), 3),
+        "failure_12m": round(base, 3),
+        "failure_24m": round(min(base * 0.88, 0.99), 3),
+        "method": f"{bundle['model_type']} (trained on {bundle['n_samples']} real companies, AUC {bundle['metrics']['auc']})",
+        "model_base_probability": round(base_ml, 3),
+        "financial_adjustment": round(delta, 3),
+        "feature_importance": feature_importance,
+        "shap_available": shap_ok,
+        "trained": True,
+    }
