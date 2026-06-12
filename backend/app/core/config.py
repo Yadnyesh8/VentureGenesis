@@ -85,6 +85,11 @@ class Settings:
     OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
     OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY", "")
     OPENROUTER_MODEL = os.getenv("OPENROUTER_MODEL", "google/gemma-2-9b-it:free")
+    # Featherless (OpenAI-compatible). Set LLM_PROVIDER=featherless to make it active.
+    LLM_PROVIDER = os.getenv("LLM_PROVIDER", "")
+    FEATHERLESS_API_KEY = os.getenv("FEATHERLESS_API_KEY", "")
+    FEATHERLESS_MODEL = os.getenv("FEATHERLESS_MODEL", "google/gemma-4-31B-it")
+    FEATHERLESS_BASE_URL = os.getenv("FEATHERLESS_BASE_URL", "https://api.featherless.ai/v1")
     PINECONE_API_KEY = os.getenv("PINECONE_API_KEY", "")
     NEO4J_URI = os.getenv("NEO4J_URI", "")
     NEO4J_USER = os.getenv("NEO4J_USER", "neo4j")

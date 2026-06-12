@@ -9,7 +9,7 @@ import { InstrumentTooltip } from "@/components/instrument";
 export default function FailurePage() {
   const { ref } = useStore();
   const r = ref();
-  const fail = useAgent(() => api.failure(r), [JSON.stringify(r)]);
+  const fail = useAgent(() => api.failure(r), [JSON.stringify(r)], "failure");
   const d = fail.data?.data;
   const shap = (d?.feature_importance || []).map((x: any) => ({ name: x.feature, value: x.impact }));
 

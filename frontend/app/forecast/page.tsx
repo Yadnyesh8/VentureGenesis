@@ -9,7 +9,7 @@ import { InstrumentTooltip } from "@/components/instrument";
 export default function ForecastPage() {
   const { ref } = useStore();
   const r = ref();
-  const { data, loading, error } = useAgent(() => api.forecast(r), [JSON.stringify(r)]);
+  const { data, loading, error } = useAgent(() => api.forecast(r), [JSON.stringify(r)], "forecast");
   const d = data?.data;
   const history = (d?.series || []).map((v: number, i: number) => ({ x: `H${i + 1}`, history: v }));
   const proj = (d?.projection || []).map((v: number, i: number) => ({ x: `+${i + 1}m`, forecast: v }));

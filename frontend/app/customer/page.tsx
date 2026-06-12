@@ -13,7 +13,7 @@ export default function CustomerPage() {
   const { ref, reviews, setReviews } = useStore();
   const [draft, setDraft] = useState(reviews.join("\n"));
   const r = ref();
-  const { data, loading, error, refetch } = useAgent(() => api.customer(r), [JSON.stringify(r)]);
+  const { data, loading, error, refetch } = useAgent(() => api.customer(r), [JSON.stringify(r)], "customer");
   const sent = data?.data?.sentiment;
   const dist = sent ? Object.entries(sent.distribution).map(([k, v]) => ({ name: k, value: v as number })) : [];
 

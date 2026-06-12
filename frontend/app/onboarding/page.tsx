@@ -123,9 +123,9 @@ export default function Onboarding() {
       };
       let id: number | null = null;
       try { id = (await api.createStartup(m))?.id ?? null; } catch {}
-      setProfile(m, id);
       if (reviews.length) setReviews(reviews);
-      router.push("/dashboard");
+      setProfile(m, id); // also resets any prior analysis cache
+      router.push("/launching");
     } finally {
       setSaving(false);
     }

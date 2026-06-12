@@ -15,12 +15,12 @@ function StatusGlyph({ status }: { status: StepState["status"] }) {
     return (
       <svg width="16" height="16" viewBox="0 0 16 16" className="[animation:sweep_0.9s_linear_infinite]">
         <circle cx="8" cy="8" r="6" fill="none" stroke="#1A1E29" strokeWidth="2" />
-        <path d="M8 2 a6 6 0 0 1 6 6" fill="none" stroke="#7C6CFF" strokeWidth="2" strokeLinecap="round" />
+        <path d="M8 2 a6 6 0 0 1 6 6" fill="none" stroke="#FF8A3D" strokeWidth="2" strokeLinecap="round" />
       </svg>
     );
   if (status === "done")
     return (
-      <svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8.5 L6.5 12 L13 4" fill="none" stroke="#C2F24A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+      <svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8.5 L6.5 12 L13 4" fill="none" stroke="#FFC83D" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
     );
   if (status === "error")
     return <svg width="16" height="16" viewBox="0 0 16 16"><path d="M4 4 L12 12 M12 4 L4 12" stroke="#FF5D5D" strokeWidth="2" strokeLinecap="round" /></svg>;
@@ -37,7 +37,7 @@ export default function AgentPipeline({ steps }: { steps: StepState[] }) {
         <div className="label-mono text-text-dim">{done}/{steps.length} · {pct}%</div>
       </div>
       <div className="h-[3px] bg-surface2 rounded-full mb-4 overflow-hidden">
-        <motion.div className="h-full rounded-full" style={{ background: "linear-gradient(90deg,#7C6CFF,#34E1D2)" }}
+        <motion.div className="h-full rounded-full" style={{ background: "linear-gradient(90deg,#FF5D5D,#FF8A3D,#FFC83D)" }}
           animate={{ width: `${pct}%` }} transition={{ ease: "easeOut", duration: 0.4 }} />
       </div>
       <div className="space-y-1">
@@ -48,14 +48,14 @@ export default function AgentPipeline({ steps }: { steps: StepState[] }) {
               key={s.key}
               layout
               className={`flex items-center gap-3 px-3 py-2 rounded-lg border transition ${
-                active ? "border-violet bg-violet/5" : s.status === "done" ? "border-line" : "border-transparent"
+                active ? "border-amber bg-amber/5" : s.status === "done" ? "border-line" : "border-transparent"
               }`}
               animate={active ? { opacity: [0.6, 1, 0.6] } : { opacity: 1 }}
               transition={active ? { repeat: Infinity, duration: 1.4 } : { duration: 0.2 }}
             >
               <StatusGlyph status={s.status} />
               <span className={`text-sm flex-1 ${s.status === "pending" ? "text-text-mute" : "text-text"}`}>{s.label}</span>
-              <span className={`pill ${s.kind === "llm" ? "text-violet border-violet bg-violet/10" : "text-aqua border-aqua bg-aqua/10"}`}>
+              <span className={`pill ${s.kind === "llm" ? "text-amber border-amber bg-amber/10" : "text-coral border-coral bg-coral/10"}`}>
                 {s.kind === "llm" ? "LLM" : "MODEL"}
               </span>
               {s.ms != null && s.status !== "running" && (

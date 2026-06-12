@@ -8,7 +8,7 @@ import { gradeColor } from "@/lib/chartTheme";
 export default function MarketPage() {
   const { ref } = useStore();
   const r = ref();
-  const { data, loading, error } = useAgent(() => api.market(r), [JSON.stringify(r)]);
+  const { data, loading, error } = useAgent(() => api.market(r), [JSON.stringify(r)], "market");
   const d = data?.data;
   const opp = d?.opportunity_score ?? 0;
 

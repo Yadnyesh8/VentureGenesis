@@ -9,7 +9,7 @@ import { InstrumentTooltip } from "@/components/instrument";
 export default function HealthPage() {
   const { ref } = useStore();
   const r = ref();
-  const { data, loading, error } = useAgent(() => api.health(r), [JSON.stringify(r)]);
+  const { data, loading, error } = useAgent(() => api.health(r), [JSON.stringify(r)], "health");
   const d = data?.data;
   const comps = d?.components || {};
   const chart = Object.entries(comps).map(([k, v]) => ({ name: k.replace(/_/g, " "), value: v as number }));

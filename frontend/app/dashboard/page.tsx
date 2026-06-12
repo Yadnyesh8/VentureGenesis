@@ -10,9 +10,9 @@ export default function Dashboard() {
   const { ref, metrics, clearProfile } = useStore();
   const r = ref();
   const key = JSON.stringify(r);
-  const health = useAgent(() => api.health(r), [key]);
-  const failure = useAgent(() => api.failure(r), [key]);
-  const funding = useAgent(() => api.funding(r), [key]);
+  const health = useAgent(() => api.health(r), [key], "health");
+  const failure = useAgent(() => api.failure(r), [key], "failure");
+  const funding = useAgent(() => api.funding(r), [key], "funding");
 
   const hs = health.data?.data?.health_score ?? 0;
   const f12 = failure.data?.data?.failure_12m ?? 0;

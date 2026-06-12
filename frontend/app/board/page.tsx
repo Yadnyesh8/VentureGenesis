@@ -1,9 +1,8 @@
 "use client";
-import { useRef, useState } from "react";
-import { streamBoard } from "@/lib/api";
+import { useEffect, useRef } from "react";
 import { useStore } from "@/lib/store";
 import { Card, PageHeader, Pill } from "@/components/ui";
-import AgentPipeline, { StepState } from "@/components/AgentPipeline";
+import AgentPipeline from "@/components/AgentPipeline";
 
 // Professional monogram codes (no emoji).
 const ROLE_CODE: any = {
@@ -11,75 +10,30 @@ const ROLE_CODE: any = {
 };
 
 export default function BoardPage() {
-  const { ref } = useStore();
-  const [steps, setSteps] = useState<StepState[]>([]);
-  const [messages, setMessages] = useState<any[]>([]);
-  const [decision, setDecision] = useState<any>(null);
-  const [running, setRunning] = useState(false);
-  const [elapsed, setElapsed] = useState(0);
+  const { board, analysis, prewarm } = useStore();
+  const { steps, messages, decision } = board;
+  const running = analysis.status === "running";
   const scrollRef = useRef<HTMLDivElement>(null);
-  const timerRef = useRef<any>(null);
 
-  function patch(key: string, updates: Partial<StepState>) {
-    setSteps((prev) => prev.map((s) => (s.key === key ? { ...s, ...updates } : s)));
-  }
-
-  async function convene() {
-    setMessages([]);
-    setDecision(null);
-    setRunning(true);
-    setElapsed(0);
-    const t0 = Date.now();
-    timerRef.current = setInterval(() => setElapsed(Math.floor((Date.now() - t0) / 1000)), 1000);
-    try {
-      await streamBoard(ref(), (ev) => {
-        switch (ev.type) {
-          case "start":
-            setSteps(ev.steps.map((s: any) => ({ ...s, status: "pending" })));
-            break;
-          case "agent_start":
-            patch(ev.key, { status: "running" });
-            break;
-          case "agent_done":
-            patch(ev.key, { status: "done", ms: ev.ms });
-            if (ev.key === "board") setDecision(ev.result);
-            break;
-          case "agent_error":
-            patch(ev.key, { status: "error", ms: ev.ms });
-            break;
-          case "debate_message":
-            setMessages((m) => [...m, ev]);
-            setTimeout(() => scrollRef.current?.scrollTo({ top: 1e9, behavior: "smooth" }), 40);
-            break;
-          case "complete":
-            if (ev.decision) setDecision(ev.decision);
-            break;
-        }
-      });
-    } catch (e) {
-      /* surfaced via step error states */
-    } finally {
-      clearInterval(timerRef.current);
-      setRunning(false);
-    }
-  }
-
-  const fmtT = `${Math.floor(elapsed / 60)}:${String(elapsed % 60).padStart(2, "0")}`;
+  // Auto-scroll the debate as statements stream in.
+  useEffect(() => {
+    scrollRef.current?.scrollTo({ top: 1e9, behavior: "smooth" });
+  }, [messages.length]);
 
   return (
     <div>
       <PageHeader
         title="Board of Directors"
-        desc="Every agent runs live (real LLM calls). This genuinely takes a few minutes — watch each agent work."
+        desc="Your full board — every agent already ran during launch. Re-run any time to refresh the deliberation."
         action={
-          <button className="btn" onClick={convene} disabled={running}>
-            {running ? `Deliberating · ${fmtT}` : "Convene the Board"}
+          <button className="btn" onClick={prewarm} disabled={running}>
+            {running ? "Deliberating…" : board.ran ? "Re-run board" : "Convene the Board"}
           </button>
         }
       />
 
       {steps.length === 0 && !running && (
-        <Card><div className="text-text-dim text-sm">Click "Convene the Board" to run all 16 agents live. Each lights up as it works; the boardroom debate streams in real time.</div></Card>
+        <Card><div className="text-text-dim text-sm">No analysis yet. Click "Convene the Board" to run all agents live; each lights up as it works and the boardroom debate streams in real time.</div></Card>
       )}
 
       {steps.length > 0 && (

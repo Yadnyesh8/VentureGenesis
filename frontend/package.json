@@ -9,16 +9,23 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@gsap/react": "^2.1.1",
+    "@react-three/fiber": "^8.17.10",
     "framer-motion": "^11.11.17",
+    "gsap": "^3.12.5",
+    "lenis": "^1.1.17",
+    "lottie-react": "^2.4.1",
     "next": "14.2.18",
     "react": "18.3.1",
     "react-dom": "18.3.1",
-    "recharts": "2.13.3"
+    "recharts": "2.13.3",
+    "three": "^0.169.0"
   },
   "devDependencies": {
     "@types/node": "20.14.0",
     "@types/react": "18.3.3",
     "@types/react-dom": "18.3.0",
+    "@types/three": "^0.169.0",
     "autoprefixer": "10.4.20",
     "postcss": "8.4.49",
     "tailwindcss": "3.4.15",

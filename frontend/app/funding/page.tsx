@@ -8,8 +8,8 @@ import { gradeColor } from "@/lib/chartTheme";
 export default function FundingPage() {
   const { ref } = useStore();
   const r = ref();
-  const fund = useAgent(() => api.funding(r), [JSON.stringify(r)]);
-  const invest = useAgent(() => api.strategy(r), [JSON.stringify(r)]); // founder strategy recs
+  const fund = useAgent(() => api.funding(r), [JSON.stringify(r)], "funding");
+  const invest = useAgent(() => api.strategy(r), [JSON.stringify(r)], "strategy"); // founder strategy recs
   const d = fund.data?.data;
   const score = d?.investor_score ?? 0;
 

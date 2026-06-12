@@ -1,9 +1,7 @@
 "use client";
-import { useState } from "react";
-import { streamBoard } from "@/lib/api";
 import { useStore } from "@/lib/store";
 import { Card, PageHeader, fmtMoney, fmtPct } from "@/components/ui";
-import AgentPipeline, { StepState } from "@/components/AgentPipeline";
+import AgentPipeline from "@/components/AgentPipeline";
 import {
   ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Cell, LabelList,
   AreaChart, Area, CartesianGrid, PieChart, Pie, Tooltip, ReferenceLine,
@@ -25,48 +23,26 @@ const today = () => new Date().toLocaleDateString("en-US", { year: "numeric", mo
 const gColor = (s: number) => (s >= 75 ? RC.good : s >= 45 ? RC.aqua : RC.bad);
 
 export default function ReportPage() {
-  const { ref, metrics } = useStore();
-  const [steps, setSteps] = useState<StepState[]>([]);
-  const [report, setReport] = useState<any>(null);
-  const [decision, setDecision] = useState<any>(null);
-  const [running, setRunning] = useState(false);
-
-  function patch(key: string, u: Partial<StepState>) {
-    setSteps((p) => p.map((s) => (s.key === key ? { ...s, ...u } : s)));
-  }
-
-  async function run() {
-    setRunning(true);
-    setReport(null);
-    setDecision(null);
-    try {
-      await streamBoard(ref(), (ev) => {
-        if (ev.type === "start") setSteps(ev.steps.map((s: any) => ({ ...s, status: "pending" })));
-        if (ev.type === "agent_start") patch(ev.key, { status: "running" });
-        if (ev.type === "agent_done") patch(ev.key, { status: "done", ms: ev.ms });
-        if (ev.type === "agent_error") patch(ev.key, { status: "error", ms: ev.ms });
-        if (ev.type === "complete") { setReport(ev.report); setDecision(ev.decision); }
-      });
-    } finally {
-      setRunning(false);
-    }
-  }
+  const { metrics, board, analysis, prewarm } = useStore();
+  const report = board.report;
+  const decision = board.decision;
+  const running = analysis.status === "running";
 
   return (
     <div>
       <div className="no-print">
         <PageHeader
           title="Executive Report"
-          desc="Runs every agent live, then compiles a professional multi-page document."
+          desc="Compiled from your board analysis — every agent already ran during launch."
           action={
             <div className="flex gap-2">
-              <button className="btn" onClick={run} disabled={running}>{running ? "Compiling…" : report ? "Re-run" : "Generate report"}</button>
+              <button className="btn" onClick={prewarm} disabled={running}>{running ? "Compiling…" : report ? "Re-run" : "Generate report"}</button>
               {report && <button className="btn-ghost" onClick={() => window.print()}>Download PDF</button>}
             </div>
           }
         />
-        {steps.length > 0 && !report && <Card><AgentPipeline steps={steps} /></Card>}
-        {!report && steps.length === 0 && (
+        {board.steps.length > 0 && !report && <Card><AgentPipeline steps={board.steps} /></Card>}
+        {!report && board.steps.length === 0 && (
           <Card><div className="text-text-dim text-sm">Click "Generate report" to run all agents and compile your executive document.</div></Card>
         )}
       </div>

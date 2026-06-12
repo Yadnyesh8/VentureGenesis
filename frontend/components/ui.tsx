@@ -2,6 +2,7 @@
 import React from "react";
 import { motion, animate, useReducedMotion } from "framer-motion";
 import { RegCross, CoordTag, TraceGlyph } from "./instrument";
+import { useStore } from "@/lib/store";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -164,21 +165,33 @@ export function fmtPct(n: number) {
   return `${(n * 100).toFixed(1)}%`;
 }
 
-export function useAgent<T = any>(fn: () => Promise<T>, deps: any[] = []) {
-  const [data, setData] = React.useState<T | null>(null);
-  const [loading, setLoading] = React.useState(true);
+// Cache-aware agent runner. When `cacheKey` is supplied, results pre-loaded by the
+// launching screen (or a prior visit) are read from the shared store and rendered
+// instantly — no refetch. Without a key it behaves as a plain on-mount fetcher.
+export function useAgent<T = any>(fn: () => Promise<T>, deps: any[] = [], cacheKey?: string) {
+  const { cache, setCache } = useStore();
+  const cached = cacheKey ? (cache[cacheKey] as T | undefined) : undefined;
+  const [data, setData] = React.useState<T | null>(cached ?? null);
+  const [loading, setLoading] = React.useState(cacheKey ? !cached : true);
   const [error, setError] = React.useState<string | null>(null);
   const run = React.useCallback(() => {
     setLoading(true);
     setError(null);
     fn()
-      .then((d) => setData(d))
+      .then((d) => { setData(d); if (cacheKey) setCache(cacheKey, d); })
       .catch((e) => setError(String(e?.message || e)))
       .finally(() => setLoading(false));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
   React.useEffect(() => {
+    if (cacheKey && cache[cacheKey]) {
+      setData(cache[cacheKey]);
+      setLoading(false);
+      setError(null);
+      return;
+    }
     run();
-  }, [run]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [run, cacheKey ? cache[cacheKey] : undefined]);
   return { data, loading, error, refetch: run };
 }

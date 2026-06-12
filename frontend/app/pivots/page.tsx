@@ -9,7 +9,7 @@ import { InstrumentTooltip } from "@/components/instrument";
 export default function PivotsPage() {
   const { ref } = useStore();
   const r = ref();
-  const { data, loading, error } = useAgent(() => api.pivots(r), [JSON.stringify(r)]);
+  const { data, loading, error } = useAgent(() => api.pivots(r), [JSON.stringify(r)], "pivots");
   const d = data?.data;
   const chart = (d?.all_pivots || []).map((p: any) => ({
     name: p.pivot_name.length > 18 ? p.pivot_name.slice(0, 18) + "…" : p.pivot_name,

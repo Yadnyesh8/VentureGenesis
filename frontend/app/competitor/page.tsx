@@ -8,7 +8,7 @@ import { CHART } from "@/lib/chartTheme";
 export default function CompetitorPage() {
   const { ref } = useStore();
   const r = ref();
-  const { data, loading, error } = useAgent(() => api.competitor(r), [JSON.stringify(r)]);
+  const { data, loading, error } = useAgent(() => api.competitor(r), [JSON.stringify(r)], "competitor");
   const d = data?.data;
   const threat = d?.threat_score ?? 0;
 

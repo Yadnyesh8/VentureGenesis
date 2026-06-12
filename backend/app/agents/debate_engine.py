@@ -25,20 +25,6 @@ except Exception:  # pragma: no cover
     _HAS_LANGGRAPH = False
 
 
-def _stance_for(role: str, context: dict[str, Any]) -> str:
-    growth = context.get("customer_growth", 0) or 0
-    runway = context.get("runway", 0) or 0
-    if role in ("Financial",):
-        return "bearish" if runway < 8 else "neutral"
-    if role in ("Investor", "Market"):
-        return "bullish" if growth > 0.1 else "neutral"
-    if role == "Customer":
-        return "bearish" if (context.get("churn_rate", 0) or 0) > 0.12 else "bullish"
-    if role == "Competitor":
-        return "bearish"
-    return "bullish" if growth > 0.08 else "neutral"
-
-
 def _agent_turn(role: str, rnd: int, context: dict[str, Any], prior: str) -> dict[str, Any]:
     if rnd == 1:
         prompt = render_prompt("debate_round_1", role=role, context=context)
