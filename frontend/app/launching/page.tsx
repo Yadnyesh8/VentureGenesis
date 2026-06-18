@@ -5,7 +5,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useStore } from "@/lib/store";
 import LottieLoader from "@/components/LottieLoader";
 import AgentPipeline from "@/components/AgentPipeline";
-import FluidCanvas from "@/components/landing/FluidCanvas";
 
 const PHRASES = [
   "Reading your numbers…",
@@ -53,7 +52,6 @@ export default function Launching() {
 
   return (
     <div className="relative overflow-hidden -mx-5 px-5 -my-8 py-8 md:-my-10 md:py-10">
-      <FluidCanvas color="#FF8A3D" />
       <div className="relative z-10 min-h-[70vh] grid lg:grid-cols-[1fr_360px] gap-10 items-center">
       <div className="text-center lg:text-left">
         <LottieLoader size={300} />
