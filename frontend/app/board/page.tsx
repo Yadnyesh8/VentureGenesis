@@ -3,10 +3,14 @@ import { useEffect, useRef } from "react";
 import { useStore } from "@/lib/store";
 import { Card, PageHeader, Pill } from "@/components/ui";
 import AgentPipeline from "@/components/AgentPipeline";
+import { TraceGlyph } from "@/components/instrument";
 
-// Professional monogram codes (no emoji).
+// Professional monogram codes (no emoji) + fixed accent per role.
 const ROLE_CODE: any = {
   Founder: "FND", Investor: "INV", Financial: "CFO", Customer: "CX", Market: "MKT", Competitor: "CMP",
+};
+const ROLE_HEX: Record<string, string> = {
+  Founder: "#34E1D2", Investor: "#7C6CFF", Financial: "#C2F24A", Customer: "#FF4FA3", Market: "#FFB13C", Competitor: "#FF5D5D",
 };
 
 export default function BoardPage() {
@@ -33,7 +37,17 @@ export default function BoardPage() {
       />
 
       {steps.length === 0 && !running && (
-        <Card><div className="text-text-dim text-sm">No analysis yet. Click "Convene the Board" to run all agents live; each lights up as it works and the boardroom debate streams in real time.</div></Card>
+        <Card hover={false}>
+          <div className="flex items-start gap-4 py-2">
+            <span className="grid place-items-center w-11 h-11 rounded-xl border border-line bg-surface2 shrink-0">
+              <TraceGlyph size={22} animated />
+            </span>
+            <div>
+              <div className="title-display text-lg">No deliberation yet</div>
+              <div className="text-text-dim text-sm mt-1 max-w-xl">Click <span className="text-text">Convene the Board</span> to run all agents live — each lights up as it works and the boardroom debate streams in real time.</div>
+            </div>
+          </div>
+        </Card>
       )}
 
       {steps.length > 0 && (
@@ -45,33 +59,48 @@ export default function BoardPage() {
           </div>
 
           <div className="lg:col-span-3 space-y-4">
-            <Card title={`Boardroom debate ${running ? "· live" : ""}`} right={messages.length > 0 && <Pill tone="neutral">{messages.length} statements</Pill>}>
-              <div ref={scrollRef} className="space-y-3 max-h-[420px] overflow-y-auto pr-1">
-                {messages.length === 0 && <div className="text-text-mute text-sm label-mono">AWAITING DEBATE…</div>}
-                {messages.map((m, i) => (
-                  <div key={i} className="flex gap-3 animate-[fadeIn_0.3s_ease]">
-                    <div className="w-11 h-11 shrink-0 rounded-lg border border-line bg-surface grid place-items-center">
-                      <span className="title-display text-[12px] text-aqua leading-none">{ROLE_CODE[m.role] || "AGT"}</span>
-                    </div>
-                    <div className="flex-1 bg-surface2 border border-line rounded-xl p-3">
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="font-semibold text-sm">{m.role}</span>
-                        <Pill tone={m.stance}>{m.stance}</Pill>
-                        <span className="label-mono text-[9px] ml-auto">ROUND {m.round}</span>
+            <Card
+              title={`Boardroom debate`}
+              right={
+                <div className="flex items-center gap-2">
+                  {running && <span className="flex items-center gap-1.5 label-mono text-amber"><span className="w-1.5 h-1.5 rounded-full bg-amber animate-pulse" />LIVE</span>}
+                  {messages.length > 0 && <Pill tone="neutral">{messages.length} statements</Pill>}
+                </div>
+              }
+            >
+              <div ref={scrollRef} className="space-y-3.5 max-h-[440px] overflow-y-auto pr-1.5 -mr-1">
+                {messages.length === 0 && <div className="text-text-mute text-sm label-mono py-6 text-center">AWAITING DEBATE…</div>}
+                {messages.map((m, i) => {
+                  const hex = ROLE_HEX[m.role] || "#34E1D2";
+                  return (
+                    <div key={i} className="flex gap-3 animate-fadeIn">
+                      <div className="w-11 h-11 shrink-0 rounded-xl border bg-surface grid place-items-center" style={{ borderColor: `${hex}55` }}>
+                        <span className="title-display text-[12px] leading-none" style={{ color: hex }}>{ROLE_CODE[m.role] || "AGT"}</span>
                       </div>
-                      <div className="text-sm text-text">{m.message}</div>
+                      <div className="flex-1 bg-surface2 border border-line rounded-2xl rounded-tl-md p-3.5 relative">
+                        <span className="absolute left-0 top-4 bottom-4 w-[2px] rounded-full" style={{ background: hex, opacity: 0.6 }} />
+                        <div className="flex items-center gap-2 mb-1.5">
+                          <span className="font-semibold text-sm">{m.role}</span>
+                          <Pill tone={m.stance} dot>{m.stance}</Pill>
+                          <span className="label-mono text-[9px] ml-auto text-text-faint">ROUND {m.round}</span>
+                        </div>
+                        <div className="text-sm text-text-dim leading-relaxed">{m.message}</div>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </Card>
 
             {decision && (
-              <Card title="Board verdict">
-                <div className="text-center mb-3">
-                  <div className="display-hero text-aqua text-[clamp(36px,5vw,60px)]">{decision.board_decision}</div>
-                  <div className="label-mono mt-1">CONFIDENCE {Math.round((decision.confidence || 0) * 100)}%</div>
-                  <div className="tick-ruler mt-3 mx-auto w-1/2" />
+              <Card title="Board verdict" className="glow-aqua">
+                <div className="text-center mb-5 py-2">
+                  <div className="display-hero !bg-none text-aqua text-[clamp(38px,5.4vw,64px)]" style={{ WebkitTextFillColor: "#34E1D2", textShadow: "0 0 40px rgba(52,225,210,0.35)" }}>{decision.board_decision}</div>
+                  <div className="inline-flex items-center gap-2 mt-3 px-3 py-1 rounded-full border border-line bg-surface2">
+                    <span className="label-mono text-text-faint">CONFIDENCE</span>
+                    <span className="label-mono text-aqua">{Math.round((decision.confidence || 0) * 100)}%</span>
+                  </div>
+                  <div className="tick-ruler mt-4 mx-auto w-1/2" />
                 </div>
                 <Section title="Strategic actions" items={decision.strategic_actions} />
                 <Section title="Growth roadmap" items={decision.growth_roadmap} />

@@ -8,7 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.config import settings
 from app.db.database import init_db
-from app.api.routes import analysis, debate, pipeline, system, upload
+from app.api.routes import analysis, debate, pipeline, system, upload, webhooks
 
 logging.basicConfig(level=logging.INFO)
 
@@ -44,3 +44,4 @@ app.include_router(upload.router, prefix=settings.API_V1, tags=["data"])
 app.include_router(analysis.router, prefix=settings.API_V1, tags=["agents"])
 app.include_router(debate.router, prefix=settings.API_V1, tags=["debate"])
 app.include_router(pipeline.router, prefix=settings.API_V1, tags=["pipeline"])
+app.include_router(webhooks.router, prefix=settings.API_V1, tags=["webhooks"])

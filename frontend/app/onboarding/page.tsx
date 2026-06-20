@@ -147,7 +147,23 @@ export default function Onboarding() {
           </div>
           <p className="label-mono mt-3 leading-relaxed">NO DEMO DATA · EVERY ANSWER FEEDS A REAL MODEL OR AGENT</p>
 
-          <div className="mt-8 space-y-1.5">
+          {(() => {
+            const total = STEPS.length + 1;
+            const pct = Math.round((step / (total - 1)) * 100);
+            return (
+              <div className="mt-7 mb-4">
+                <div className="flex items-center justify-between label-mono text-text-faint mb-2">
+                  <span>PROGRESS</span><span>{pct}%</span>
+                </div>
+                <div className="h-[3px] bg-surface3 rounded-full overflow-hidden">
+                  <motion.div className="h-full rounded-full" style={{ background: "linear-gradient(90deg,#7C6CFF,#34E1D2)" }}
+                    animate={{ width: `${pct}%` }} transition={{ ease: [0.16, 1, 0.3, 1], duration: 0.4 }} />
+                </div>
+              </div>
+            );
+          })()}
+
+          <div className="space-y-1.5">
             {[...STEPS.map((x) => x.title), "Review"].map((label, i) => {
               const done = i < step;
               const active = i === step;
@@ -155,13 +171,15 @@ export default function Onboarding() {
                 <button
                   key={label}
                   onClick={() => i <= step && setStep(i)}
-                  className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl border text-left transition ${
-                    active ? "border-violet bg-violet/5" : done ? "border-line hover:bg-surface2" : "border-transparent opacity-50 cursor-default"
+                  className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl border text-left transition-colors ${
+                    active ? "border-violet/60 bg-violet/10" : done ? "border-line hover:bg-surface2 cursor-pointer" : "border-transparent opacity-45 cursor-default"
                   }`}
                 >
                   <span className="w-6 h-6 rounded-lg grid place-items-center label-mono text-[10px] shrink-0 border"
-                    style={{ borderColor: i <= step ? "var(--violet)" : "var(--line)", background: done ? "var(--violet)" : "transparent", color: done ? "#0a0b0f" : i <= step ? "var(--text)" : "var(--text-mute)" }}>
-                    {done ? "✓" : i + 1}
+                    style={{ borderColor: i <= step ? "var(--violet)" : "var(--line)", background: done ? "var(--violet)" : "transparent", color: done ? "#07080c" : i <= step ? "var(--text)" : "var(--text-mute)" }}>
+                    {done ? (
+                      <svg width="11" height="11" viewBox="0 0 12 12" aria-hidden><path d="M2.5 6.5 L5 9 L9.5 3.5" fill="none" stroke="#07080c" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                    ) : i + 1}
                   </span>
                   <span className={`text-sm ${active ? "text-text font-medium" : "text-text-dim"}`}>{label}</span>
                 </button>

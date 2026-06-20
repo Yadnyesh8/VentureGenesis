@@ -17,6 +17,31 @@ from sqlalchemy.orm import relationship
 from app.db.database import Base
 
 
+class User(Base):
+    """Mirror of a Clerk user, kept in sync via the Clerk webhook (app/api/routes/webhooks.py)."""
+
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True, index=True)
+    clerk_id = Column(String(255), unique=True, nullable=False, index=True)
+    email = Column(String(320), index=True)
+    first_name = Column(String(255))
+    last_name = Column(String(255))
+    image_url = Column(Text)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    def to_dict(self) -> dict:
+        return {
+            "id": self.id,
+            "clerk_id": self.clerk_id,
+            "email": self.email,
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "image_url": self.image_url,
+        }
+
+
 class Startup(Base):
     __tablename__ = "startups"
 

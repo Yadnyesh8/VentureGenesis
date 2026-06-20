@@ -8,11 +8,11 @@ export const CHART = {
   warn: "#FFB13C",
   bad: "#FF5D5D",
   magenta: "#FF4FA3",
-  grid: "#232734",
-  axis: "#CBD5E1", // Brighter axis text
-  track: "#1A1E29",
-  tooltipBg: "#14171F",
-  text: "#F8FAFC",
+  grid: "#232838",
+  axis: "#8A95AA", // mono-tick slate
+  track: "#1B1F2B",
+  tooltipBg: "#181C27",
+  text: "#F4F6FB",
 };
 
 // Grade an arc/score color the instrument way.

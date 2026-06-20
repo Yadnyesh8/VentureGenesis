@@ -3,11 +3,13 @@ import { usePathname } from "next/navigation";
 import TopNav from "@/components/TopNav";
 import ProfileGuard from "@/components/ProfileGuard";
 
-// The landing page at "/" is a public, full-bleed cinematic — no nav chrome, no
-// profile gate. Every other route keeps the standard app shell.
+// The landing page at "/" and the auth pages are public, full-bleed surfaces —
+// no nav chrome, no profile gate. Every other route keeps the app shell.
+const FULL_BLEED = ["/sign-in", "/sign-up", "/sso-callback"];
+
 export default function Chrome({ children }: { children: React.ReactNode }) {
   const path = usePathname();
-  if (path === "/") return <>{children}</>;
+  if (path === "/" || FULL_BLEED.some((p) => path.startsWith(p))) return <>{children}</>;
   return (
     <>
       <TopNav />

@@ -1,5 +1,5 @@
 "use client";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 export type StepState = {
   key: string;
@@ -13,17 +13,17 @@ export type StepState = {
 function StatusGlyph({ status }: { status: StepState["status"] }) {
   if (status === "running")
     return (
-      <svg width="16" height="16" viewBox="0 0 16 16" className="[animation:sweep_0.9s_linear_infinite]">
-        <circle cx="8" cy="8" r="6" fill="none" stroke="#1A1E29" strokeWidth="2" />
-        <path d="M8 2 a6 6 0 0 1 6 6" fill="none" stroke="#FF8A3D" strokeWidth="2" strokeLinecap="round" />
+      <svg width="16" height="16" viewBox="0 0 16 16" className="[animation:sweep_0.9s_linear_infinite]" aria-label="running">
+        <circle cx="8" cy="8" r="6" fill="none" stroke="#1B1F2B" strokeWidth="2" />
+        <path d="M8 2 a6 6 0 0 1 6 6" fill="none" stroke="#FFB13C" strokeWidth="2" strokeLinecap="round" />
       </svg>
     );
   if (status === "done")
     return (
-      <svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8.5 L6.5 12 L13 4" fill="none" stroke="#FFC83D" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+      <svg width="16" height="16" viewBox="0 0 16 16" aria-label="done"><path d="M3 8.5 L6.5 12 L13 4" fill="none" stroke="#C2F24A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
     );
   if (status === "error")
-    return <svg width="16" height="16" viewBox="0 0 16 16"><path d="M4 4 L12 12 M12 4 L4 12" stroke="#FF5D5D" strokeWidth="2" strokeLinecap="round" /></svg>;
+    return <svg width="16" height="16" viewBox="0 0 16 16" aria-label="error"><path d="M4 4 L12 12 M12 4 L4 12" stroke="#FF5D5D" strokeWidth="2" strokeLinecap="round" /></svg>;
   return <span className="w-2 h-2 rounded-full bg-line-strong" />;
 }
 
@@ -33,33 +33,33 @@ export default function AgentPipeline({ steps }: { steps: StepState[] }) {
   return (
     <div>
       <div className="flex items-center justify-between mb-3">
-        <div className="label-mono">AGENT PIPELINE</div>
-        <div className="label-mono text-text-dim">{done}/{steps.length} · {pct}%</div>
+        <div className="label-mono text-text-dim">AGENT PIPELINE</div>
+        <div className="label-mono tabular-nums">{done}/{steps.length} <span className="text-text-faint">·</span> {pct}%</div>
       </div>
-      <div className="h-[3px] bg-surface2 rounded-full mb-4 overflow-hidden">
-        <motion.div className="h-full rounded-full" style={{ background: "linear-gradient(90deg,#FF5D5D,#FF8A3D,#FFC83D)" }}
+      <div className="h-[4px] bg-surface3 rounded-full mb-5 overflow-hidden">
+        <motion.div className="h-full rounded-full" style={{ background: "linear-gradient(90deg,#FF5D5D,#FFB13C,#C2F24A)", boxShadow: "0 0 12px rgba(255,177,60,0.5)" }}
           animate={{ width: `${pct}%` }} transition={{ ease: "easeOut", duration: 0.4 }} />
       </div>
-      <div className="space-y-1">
+      <div className="space-y-1.5">
         {steps.map((s) => {
           const active = s.status === "running";
+          const kindCls = s.kind === "llm" ? "text-violet border-violet/40 bg-violet/10" : "text-aqua border-aqua/40 bg-aqua/10";
           return (
             <motion.div
               key={s.key}
               layout
-              className={`flex items-center gap-3 px-3 py-2 rounded-lg border transition ${
-                active ? "border-amber bg-amber/5" : s.status === "done" ? "border-line" : "border-transparent"
+              className={`flex items-center gap-3 px-3 py-2.5 rounded-xl border transition-colors ${
+                active ? "border-amber/60 bg-amber/5" : s.status === "done" ? "border-line bg-surface/40" : s.status === "error" ? "border-coral/40 bg-coral/5" : "border-transparent"
               }`}
-              animate={active ? { opacity: [0.6, 1, 0.6] } : { opacity: 1 }}
+              style={active ? { boxShadow: "0 0 0 1px rgba(255,177,60,0.25), 0 8px 24px -12px rgba(255,177,60,0.4)" } : undefined}
+              animate={active ? { opacity: [0.7, 1, 0.7] } : { opacity: 1 }}
               transition={active ? { repeat: Infinity, duration: 1.4 } : { duration: 0.2 }}
             >
-              <StatusGlyph status={s.status} />
-              <span className={`text-sm flex-1 ${s.status === "pending" ? "text-text-mute" : "text-text"}`}>{s.label}</span>
-              <span className={`pill ${s.kind === "llm" ? "text-amber border-amber bg-amber/10" : "text-coral border-coral bg-coral/10"}`}>
-                {s.kind === "llm" ? "LLM" : "MODEL"}
-              </span>
+              <span className="grid place-items-center w-4 h-4 shrink-0"><StatusGlyph status={s.status} /></span>
+              <span className={`text-sm flex-1 truncate ${s.status === "pending" ? "text-text-mute" : "text-text"}`}>{s.label}</span>
+              <span className={`pill ${kindCls}`}>{s.kind === "llm" ? "LLM" : "MODEL"}</span>
               {s.ms != null && s.status !== "running" && (
-                <span className="label-mono text-[9px] w-14 text-right">{(s.ms / 1000).toFixed(1)}s</span>
+                <span className="label-mono text-[9px] w-12 text-right tabular-nums">{(s.ms / 1000).toFixed(1)}s</span>
               )}
             </motion.div>
           );

@@ -90,6 +90,8 @@ class Settings:
     FEATHERLESS_API_KEY = os.getenv("FEATHERLESS_API_KEY", "")
     FEATHERLESS_MODEL = os.getenv("FEATHERLESS_MODEL", "google/gemma-4-31B-it")
     FEATHERLESS_BASE_URL = os.getenv("FEATHERLESS_BASE_URL", "https://api.featherless.ai/v1")
+    # Clerk webhook signing secret (whsec_...) — verifies inbound user-sync events.
+    CLERK_WEBHOOK_SIGNING_SECRET = os.getenv("CLERK_WEBHOOK_SIGNING_SECRET", "")
     PINECONE_API_KEY = os.getenv("PINECONE_API_KEY", "")
     NEO4J_URI = os.getenv("NEO4J_URI", "")
     NEO4J_USER = os.getenv("NEO4J_USER", "neo4j")

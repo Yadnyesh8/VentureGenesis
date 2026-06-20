@@ -9,13 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/nextjs": "^6.39.5",
     "@gsap/react": "^2.1.1",
     "@react-three/fiber": "^8.17.10",
     "framer-motion": "^11.11.17",
     "gsap": "^3.12.5",
     "lenis": "^1.1.17",
     "lottie-react": "^2.4.1",
-    "next": "14.2.18",
+    "next": "^14.2.35",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "recharts": "2.13.3",
