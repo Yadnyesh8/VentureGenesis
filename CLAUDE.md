@@ -47,7 +47,7 @@ Routes live in `app/api/routes/` (`analysis`, `debate`, `pipeline`, `upload`, `s
 
 ### Two classes of agents
 - **ML / stat agents** (`app/agents/ml/`) — local, instant: failure prediction, funding readiness, revenue forecast, sentiment, health score, risk detection (churn is a metric consumed by the health agent, not a standalone module). Each has a documented **rule-based fallback** used when its library or a trained model is missing.
-- **LLM reasoning agents** (`app/agents/intelligence/agents.py`, `debate_engine.py`, `board.py`, `simulation/pivot.py`) — live calls: understanding, root-cause, founder/investor/CFO/competitor/market, the 6-agent × 3-round debate, pivot generation, and the board chairperson that aggregates everything.
+- **LLM reasoning agents** — live calls: understanding, root-cause, founder/investor/CFO/competitor/market (`app/agents/intelligence/agents.py`), the 6-agent × 3-round debate (`app/agents/debate_engine.py`), pivot generation (`app/simulation/pivot.py`), the scenario digital twin (`app/simulation/digital_twin.py`, behind the `/simulation` page), and the board chairperson that aggregates everything (`app/agents/board.py`).
 
 ### Frontier agents (Features 1–4; see `docs/SPEC_FRONTIER_AGENTS.md`)
 Four advanced engines, each a deterministic ML-style core (config-weighted, with fallback) plus an LLM narrative wrapper that raises on failure — same conventions as above:

@@ -263,7 +263,7 @@ function ReportDocument({ report, decision, metrics }: any) {
           <div>
             <div className="doc-label mb-1">Founder strategy</div>
             <ul className="text-sm text-gray-700 space-y-1">
-              {(report.founder_strategy?.recommendations || []).slice(0, 4).map((x: any, i: number) => (
+              {(Array.isArray(report.founder_strategy?.recommendations) ? report.founder_strategy.recommendations : []).slice(0, 4).map((x: any, i: number) => (
                 <li key={i}><b>{x.area}</b> — {x.action}</li>
               ))}
             </ul>

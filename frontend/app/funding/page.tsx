@@ -12,6 +12,9 @@ export default function FundingPage() {
   const invest = useAgent(() => api.strategy(r), [JSON.stringify(r)], "strategy"); // founder strategy recs
   const d = fund.data?.data;
   const score = d?.investor_score ?? 0;
+  // The strategy agent is an LLM; its JSON shape isn't guaranteed, so coerce to an
+  // array before mapping — a non-array `recommendations` would otherwise crash the page.
+  const recs = Array.isArray(invest.data?.data?.recommendations) ? invest.data.data.recommendations : [];
 
   return (
     <div>
@@ -26,9 +29,11 @@ export default function FundingPage() {
             </div>
           </Card>
           <Card title="What investors want to see next">
-            {invest.loading ? <Loading /> : (
+            {invest.loading ? <Loading /> : invest.error ? <ErrorBox error={invest.error} /> : recs.length === 0 ? (
+              <div className="text-text-dim text-sm">No recommendations available.</div>
+            ) : (
               <ul className="space-y-2">
-                {(invest.data?.data?.recommendations || []).map((rec: any, i: number) => (
+                {recs.map((rec: any, i: number) => (
                   <li key={i} className="flex items-start gap-2 text-sm">
                     <Pill tone={rec.priority === "high" ? "bad" : rec.priority === "medium" ? "warn" : "neutral"}>{rec.priority}</Pill>
                     <span><span className="text-accent">{rec.area}</span> — {rec.action}</span>

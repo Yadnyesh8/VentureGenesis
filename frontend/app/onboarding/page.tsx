@@ -48,7 +48,6 @@ const STEPS: { title: string; blurb: string; fields: Field[] }[] = [
     fields: [
       { key: "customer_count", label: "Customers", type: "number", placeholder: "340" },
       { key: "customer_growth", label: "Monthly growth rate", type: "number", step: 0.01, placeholder: "0.14", unit: "0–1", hint: "0.14 = 14% MoM" },
-      { key: "churn_rate", label: "Monthly churn rate", type: "number", step: 0.01, placeholder: "0.07", unit: "0–1" },
     ],
   },
   {
@@ -115,7 +114,6 @@ export default function Onboarding() {
         runway,
         customer_count: Number(form.customer_count) || 0,
         customer_growth: Number(form.customer_growth) || 0,
-        churn_rate: Number(form.churn_rate) || 0,
         funding_amount: Number(form.funding_amount) || 0,
         employee_count: Number(form.employee_count) || 0,
         valuation: Number(form.valuation) || 0,
@@ -305,7 +303,6 @@ function ReviewPane({ form, runway }: any) {
           {row("Monthly burn", form.burn_rate ? fmtMoney(Number(form.burn_rate)) : "—")}
           {row("Runway", `${runway} mo`)}
           {row("Growth", form.customer_growth ? fmtPct(Number(form.customer_growth)) : "—")}
-          {row("Churn", form.churn_rate ? fmtPct(Number(form.churn_rate)) : "—")}
         </div>
       </div>
     </div>
