@@ -163,6 +163,8 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
               ["strategy", report.founder_strategy],
               ["pivots", report.pivots],
               ["understand", report.understanding],
+              ["agi", report.agi],
+              ["causal", report.causal],
             ];
             for (const [k, v] of map) if (v && !v.error) derived[k] = wrap(v);
             if (report.sentiment && !report.sentiment.error) derived.customer = wrap({ sentiment: report.sentiment });

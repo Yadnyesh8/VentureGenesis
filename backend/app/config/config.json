@@ -110,5 +110,80 @@
     "min_team_for_growth_stage": 5,
     "low_funding_probability": 0.35,
     "high_failure_probability": 0.6
+  },
+  "knowledge_sources": {
+    "web_search": { "usd_cost": 0.004, "latency_ms": 1500, "reliability": 0.7 },
+    "market_data": { "usd_cost": 0.02, "latency_ms": 2500, "reliability": 0.85 },
+    "competitor_db": { "usd_cost": 0.01, "latency_ms": 2000, "reliability": 0.8 },
+    "internal": { "usd_cost": 0.0, "latency_ms": 50, "reliability": 0.95 }
+  },
+  "voi": {
+    "candidate_fields": ["tam", "market_growth_rate", "competitor_funding", "cac", "ltv", "churn_cohort", "runway", "churn_rate", "customer_growth", "burn_rate"],
+    "decision_value_weights": {
+      "tam": 0.9, "market_growth_rate": 0.5, "competitor_funding": 0.6,
+      "cac": 0.6, "ltv": 0.7, "churn_cohort": 0.7,
+      "runway": 0.8, "churn_rate": 0.8, "customer_growth": 0.7, "burn_rate": 0.7
+    },
+    "field_source": {
+      "tam": "market_data", "market_growth_rate": "market_data",
+      "competitor_funding": "competitor_db", "cac": "web_search",
+      "ltv": "web_search", "churn_cohort": "internal",
+      "runway": "internal", "churn_rate": "internal",
+      "customer_growth": "internal", "burn_rate": "internal"
+    },
+    "prior_elasticity": {
+      "tam": 0.08, "market_growth_rate": 0.05, "competitor_funding": 0.06,
+      "cac": 0.05, "ltv": 0.06, "churn_cohort": 0.07,
+      "runway": 0.10, "churn_rate": 0.09, "customer_growth": 0.07, "burn_rate": 0.06
+    },
+    "perturbation_fields": ["runway", "churn_rate", "customer_growth", "burn_rate"],
+    "fetch_margin": 0.15,
+    "max_fetches_per_run": 3,
+    "cost_to_voi_scale": 4.0
+  },
+  "agi_preconditioner": {
+    "vector_weights": {
+      "labor_arbitrage": 0.22, "data_moat": 0.20, "distribution": 0.18,
+      "regulatory": 0.12, "human_trust": 0.16, "capital_moat": 0.12
+    },
+    "milestones": [
+      { "name": "Expert-level white-collar automation", "year_offset": 2, "intensity": 0.4 },
+      { "name": "Autonomous tool-using agents", "year_offset": 4, "intensity": 0.7 },
+      { "name": "Self-improving research AI", "year_offset": 7, "intensity": 0.95 }
+    ],
+    "industry_labor_exposure": {
+      "Analytics": 0.85, "Marketing": 0.8, "Productivity": 0.8, "Design": 0.75,
+      "Software & Hardware": 0.7, "Finances": 0.65, "Fintech": 0.65, "Education": 0.6,
+      "Healthcare": 0.45, "Health": 0.45, "Real Estate and Construction": 0.4,
+      "Transportation": 0.4, "Food & Beverage": 0.3, "Industrials": 0.4, "default": 0.6
+    },
+    "resistance_floor": 0.05
+  },
+  "spinout": {
+    "factor_weights": {
+      "market_disruption": 0.25, "cannibalization_risk": 0.20,
+      "capital_intensity": 0.15, "talent_flight_risk": 0.15,
+      "strategic_adjacency": 0.25
+    },
+    "vc_upside_multiple": 2.2,
+    "org_drag": 0.35,
+    "parent_capture": 0.6,
+    "independent_failure_inflation": 0.1,
+    "base_project_value": 1.0,
+    "decision_margin": 0.1
+  },
+  "causal": {
+    "template_edges": [
+      { "from": "churn_rate", "to": "revenue", "weight": 0.7, "lag_months": 2 },
+      { "from": "customer_growth", "to": "revenue", "weight": 0.6, "lag_months": 2 },
+      { "from": "revenue", "to": "runway", "weight": 0.8, "lag_months": 1 },
+      { "from": "burn_rate", "to": "runway", "weight": 0.7, "lag_months": 1 },
+      { "from": "runway", "to": "hiring_freeze", "weight": 0.6, "lag_months": 1 },
+      { "from": "hiring_freeze", "to": "customer_growth", "weight": 0.5, "lag_months": 3 },
+      { "from": "runway", "to": "death", "weight": 0.9, "lag_months": 1 }
+    ],
+    "death_node": "death",
+    "base_time_to_event_months": 3.0,
+    "intervention_min_leverage": 0.2
   }
 }

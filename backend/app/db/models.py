@@ -143,3 +143,52 @@ class PivotResult(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
 
     startup = relationship("Startup", back_populates="pivot_results")
+
+
+# ---- Frontier agents (Phases 1-4) ----
+
+class VOIDecision(Base):
+    """Persisted Value-of-Information ledger summary for a board/standalone run."""
+
+    __tablename__ = "voi_decisions"
+
+    id = Column(Integer, primary_key=True, index=True)
+    startup_id = Column(Integer, ForeignKey("startups.id"), index=True, nullable=True)
+    field = Column(String(120))
+    voi = Column(Float)
+    cost = Column(Float)
+    decided_fetch = Column(Integer, default=0)  # bool as int for SQLite portability
+    source = Column(String(80))
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class AGIAssessment(Base):
+    __tablename__ = "agi_assessments"
+
+    id = Column(Integer, primary_key=True, index=True)
+    startup_id = Column(Integer, ForeignKey("startups.id"), index=True, nullable=True)
+    resistance_score = Column(Float)
+    years_of_defensibility = Column(Float)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class SpinoutAssessment(Base):
+    __tablename__ = "spinout_assessments"
+
+    id = Column(Integer, primary_key=True, index=True)
+    project_name = Column(String(255))
+    recommendation = Column(String(40))  # SPIN_OUT | KEEP_INTERNAL | TOSS_UP
+    ev_spinout = Column(Float)
+    ev_internal = Column(Float)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class CausalTrajectory(Base):
+    __tablename__ = "causal_trajectories"
+
+    id = Column(Integer, primary_key=True, index=True)
+    startup_id = Column(Integer, ForeignKey("startups.id"), index=True, nullable=True)
+    death_probability = Column(Float)
+    months_to_death = Column(Float)
+    path = Column(Text)  # JSON-encoded ordered cascade
+    created_at = Column(DateTime, default=datetime.utcnow)

@@ -18,6 +18,8 @@ from app.agents.ml.sentiment import analyze_sentiment
 from app.agents.ml.health import compute_health
 from app.agents.ml.risk_detection import detect_risks
 from app.agents.intelligence import agents as intel
+from app.agents.intelligence import agi as agi_intel
+from app.agents.intelligence import causal as causal_intel
 from app.agents.debate_engine import run_debate_blocking
 from app.simulation.pivot import run_pivot_pipeline
 
@@ -50,6 +52,8 @@ def gather_all(metrics: dict[str, Any], reviews: list[str] | None = None,
     safe("financial_risk", lambda: intel.financial_risk(ctx))
     safe("competitor", lambda: intel.competitor(ctx))
     safe("market", lambda: intel.market_opportunity(ctx))
+    safe("agi", lambda: agi_intel.precondition(metrics))
+    safe("causal", lambda: causal_intel.narrate(metrics))
     safe("debate", lambda: run_debate_blocking(ctx))
     safe("pivots", lambda: run_pivot_pipeline(ctx))
     return out
@@ -75,6 +79,13 @@ def _compact(aggregate: dict[str, Any]) -> dict[str, Any]:
         "market_opportunity": a.get("market", {}).get("opportunity_score"),
         "debate_consensus": a.get("debate", {}).get("consensus"),
         "recommended_pivot": a.get("pivots", {}).get("recommended_pivot"),
+        "agi_resistance": a.get("agi", {}).get("resistance_score"),
+        "agi_years_defensible": a.get("agi", {}).get("years_of_defensibility"),
+        "death_path": {
+            "root_cause": a.get("causal", {}).get("root_cause"),
+            "probability": a.get("causal", {}).get("death_probability"),
+            "months_to_death": a.get("causal", {}).get("months_to_death"),
+        },
     }
 
 

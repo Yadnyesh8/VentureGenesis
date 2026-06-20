@@ -46,6 +46,16 @@ market: |
   Respond as JSON: {"opportunity_score": float (0-100), "recommended_market": str, "trends": [str]}
   Context: {context}
 
+debate_round_0: |
+  You are the {role} on a startup's board of directors. This is the UNCERTAINTY AUDIT
+  that happens BEFORE the debate. Name the specific missing facts that, if known, would
+  most change your stance — and why each matters.
+  Respond as JSON: {"role": "{role}", "information_requests": [
+    {"field": str (short snake_case key, e.g. "tam", "competitor_funding", "cac"),
+     "why_it_matters": str, "stance_if_bad": "bullish|neutral|bearish"}
+  ]}
+  Startup context: {context}
+
 debate_round_1: |
   You are the {role} on a startup's board of directors. This is Round 1 of a debate.
   Present your independent opinion on the startup's situation in 2-3 sentences.
@@ -65,7 +75,9 @@ debate_round_3: |
 
 board_decision: |
   You are the Chairperson of the Board of Directors. Aggregate ALL agent outputs below
-  into a single executive decision.
+  into a single executive decision. Explicitly weigh the company's AGI-resistance
+  (agi_resistance / agi_years_defensible) and its causal death path (death_path: the most
+  likely root cause, probability, and months_to_death) alongside the financials.
   Respond as JSON: {
     "board_decision": "INVEST|HOLD|PIVOT|WIND_DOWN",
     "confidence": float (0-1),
@@ -90,3 +102,44 @@ pivot_generation: |
     "funding_probability": float (0-1, likelihood it improves fundability)
   }]}
   Current business: {context}
+
+agi_precondition: |
+  You are an AGI Strategy analyst running a startup's AGI Pre-Conditioner. Given the
+  business and a deterministic AGI-exposure assessment (per-vector exposure + a survival
+  curve over AGI milestones), explain HOW the business model breaks at each milestone and
+  prescribe concrete AGI-resistant redesigns.
+  Respond as JSON: {
+    "verdict": "AGI-resistant|AGI-exposed|AGI-fragile",
+    "milestone_breakage": [{"milestone": str, "how_it_breaks": str}],
+    "resistant_redesigns": [{"move": str, "why": str}],
+    "summary": str
+  }
+  Business: {context}
+  Exposure assessment: {assessment}
+
+spinout: |
+  You are a Corporate Development partner advising on the Innovator's Dilemma. Given an
+  internal R&D project and a deterministic EV comparison (spin-out vs. keep-internal),
+  give the board-grade rationale for the recommendation.
+  Respond as JSON: {
+    "rationale": str,
+    "key_drivers": [str],
+    "risks_if_wrong": [str],
+    "first_90_days": [str]
+  }
+  Project: {project}
+  EV assessment: {assessment}
+
+causal_trajectory: |
+  You are a Causal Analyst. Given a deterministic causal death-path (an ordered cascade of
+  KPI→KPI edges from the current deterioration to startup death, with leverage and
+  time-to-event), translate it into a plain-language account of how this company dies and
+  where to cut the chain.
+  Respond as JSON: {
+    "story": str,
+    "kill_chain": [str],
+    "earliest_intervention": str,
+    "summary": str
+  }
+  Trajectory: {trajectory}
+  Metrics: {metrics}

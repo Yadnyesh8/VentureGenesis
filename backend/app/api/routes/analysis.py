@@ -11,14 +11,36 @@ from app.agents.ml.sentiment import analyze_sentiment
 from app.agents.ml.health import compute_health
 from app.agents.ml.risk_detection import detect_risks
 from app.agents.intelligence import agents as intel
+from app.agents.intelligence import agi as agi_intel
+from app.agents.intelligence import spinout as spinout_intel
+from app.agents.intelligence import causal as causal_intel
+from app.agents.ml import voi as voi_ml
+from app.agents.ml import causal as causal_ml
 from app.agents.startup_understanding import understand
 from app.agents.board import board_decision
 from app.simulation import digital_twin
 from app.simulation.pivot import run_pivot_pipeline
 from app.db import models
 from app.db.database import get_db
-from app.db.schemas import SimulateRequest, StartupRef
+from app.db.schemas import (
+    AGIRequest, CausalRequest, SimulateRequest, SpinoutRequest, StartupRef, VOIRequest,
+)
 from app.utils.resolve import resolve_metrics
+
+
+def _causal_leverage(metrics: dict) -> dict:
+    """Per-field leverage from the causal death path, to bias VOI toward fatal unknowns."""
+    try:
+        traj = causal_ml.map_trajectory(metrics)
+    except Exception:
+        return {}
+    lev: dict[str, float] = {}
+    for node in traj.get("chain", []):
+        if "node" in node:
+            lev[node["node"]] = max(lev.get(node["node"], 0.0), node.get("activation", 0.0))
+        elif "from" in node:
+            lev[node["from"]] = max(lev.get(node["from"], 0.0), node.get("leverage", 0.0))
+    return lev
 
 router = APIRouter()
 
@@ -185,4 +207,75 @@ def api_pivots(ref: StartupRef, db: Session = Depends(get_db)):
 def api_board(ref: StartupRef, db: Session = Depends(get_db)):
     m = resolve_metrics(ref, db)
     result = board_decision(m, ref.customer_reviews, ref.revenue_series)
+    return {"ok": True, "data": result}
+
+
+# ---- Frontier agents (Features 1-4) ----
+
+@router.post("/voi")
+def api_voi(ref: VOIRequest, db: Session = Depends(get_db)):
+    """Value-of-Information ledger: rank decision-critical unknowns by VOI vs cost."""
+    m = resolve_metrics(ref, db)
+    result = voi_ml.assess(m, allow_fetch=ref.allow_fetch, causal_leverage=_causal_leverage(m))
+    if ref.startup_id is not None:
+        try:
+            for item in result.get("ledger", [])[:10]:
+                db.add(models.VOIDecision(
+                    startup_id=ref.startup_id, field=item["field"], voi=item["voi"],
+                    cost=item["cost_usd"], decided_fetch=int(item["fetched"]),
+                    source=item["source"]))
+            db.commit()
+        except Exception:
+            db.rollback()
+    return {"ok": True, "data": result}
+
+
+@router.post("/agi")
+def api_agi(ref: AGIRequest, db: Session = Depends(get_db)):
+    """AGI Pre-Conditioner: AGI-resistance score + milestone breakage + redesigns."""
+    m = resolve_metrics(ref, db)
+    result = agi_intel.precondition(m, ref.moats)
+    if ref.startup_id is not None:
+        try:
+            db.add(models.AGIAssessment(
+                startup_id=ref.startup_id, resistance_score=result.get("resistance_score"),
+                years_of_defensibility=result.get("years_of_defensibility")))
+            db.commit()
+        except Exception:
+            db.rollback()
+    return {"ok": True, "data": result}
+
+
+@router.post("/spinout")
+def api_spinout(req: SpinoutRequest, db: Session = Depends(get_db)):
+    """Corporate Spin-out Viability: EV(spin-out) vs EV(internal) + recommendation."""
+    project = req.project.model_dump()
+    metrics = req.metrics.model_dump() if req.metrics is not None else None
+    result = spinout_intel.evaluate(project, metrics)
+    try:
+        db.add(models.SpinoutAssessment(
+            project_name=project.get("project_name"), recommendation=result.get("recommendation"),
+            ev_spinout=result.get("ev_spinout"), ev_internal=result.get("ev_internal")))
+        db.commit()
+    except Exception:
+        db.rollback()
+    return {"ok": True, "data": result}
+
+
+@router.post("/causal")
+def api_causal(ref: CausalRequest, db: Session = Depends(get_db)):
+    """Causal Trajectory Mapping: current-KPI → death cascade + intervention points."""
+    import json as _json
+
+    m = resolve_metrics(ref, db)
+    result = causal_intel.narrate(m)
+    if ref.startup_id is not None:
+        try:
+            db.add(models.CausalTrajectory(
+                startup_id=ref.startup_id, death_probability=result.get("death_probability"),
+                months_to_death=result.get("months_to_death"),
+                path=_json.dumps(result.get("chain", []))))
+            db.commit()
+        except Exception:
+            db.rollback()
     return {"ok": True, "data": result}

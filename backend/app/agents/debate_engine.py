@@ -39,10 +39,60 @@ def _agent_turn(role: str, rnd: int, context: dict[str, Any], prior: str) -> dic
     return result
 
 
-def run_debate(context: dict[str, Any]) -> Iterator[dict[str, Any]]:
+def _uncertainty_audit(context: dict[str, Any], allow_fetch: bool) -> Iterator[dict[str, Any]]:
+    """Round 0: agents declare their key unknowns; VOI decides what is worth buying.
+
+    Mutates `context` in place with any fetched evidence so rounds 1-3 argue with it.
+    Fully wrapped: any failure degrades to a skipped audit, never aborting the debate.
+    """
+    from app.agents.ml import voi as voi_ml  # local import avoids ml<->debate cycles
+
+    requests: list[dict[str, Any]] = []
+    for role in ROLES:
+        try:
+            res = llm.complete(render_prompt("debate_round_0", role=role, context=context))
+            for r in res.get("information_requests", []) or []:
+                if r.get("field"):
+                    requests.append({"role": role, **r})
+                    yield {"type": "info_request", "role": role, "field": r["field"],
+                           "why": r.get("why_it_matters", "")}
+        except Exception as exc:
+            yield {"type": "agent_skipped", "round": 0, "role": role, "error": str(exc)[:120]}
+
+    try:
+        ledger = voi_ml.assess(context, allow_fetch=allow_fetch).get("ledger", [])
+    except Exception as exc:
+        yield {"type": "audit_error", "error": str(exc)[:120]}
+        return
+
+    by_field = {item["field"]: item for item in ledger}
+    requested_fields = {r["field"] for r in requests}
+    for field in requested_fields:
+        item = by_field.get(field)
+        if item is None:
+            continue
+        if item.get("fetched"):
+            context[f"evidence_{field}"] = item.get("fetch_result")
+            yield {"type": "info_fetched", "field": field, "voi": item["voi"],
+                   "cost": item["cost_usd"], "source": item["source"]}
+        elif item.get("worth_fetching"):
+            yield {"type": "info_unavailable", "field": field, "voi": item["voi"],
+                   "cost": item["cost_usd"], "reason": item.get("fetch_reason", "no connector")}
+        else:
+            yield {"type": "info_skipped_low_voi", "field": field, "voi": item["voi"],
+                   "cost": item["cost_usd"]}
+    yield {"type": "audit_done", "requests": len(requests)}
+
+
+def run_debate(context: dict[str, Any], allow_fetch: bool = False) -> Iterator[dict[str, Any]]:
     """Yields debate events: {type, round, role, message, stance}."""
     transcript: list[dict[str, Any]] = []
     yield {"type": "start", "engine": "langgraph" if _HAS_LANGGRAPH else "sequential", "roles": ROLES}
+
+    # Round 0 — epistemic uncertainty resolution (VOI-gated information acquisition).
+    yield {"type": "round_start", "round": 0}
+    yield from _uncertainty_audit(context, allow_fetch)
+    yield {"type": "round_end", "round": 0}
 
     for rnd in (1, 2, 3):
         yield {"type": "round_start", "round": rnd}

@@ -54,6 +54,49 @@ class SimulateRequest(StartupRef):
     )
 
 
+# ---- Frontier agents ----
+
+class VOIRequest(StartupRef):
+    """Value-of-Information audit. Set allow_fetch=False to score gaps without spending."""
+
+    allow_fetch: bool = False
+
+
+class AGIRequest(StartupRef):
+    """AGI Pre-Conditioner. Optional founder-stated moat strengths (0-1) override inference."""
+
+    moats: Optional[dict[str, float]] = None
+
+
+class CausalRequest(StartupRef):
+    """Causal trajectory mapping from current KPI state to the death node."""
+
+    pass
+
+
+class ProjectBase(BaseModel):
+    """An internal R&D project evaluated for corporate spin-out viability."""
+
+    project_name: str = "Untitled Project"
+    parent_industry: Optional[str] = None
+    stage: Optional[str] = None
+    # All 0-1 operator-suppliable signals.
+    market_disruption: float = 0.5      # how disruptive vs. the parent's core business
+    cannibalization_risk: float = 0.5   # risk of eroding the parent's existing revenue
+    capital_intensity: float = 0.5      # capital required relative to a lean startup
+    talent_flight_risk: float = 0.5     # risk key talent leaves if kept internal
+    strategic_adjacency: float = 0.5    # fit with the parent's core strategy/assets
+    annual_budget: float = 0.0          # current internal annual spend on the project
+    parent_cost_of_capital: float = 0.12
+
+
+class SpinoutRequest(BaseModel):
+    project: ProjectBase
+    # Optional standalone-startup metrics for the independent-failure base estimate.
+    metrics: Optional[StartupBase] = None
+    description: Optional[str] = None
+
+
 class GenericResult(BaseModel):
     ok: bool = True
     data: dict[str, Any] = {}

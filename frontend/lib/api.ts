@@ -73,7 +73,27 @@ export const api = {
   pivots: (ref: Ref) => post("/pivots", ref),
   board: (ref: Ref) => post("/board", ref),
   debate: (ref: Ref) => post("/debate", ref),
+  // Frontier agents
+  voi: (ref: Ref & { allow_fetch?: boolean }) => post("/voi", ref),
+  agi: (ref: Ref & { moats?: Record<string, number> }) => post("/agi", ref),
+  causal: (ref: Ref) => post("/causal", ref),
+  spinout: (req: SpinoutReq) => post("/spinout", req),
 };
+
+// Internal R&D project evaluated for corporate spin-out viability.
+export type SpinoutProject = {
+  project_name?: string;
+  parent_industry?: string;
+  stage?: string;
+  market_disruption?: number;
+  cannibalization_risk?: number;
+  capital_intensity?: number;
+  talent_flight_risk?: number;
+  strategic_adjacency?: number;
+  annual_budget?: number;
+  parent_cost_of_capital?: number;
+};
+export type SpinoutReq = { project: SpinoutProject; metrics?: Metrics; description?: string };
 
 // Generic SSE consumer for our POST streaming endpoints.
 async function streamSSE(path: string, ref: Ref, onEvent: (ev: any) => void) {

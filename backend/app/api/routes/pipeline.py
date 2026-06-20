@@ -20,6 +20,8 @@ from app.agents.ml.funding_readiness import predict_funding
 from app.agents.ml.sentiment import analyze_sentiment
 from app.agents.ml.health import compute_health
 from app.agents.intelligence import agents as intel
+from app.agents.intelligence import agi as agi_intel
+from app.agents.intelligence import causal as causal_intel
 from app.agents.debate_engine import run_debate
 from app.simulation.pivot import run_pivot_pipeline
 from app.agents.board import _compact
@@ -50,6 +52,8 @@ STEPS = [
     ("financial_risk", "Financial Risk (CFO)", "llm"),
     ("competitor", "Competitor Intelligence", "llm"),
     ("market", "Market Opportunity", "llm"),
+    ("agi", "AGI Pre-Conditioner", "llm"),
+    ("causal", "Causal Trajectory", "llm"),
     ("debate", "Boardroom Debate", "llm"),
     ("pivots", "Pivot Engine", "llm"),
     ("board", "Board Verdict", "llm"),
@@ -99,20 +103,26 @@ def board_stream(ref: StartupRef, db: Session = Depends(get_db)):
         yield from step("financial_risk", "Financial Risk (CFO)", "llm", lambda: intel.financial_risk(ctx))
         yield from step("competitor", "Competitor Intelligence", "llm", lambda: intel.competitor(ctx))
         yield from step("market", "Market Opportunity", "llm", lambda: intel.market_opportunity(ctx))
+        yield from step("agi", "AGI Pre-Conditioner", "llm", lambda: agi_intel.precondition(metrics))
+        yield from step("causal", "Causal Trajectory", "llm", lambda: causal_intel.narrate(metrics))
 
-        # Debate — stream each message as it is produced.
+        # Debate — stream each message (and the Round 0 VOI uncertainty audit) as produced.
         yield _sse({"type": "agent_start", "key": "debate", "label": "Boardroom Debate", "kind": "llm"})
         transcript = []
         consensus = "neutral"
+        audit: list[dict] = []
         t0 = time.time()
         try:
             for ev in run_debate(ctx):
                 if ev["type"] == "message":
                     transcript.append({k: ev[k] for k in ("round", "role", "message", "stance") if k in ev})
                     yield _sse({"type": "debate_message", **{k: ev[k] for k in ("round", "role", "message", "stance") if k in ev}})
+                elif ev["type"] in ("info_request", "info_fetched", "info_skipped_low_voi", "info_unavailable"):
+                    audit.append(ev)
+                    yield _sse(ev)
                 elif ev["type"] == "consensus":
                     consensus = ev["consensus"]
-            out["debate"] = {"consensus": consensus, "transcript": transcript}
+            out["debate"] = {"consensus": consensus, "transcript": transcript, "uncertainty_audit": audit}
             yield _sse({"type": "agent_done", "key": "debate", "label": "Boardroom Debate",
                         "ms": int((time.time() - t0) * 1000), "result": {"consensus": consensus, "messages": len(transcript)}})
         except Exception as exc:

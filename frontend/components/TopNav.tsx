@@ -41,6 +41,16 @@ const CATS: Cat[] = [
       { href: "/board", label: "Board of Directors", tag: "multi-agent" },
     ],
   },
+  {
+    label: "Frontier",
+    blurb: "Advanced strategic engines",
+    items: [
+      { href: "/uncertainty", label: "Epistemic Uncertainty", tag: "VOI" },
+      { href: "/agi", label: "AGI Pre-Conditioner", tag: "stress-test" },
+      { href: "/spinout", label: "Spin-out Viability", tag: "EV" },
+      { href: "/trajectory", label: "Causal Trajectory", tag: "causal" },
+    ],
+  },
 ];
 
 export default function TopNav() {
