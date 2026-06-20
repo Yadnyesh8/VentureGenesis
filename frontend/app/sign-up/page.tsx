@@ -86,7 +86,7 @@ export default function SignUpPage() {
     return (
       <AuthShell>
         <div className="label-mono">VERIFY EMAIL</div>
-        <h1 className="title-display text-2xl mt-1">Check your inbox</h1>
+        <h1 className="title-display text-3xl mt-1.5">Check your inbox</h1>
         <p className="text-sm text-text-dim mt-1 mb-6">
           We sent a code to <span className="text-text">{email}</span>.
         </p>
@@ -94,7 +94,7 @@ export default function SignUpPage() {
         <form onSubmit={handleVerify} className="space-y-4">
           <AuthField label="Verification code" value={code} onChange={setCode} placeholder="123456" autoComplete="one-time-code" autoFocus inputMode="numeric" />
           <AuthError>{error}</AuthError>
-          <button className="btn w-full" disabled={busy || !code}>{busy ? "Verifying…" : "Verify & continue →"}</button>
+          <button className="btn w-full !py-3" disabled={busy || !code}>{busy ? "Verifying…" : "Verify & continue →"}</button>
         </form>
 
         <button
@@ -111,7 +111,7 @@ export default function SignUpPage() {
   return (
     <AuthShell>
       <div className="label-mono">GET STARTED</div>
-      <h1 className="title-display text-2xl mt-1">Create your board</h1>
+      <h1 className="title-display text-3xl mt-1.5">Create your board</h1>
       <p className="text-sm text-text-dim mt-1 mb-6">One account to convene every advisor.</p>
 
       <GoogleButton onClick={handleGoogle} disabled={busy} label="Sign up with Google" />
@@ -124,7 +124,7 @@ export default function SignUpPage() {
         <AuthError>{error}</AuthError>
         {/* Clerk bot-protection mounts here (enabled by default for sign-ups). */}
         <div id="clerk-captcha" />
-        <button className="btn w-full" disabled={busy || !email || !password}>{busy ? "Creating…" : "Create account →"}</button>
+        <button className="btn w-full !py-3" disabled={busy || !email || !password}>{busy ? "Creating…" : "Create account →"}</button>
       </form>
 
       <p className="text-xs text-text-mute mt-6">

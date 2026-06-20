@@ -103,7 +103,7 @@ export default function SignInPage() {
     return (
       <AuthShell>
         <div className="label-mono">ACCOUNT RECOVERY</div>
-        <h1 className="title-display text-2xl mt-1">Reset password</h1>
+        <h1 className="title-display text-3xl mt-1.5">Reset password</h1>
         <p className="text-sm text-text-dim mt-1 mb-6">
           {codeSent ? "Enter the code we emailed you and choose a new password." : "We'll email you a verification code."}
         </p>
@@ -112,14 +112,14 @@ export default function SignInPage() {
           <form onSubmit={sendResetCode} className="space-y-4">
             <AuthField label="Email" type="email" value={email} onChange={setEmail} placeholder="you@startup.com" autoComplete="email" autoFocus inputMode="email" />
             <AuthError>{error}</AuthError>
-            <button className="btn w-full" disabled={busy || !email}>{busy ? "Sending…" : "Send reset code →"}</button>
+            <button className="btn w-full !py-3" disabled={busy || !email}>{busy ? "Sending…" : "Send reset code →"}</button>
           </form>
         ) : (
           <form onSubmit={submitReset} className="space-y-4">
             <AuthField label="Verification code" value={code} onChange={setCode} placeholder="123456" autoComplete="one-time-code" autoFocus inputMode="numeric" />
             <AuthField label="New password" type="password" value={newPassword} onChange={setNewPassword} placeholder="••••••••" autoComplete="new-password" />
             <AuthError>{error}</AuthError>
-            <button className="btn w-full" disabled={busy || !code || !newPassword}>{busy ? "Updating…" : "Update password →"}</button>
+            <button className="btn w-full !py-3" disabled={busy || !code || !newPassword}>{busy ? "Updating…" : "Update password →"}</button>
           </form>
         )}
 
@@ -137,7 +137,7 @@ export default function SignInPage() {
   return (
     <AuthShell>
       <div className="label-mono">BOARD ACCESS</div>
-      <h1 className="title-display text-2xl mt-1">Welcome back</h1>
+      <h1 className="title-display text-3xl mt-1.5">Welcome back</h1>
       <p className="text-sm text-text-dim mt-1 mb-6">Sign in to reconvene your virtual board.</p>
 
       <GoogleButton onClick={handleGoogle} disabled={busy} label="Continue with Google" />
@@ -156,7 +156,7 @@ export default function SignInPage() {
           </button>
         </div>
         <AuthError>{error}</AuthError>
-        <button className="btn w-full" disabled={busy || !email || !password}>{busy ? "Signing in…" : "Sign in →"}</button>
+        <button className="btn w-full !py-3" disabled={busy || !email || !password}>{busy ? "Signing in…" : "Sign in →"}</button>
       </form>
 
       <p className="text-xs text-text-mute mt-6">
