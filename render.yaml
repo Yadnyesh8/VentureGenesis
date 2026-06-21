@@ -1,0 +1,78 @@
+services:
+  # ── Backend: FastAPI ──────────────────────────────────────────────────────
+  - type: web
+    name: venturegenesis-backend
+    runtime: python
+    region: oregon
+    plan: free
+    rootDir: backend
+    buildCommand: >-
+      pip install -r requirements-min.txt psycopg2-binary python-dotenv &&
+      python -m app.ml_training.train &&
+      python seed.py
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: venturegenesis-db
+          property: connectionString
+      - key: VG_HOT_RELOAD
+        value: "false"
+      - key: CORS_ORIGINS
+        fromService:
+          name: venturegenesis-frontend
+          type: web
+          property: url
+      # ── LLM (required for reasoning agents) ──────────────────────────────
+      # Set OPENROUTER_API_KEY in the Render dashboard after first deploy.
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: OPENROUTER_MODEL
+        value: openai/gpt-oss-20b:free
+      - key: OPENROUTER_RPM
+        value: "18"
+      # ── Clerk webhook ────────────────────────────────────────────────────
+      # Set in Render dashboard: Clerk dashboard → Webhooks → your endpoint.
+      - key: CLERK_WEBHOOK_SIGNING_SECRET
+        sync: false
+
+  # ── Frontend: Next.js ────────────────────────────────────────────────────
+  - type: web
+    name: venturegenesis-frontend
+    runtime: node
+    region: oregon
+    plan: free
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      # Server-side proxy target (next.config.js rewrites)
+      - key: BACKEND_URL
+        fromService:
+          name: venturegenesis-backend
+          type: web
+          property: url
+      # Client-side direct calls (bypasses dev proxy; falls back to relative URL if unset)
+      - key: NEXT_PUBLIC_API_BASE_URL
+        fromService:
+          name: venturegenesis-backend
+          type: web
+          property: url
+      # ── Clerk ────────────────────────────────────────────────────────────
+      # Set both in the Render dashboard after adding your Clerk app.
+      - key: NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+        sync: false
+      - key: CLERK_SECRET_KEY
+        sync: false
+
+databases:
+  - name: venturegenesis-db
+    plan: free
+    databaseName: venturegenesis
+    user: venture
+    region: oregon
