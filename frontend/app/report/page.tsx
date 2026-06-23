@@ -4,7 +4,7 @@ import { Card, PageHeader, fmtMoney, fmtPct } from "@/components/ui";
 import AgentPipeline from "@/components/AgentPipeline";
 import {
   ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Cell, LabelList,
-  AreaChart, Area, CartesianGrid, PieChart, Pie, Tooltip, ReferenceLine,
+  AreaChart, Area, CartesianGrid, Tooltip, ReferenceLine,
 } from "recharts";
 
 // Print-safe palette — darker/saturated so it stays legible on the white PDF page.
@@ -59,9 +59,6 @@ function ReportDocument({ report, decision, metrics }: any) {
   const hist = (fc.series || []).map((v: number, i: number) => ({ x: `H${i + 1}`, history: v }));
   const proj = (fc.projection || []).map((v: number, i: number) => ({ x: `+${i + 1}`, forecast: v }));
   const fcChart = [...hist, ...proj];
-  const sent = report.sentiment || {};
-  const dist = sent.distribution ? Object.entries(sent.distribution).map(([k, v]) => ({ name: k, value: v as number })) : [];
-  const sentColor: any = { positive: RC.good, neutral: RC.neutral, negative: RC.bad };
   const pivots = report.pivots || {};
   const pivotChart = (pivots.all_pivots || []).slice(0, 4).map((p: any) => ({
     name: (p.pivot_name || "").slice(0, 16),
@@ -209,28 +206,13 @@ function ReportDocument({ report, decision, metrics }: any) {
         </div>
 
         <div className="doc-rule" />
-        <div className="grid grid-cols-2 gap-8 items-start">
-          <div>
-            <h3 className="text-lg mb-1">Customer Sentiment</h3>
-            {dist.length > 0 && sent.sentiment !== "no_data" ? (
-              <ResponsiveContainer width="100%" height={180}>
-                <PieChart>
-                  <Pie data={dist} dataKey="value" nameKey="name" innerRadius={48} outerRadius={75} paddingAngle={3} isAnimationActive={false}>
-                    {dist.map((e, i) => <Cell key={i} fill={sentColor[e.name]} />)}
-                  </Pie>
-                  <Tooltip />
-                </PieChart>
-              </ResponsiveContainer>
-            ) : <p className="text-sm text-gray-400">No reviews provided.</p>}
-          </div>
-          <div>
-            <h3 className="text-lg mb-1">Root causes of risk</h3>
-            <ul className="text-sm text-gray-700 space-y-1">
-              {(report.root_cause?.causes || []).slice(0, 5).map((c: any, i: number) => (
-                <li key={i}><b className="uppercase text-[10px] text-gray-500">{c.impact}</b> — {c.cause}</li>
-              ))}
-            </ul>
-          </div>
+        <div>
+          <h3 className="text-lg mb-1">Root causes of risk</h3>
+          <ul className="text-sm text-gray-700 space-y-1">
+            {(report.root_cause?.causes || []).slice(0, 5).map((c: any, i: number) => (
+              <li key={i}><b className="uppercase text-[10px] text-gray-500">{c.impact}</b> — {c.cause}</li>
+            ))}
+          </ul>
         </div>
       </section>
 

@@ -43,7 +43,6 @@ class StartupRef(BaseModel):
     metrics: Optional[StartupBase] = None
     # Optional extra context for LLM agents.
     description: Optional[str] = None
-    customer_reviews: Optional[list[str]] = None
     revenue_series: Optional[list[float]] = None
 
 

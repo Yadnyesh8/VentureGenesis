@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { api } from "@/lib/api";
 import { useStore } from "@/lib/store";
-import { Card, Metric, Loading, PageHeader, fmtMoney, fmtPct, useAgent, Pill } from "@/components/ui";
+import { Card, Metric, Loading, PageHeader, fmtMoney, fmtPct, fmtRunway, useAgent, Pill } from "@/components/ui";
 import Gauge from "@/components/Gauge";
 import { gradeColor } from "@/lib/chartTheme";
 
@@ -10,7 +10,6 @@ const EXPLORE: { href: string; label: string; tag: string; tone: string }[] = [
   { href: "/failure", label: "Failure + SHAP", tag: "MODEL", tone: "coral" },
   { href: "/forecast", label: "Revenue Forecast", tag: "PROPHET", tone: "aqua" },
   { href: "/funding", label: "Funding Readiness", tag: "MODEL", tone: "signal" },
-  { href: "/customer", label: "Customer Sentiment", tag: "FINBERT", tone: "violet" },
   { href: "/competitor", label: "Competitor Map", tag: "LLM", tone: "magenta" },
   { href: "/market", label: "Market Opportunity", tag: "LLM", tone: "amber" },
   { href: "/pivots", label: "Pivot Engine", tag: "LLM", tone: "violet" },
@@ -48,7 +47,7 @@ export default function Dashboard() {
         <Metric label="Health Score" value={health.loading ? "…" : `${hs}`} tone={hs >= 65 ? "good" : hs >= 45 ? "warn" : "bad"} sub="0–100 composite" />
         <Metric label="12m Failure Risk" value={failure.loading ? "…" : fmtPct(f12)} tone={f12 < 0.35 ? "good" : f12 < 0.6 ? "warn" : "bad"} sub="calibrated model" />
         <Metric label="Funding Probability" value={funding.loading ? "…" : fmtPct(fp)} tone={fp >= 0.5 ? "good" : "warn"} sub="readiness score" />
-        <Metric label="Runway" value={`${metrics.runway ?? 0} mo`} tone={(metrics.runway ?? 0) >= 9 ? "good" : "bad"} sub="cash ÷ burn" />
+        <Metric label="Runway" value={fmtRunway(metrics.runway)} tone={(metrics.runway ?? 0) >= 9 ? "good" : "bad"} sub="cash ÷ burn" />
       </div>
 
       {trained !== undefined && (
@@ -104,7 +103,7 @@ export default function Dashboard() {
             ["Revenue", fmtMoney(metrics.revenue || 0)],
             ["Expenses", fmtMoney(metrics.expenses || 0)],
             ["Monthly burn", fmtMoney(metrics.burn_rate || 0)],
-            ["Runway", `${metrics.runway ?? 0} mo`],
+            ["Runway", fmtRunway(metrics.runway)],
             ["Customers", (metrics.customer_count || 0).toLocaleString()],
             ["Growth", fmtPct(metrics.customer_growth || 0)],
             ["Team", `${metrics.employee_count ?? 0}`],

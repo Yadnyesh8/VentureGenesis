@@ -106,9 +106,11 @@ def predict_failure(metrics: dict[str, Any]) -> dict[str, Any]:
         except Exception as exc:  # pragma: no cover
             logger.info("SHAP failed: %s", exc)
 
+    # Cumulative failure probability must be non-decreasing with the horizon: a longer
+    # window can only add risk. So six_month < 1 (less time to fail) and two_year > 1.
     horizons = get_config().get("failure_horizons", {})
-    six_m = horizons.get("six_month_multiplier", 1.12)
-    two_y = horizons.get("two_year_multiplier", 0.88)
+    six_m = horizons.get("six_month_multiplier", 0.6)
+    two_y = horizons.get("two_year_multiplier", 1.5)
 
     return {
         "failure_6m": round(min(base * six_m, 0.99), 3),

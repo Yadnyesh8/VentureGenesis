@@ -17,7 +17,6 @@ from app.agents.startup_understanding import understand
 from app.agents.ml.failure_prediction import predict_failure
 from app.agents.ml.revenue_forecast import forecast_revenue
 from app.agents.ml.funding_readiness import predict_funding
-from app.agents.ml.sentiment import analyze_sentiment
 from app.agents.ml.health import compute_health
 from app.agents.intelligence import agents as intel
 from app.agents.intelligence import agi as agi_intel
@@ -44,7 +43,6 @@ STEPS = [
     ("failure", "Failure Prediction", "ml"),
     ("forecast", "Revenue Forecast", "ml"),
     ("funding", "Funding Readiness", "ml"),
-    ("sentiment", "Customer Sentiment", "ml"),
     ("health", "Startup Health", "ml"),
     ("root_cause", "Root Cause Analysis", "llm"),
     ("founder_strategy", "Founder Strategy", "llm"),
@@ -63,7 +61,6 @@ STEPS = [
 @router.post("/board/stream")
 def board_stream(ref: StartupRef, db: Session = Depends(get_db)):
     metrics = resolve_metrics(ref, db)
-    reviews = ref.customer_reviews
     series = ref.revenue_series
 
     def gen():
@@ -92,7 +89,6 @@ def board_stream(ref: StartupRef, db: Session = Depends(get_db)):
         yield from step("failure", "Failure Prediction", "ml", lambda: predict_failure(metrics))
         yield from step("forecast", "Revenue Forecast", "ml", lambda: forecast_revenue(metrics, series))
         yield from step("funding", "Funding Readiness", "ml", lambda: predict_funding(metrics))
-        yield from step("sentiment", "Customer Sentiment", "ml", lambda: analyze_sentiment(reviews))
         fp = out.get("funding", {}).get("funding_probability") if isinstance(out.get("funding"), dict) else None
         yield from step("health", "Startup Health", "ml", lambda: compute_health(metrics, fp))
 

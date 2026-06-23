@@ -3,7 +3,7 @@ import { useState } from "react";
 import { api } from "@/lib/api";
 import { useStore } from "@/lib/store";
 import { Card, Loading, ErrorBox, PageHeader, Pill, fmtMoney, fmtPct } from "@/components/ui";
-import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from "recharts";
+import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip } from "recharts";
 import { CHART, axisProps, ANIM } from "@/lib/chartTheme";
 import { InstrumentTooltip } from "@/components/instrument";
 
@@ -13,6 +13,17 @@ const SCENARIOS = [
   { key: "product_launch", label: "Product Launch", desc: "customer growth +18%" },
   { key: "cost_cutting", label: "Cost Cutting", desc: "expenses −15%, burn −18%" },
 ];
+
+// Twin-state metrics live on different scales: money ($), counts, and rates (0–1).
+// Format each by kind so a customer count never renders as currency ("$1K").
+const MONEY_KEYS = new Set(["revenue", "burn_rate", "expenses", "funding"]);
+const RATE_KEYS = new Set(["growth_rate", "market_share"]);
+function fmtMetric(key: string, val: any) {
+  if (typeof val !== "number") return val;
+  if (MONEY_KEYS.has(key)) return fmtMoney(val);
+  if (RATE_KEYS.has(key)) return fmtPct(val);
+  return Math.round(val).toLocaleString();
+}
 
 export default function SimulationPage() {
   const { metrics } = useStore();
@@ -36,9 +47,12 @@ export default function SimulationPage() {
   }
 
   const diff = result?.diff || {};
+  // Metrics live on wildly different scales ($8.5M revenue vs 1,200 customers vs 0.22
+  // growth), so plotting raw before/after on one axis is unreadable. Show % change per
+  // metric instead — a single, comparable scale.
   const chart = ["revenue", "customers", "burn_rate", "growth_rate", "expenses"]
     .filter((k) => diff[k])
-    .map((k) => ({ name: k.replace(/_/g, " "), before: diff[k].before, after: diff[k].after }));
+    .map((k) => ({ name: k.replace(/_/g, " "), change: diff[k].pct }));
 
   return (
     <div>
@@ -63,22 +77,20 @@ export default function SimulationPage() {
               </div>
             </Card>
           )}
-          <Card title={`Twin state: ${scenario.replace(/_/g, " ")}`} className="mb-6">
+          <Card title={`Twin state: ${scenario.replace(/_/g, " ")} — % change per metric`} className="mb-6">
             <ResponsiveContainer width="100%" height={320}>
-              <BarChart data={chart} barCategoryGap="40%">
+              <BarChart data={chart} barCategoryGap="35%">
                 <XAxis dataKey="name" {...axisProps} />
-                <YAxis {...axisProps} />
+                <YAxis {...axisProps} unit="%" />
                 <Tooltip cursor={{ fill: "rgba(255,255,255,0.03)" }} content={<InstrumentTooltip />} />
-                <Legend wrapperStyle={{ fontFamily: "var(--font-mono)", fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase" }} />
-                <Bar dataKey="before" fill={CHART.axis} radius={[6, 6, 0, 0]} {...ANIM} />
-                <Bar dataKey="after" fill={CHART.violet} radius={[6, 6, 0, 0]} {...ANIM} />
+                <Bar dataKey="change" name="% change" fill={CHART.violet} radius={[6, 6, 0, 0]} {...ANIM} />
               </BarChart>
             </ResponsiveContainer>
           </Card>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
             {Object.entries(diff).map(([k, v]: any) => (
               <Card key={k} title={k.replace(/_/g, " ")}>
-                <div className="text-lg font-bold">{typeof v.after === "number" && v.after > 1000 ? fmtMoney(v.after) : v.after}</div>
+                <div className="text-lg font-bold">{fmtMetric(k, v.after)}</div>
                 <Pill tone={v.change >= 0 ? "good" : "bad"}>{v.change >= 0 ? "+" : ""}{v.pct}%</Pill>
               </Card>
             ))}

@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { api, Metrics } from "@/lib/api";
 import { useStore } from "@/lib/store";
 import { TraceGlyph, RegCross } from "@/components/instrument";
-import { fmtMoney, fmtPct } from "@/components/ui";
+import { fmtMoney, fmtPct, RUNWAY_INFINITE } from "@/components/ui";
 
 type Field = {
   key: string;
@@ -48,22 +48,22 @@ const STEPS: { title: string; blurb: string; fields: Field[] }[] = [
     fields: [
       { key: "customer_count", label: "Customers", type: "number", placeholder: "340" },
       { key: "customer_growth", label: "Monthly growth rate", type: "number", step: 0.01, placeholder: "0.14", unit: "0–1", hint: "0.14 = 14% MoM" },
+      { key: "churn_rate", label: "Monthly churn rate", type: "number", step: 0.01, placeholder: "0.03", unit: "0–1", hint: "0.03 = 3% monthly · drives customer health" },
     ],
   },
   {
-    title: "Capital & Voice",
-    blurb: "Capital position and (optionally) real customer reviews for sentiment.",
+    title: "Capital",
+    blurb: "Capital position — used by funding and valuation scoring.",
     fields: [
       { key: "funding_amount", label: "Total funding raised", type: "number", placeholder: "3000000", unit: "$" },
       { key: "valuation", label: "Current valuation", type: "number", placeholder: "20000000", unit: "$" },
-      { key: "reviews", label: "Customer reviews (optional, one per line)", type: "textarea", placeholder: "Great onboarding!\nSupport was slow." },
     ],
   },
 ];
 
 export default function Onboarding() {
   const router = useRouter();
-  const { setProfile, setReviews, ready, hydrated, metrics } = useStore();
+  const { setProfile, ready, hydrated, metrics } = useStore();
   const [step, setStep] = useState(0);
   const [form, setForm] = useState<Record<string, any>>({});
   const [industries, setIndustries] = useState<string[]>([]);
@@ -96,12 +96,13 @@ export default function Onboarding() {
 
   const cash = Number(form.cash_reserves) || 0;
   const burn = Number(form.burn_rate) || 0;
-  const runway = burn > 0 ? Math.round((cash / burn) * 10) / 10 : 0;
+  // Zero monthly burn ⇒ no cash-out ⇒ effectively unbounded runway (a profitable company).
+  // Carry it as a sentinel so the backend never reads "0 months → imminent death".
+  const runway = burn > 0 ? Math.round((cash / burn) * 10) / 10 : RUNWAY_INFINITE;
 
   async function finish() {
     setSaving(true);
     try {
-      const reviews: string[] = (form.reviews || "").split("\n").map((x: string) => x.trim()).filter(Boolean);
       const m: Metrics = {
         startup_name: form.startup_name || "My Startup",
         industry: form.industry,
@@ -114,6 +115,7 @@ export default function Onboarding() {
         runway,
         customer_count: Number(form.customer_count) || 0,
         customer_growth: Number(form.customer_growth) || 0,
+        churn_rate: Number(form.churn_rate) || 0,
         funding_amount: Number(form.funding_amount) || 0,
         employee_count: Number(form.employee_count) || 0,
         valuation: Number(form.valuation) || 0,
@@ -121,7 +123,6 @@ export default function Onboarding() {
       };
       let id: number | null = null;
       try { id = (await api.createStartup(m))?.id ?? null; } catch {}
-      if (reviews.length) setReviews(reviews);
       setProfile(m, id); // also resets any prior analysis cache
       router.push("/launching");
     } finally {
@@ -216,7 +217,10 @@ export default function Onboarding() {
                   </div>
                   {step === 1 && (
                     <div className="mt-4 text-sm text-text-dim">
-                      Computed runway: <span className="text-aqua font-semibold">{runway} months</span>
+                      Computed runway:{" "}
+                      <span className="text-aqua font-semibold">
+                        {runway >= RUNWAY_INFINITE ? "∞ (profitable — no monthly burn)" : `${runway} months`}
+                      </span>
                     </div>
                   )}
                 </>
@@ -301,8 +305,9 @@ function ReviewPane({ form, runway }: any) {
           {row("Revenue", form.revenue ? fmtMoney(Number(form.revenue)) : "—")}
           {row("Expenses", form.expenses ? fmtMoney(Number(form.expenses)) : "—")}
           {row("Monthly burn", form.burn_rate ? fmtMoney(Number(form.burn_rate)) : "—")}
-          {row("Runway", `${runway} mo`)}
+          {row("Runway", runway >= RUNWAY_INFINITE ? "∞ (profitable)" : `${runway} mo`)}
           {row("Growth", form.customer_growth ? fmtPct(Number(form.customer_growth)) : "—")}
+          {row("Churn", form.churn_rate ? fmtPct(Number(form.churn_rate)) : "—")}
         </div>
       </div>
     </div>

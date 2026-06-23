@@ -23,7 +23,9 @@ def test_failure_prediction_outputs_valid_probabilities():
     r = predict_failure(HEALTHY)
     for k in ("failure_6m", "failure_12m", "failure_24m"):
         assert 0.0 < r[k] < 1.0
-    assert r["failure_24m"] <= r["failure_12m"] <= r["failure_6m"]
+    # Cumulative failure probability is non-decreasing with the horizon: a longer
+    # window can only add risk (6m <= 12m <= 24m).
+    assert r["failure_6m"] <= r["failure_12m"] <= r["failure_24m"]
     assert r["trained"] is True
     assert len(r["feature_importance"]) > 0
 

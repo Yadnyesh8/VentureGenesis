@@ -46,7 +46,7 @@ Every analysis endpoint accepts **either** `{"startup_id": <id>}` **or** `{"metr
 Routes live in `app/api/routes/` (`analysis`, `debate`, `pipeline`, `upload`, `system`, `webhooks`), all mounted under `/api` in `app/main.py`. (`analysis` also serves the frontier agents — see below.)
 
 ### Two classes of agents
-- **ML / stat agents** (`app/agents/ml/`) — local, instant: failure prediction, funding readiness, revenue forecast, sentiment, health score, risk detection (churn is a metric consumed by the health agent, not a standalone module). Each has a documented **rule-based fallback** used when its library or a trained model is missing.
+- **ML / stat agents** (`app/agents/ml/`) — local, instant: failure prediction, funding readiness, revenue forecast, health score, risk detection (churn is a metric consumed by the health agent, not a standalone module). Each has a documented **rule-based fallback** used when its library or a trained model is missing. (Customer sentiment / FinBERT was removed.)
 - **LLM reasoning agents** — live calls: understanding, root-cause, founder/investor/CFO/competitor/market (`app/agents/intelligence/agents.py`), the 6-agent × 3-round debate (`app/agents/debate_engine.py`), pivot generation (`app/simulation/pivot.py`), the scenario digital twin (`app/simulation/digital_twin.py`, behind the `/simulation` page), and the board chairperson that aggregates everything (`app/agents/board.py`).
 
 ### Frontier agents (Features 1–4; see `docs/SPEC_FRONTIER_AGENTS.md`)

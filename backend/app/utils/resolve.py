@@ -18,6 +18,10 @@ _NUMERIC_KEYS = [
     "customer_growth", "churn_rate", "funding_amount", "employee_count", "valuation",
 ]
 
+# A profitable company (no monthly burn) has effectively unbounded runway. Kept in sync
+# with the frontend sentinel (components/ui.tsx RUNWAY_INFINITE).
+RUNWAY_INFINITE = 9999
+
 
 def resolve_metrics(ref: StartupRef, db: Session | None = None) -> dict[str, Any]:
     metrics: dict[str, Any] = {}
@@ -30,4 +34,13 @@ def resolve_metrics(ref: StartupRef, db: Session | None = None) -> dict[str, Any
         metrics.update({k: v for k, v in inline.items() if v is not None})
     for k in _NUMERIC_KEYS:
         metrics.setdefault(k, 0)
+
+    # Profitable / zero-burn guard: a company with no monthly burn has effectively
+    # unbounded runway. Without this, burn=0 would leave runway at 0 and every
+    # runway-dependent agent (failure adjustment, causal death path, VOI) would read
+    # it as imminent cash-out — the "0% burn ⇒ 90% death" defect. We normalize it to a
+    # large sentinel so those agents see a healthy, not fatal, runway.
+    burn = metrics.get("burn_rate", 0) or 0
+    if burn <= 0 and (metrics.get("runway", 0) or 0) <= 0:
+        metrics["runway"] = RUNWAY_INFINITE
     return metrics

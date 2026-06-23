@@ -20,8 +20,6 @@ type Store = {
   setProfile: (m: Metrics, startupId?: number | null) => void;
   clearProfile: () => void;
   startupId: number | null;
-  reviews: string[];
-  setReviews: (r: string[]) => void;
   ref: () => Ref;
   hydrated: boolean;
   // shared agent-result cache (keyed by endpoint name; values are {ok, data} like the API)
@@ -39,7 +37,6 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   const [metrics, setMetricsState] = useState<Metrics>(EMPTY);
   const [ready, setReady] = useState(false);
   const [startupId, setStartupId] = useState<number | null>(null);
-  const [reviews, setReviewsState] = useState<string[]>([]);
   const [hydrated, setHydrated] = useState(false);
   const [cache, setCacheState] = useState<Record<string, any>>({});
   const [board, setBoard] = useState<BoardState>(EMPTY_BOARD);
@@ -51,13 +48,11 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       const m = localStorage.getItem("vg_metrics");
       const r = localStorage.getItem("vg_ready");
       const id = localStorage.getItem("vg_startup_id");
-      const rev = localStorage.getItem("vg_reviews");
       const c = localStorage.getItem("vg_cache");
       const b = localStorage.getItem("vg_board");
       if (m) setMetricsState(JSON.parse(m));
       if (r) setReady(JSON.parse(r));
       if (id) setStartupId(JSON.parse(id));
-      if (rev) setReviewsState(JSON.parse(rev));
       if (c) setCacheState(JSON.parse(c));
       if (b) { const bs = JSON.parse(b); setBoard(bs); if (bs.ran) setAnalysis((a) => ({ ...a, status: "done" })); }
     } catch {}
@@ -87,17 +82,10 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     setMetricsState(EMPTY);
     setReady(false);
     setStartupId(null);
-    setReviewsState([]);
     localStorage.removeItem("vg_metrics");
     localStorage.removeItem("vg_ready");
     localStorage.removeItem("vg_startup_id");
-    localStorage.removeItem("vg_reviews");
     resetAnalysis();
-  };
-
-  const setReviews = (r: string[]) => {
-    setReviewsState(r);
-    localStorage.setItem("vg_reviews", JSON.stringify(r));
   };
 
   const setCache = (key: string, value: any) => {
@@ -111,7 +99,6 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   const ref = (): Ref => ({
     startup_id: startupId,
     metrics,
-    customer_reviews: reviews.length ? reviews : undefined,
   });
 
   // Run the full board pipeline ONCE and fan the results out into the per-page cache,
@@ -167,7 +154,6 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
               ["causal", report.causal],
             ];
             for (const [k, v] of map) if (v && !v.error) derived[k] = wrap(v);
-            if (report.sentiment && !report.sentiment.error) derived.customer = wrap({ sentiment: report.sentiment });
             setCacheState((prev) => {
               const next = { ...prev, ...derived };
               try { localStorage.setItem("vg_cache", JSON.stringify(next)); } catch {}
@@ -191,7 +177,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <Ctx.Provider value={{ metrics, ready, setProfile, clearProfile, startupId, reviews, setReviews, ref, hydrated, cache, setCache, board, analysis, prewarm }}>
+    <Ctx.Provider value={{ metrics, ready, setProfile, clearProfile, startupId, ref, hydrated, cache, setCache, board, analysis, prewarm }}>
       {children}
     </Ctx.Provider>
   );

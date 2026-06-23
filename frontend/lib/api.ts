@@ -23,7 +23,6 @@ export type Ref = {
   startup_id?: number | null;
   metrics?: Metrics;
   description?: string;
-  customer_reviews?: string[];
   revenue_series?: number[];
   scenario?: string;
 };
@@ -64,7 +63,6 @@ export const api = {
   failure: (ref: Ref) => post("/failure", ref),
   forecast: (ref: Ref) => post("/forecast", ref),
   funding: (ref: Ref) => post("/funding", ref),
-  customer: (ref: Ref) => post("/customer", ref),
   health: (ref: Ref) => post("/health", ref),
   competitor: (ref: Ref) => post("/competitor", ref),
   market: (ref: Ref) => post("/market", ref),

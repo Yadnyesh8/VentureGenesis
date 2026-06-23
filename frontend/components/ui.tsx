@@ -223,6 +223,15 @@ export function fmtPct(n: number) {
   return `${(n * 100).toFixed(1)}%`;
 }
 
+// A profitable company (no monthly burn) has effectively unbounded runway. We carry it
+// as a large sentinel so downstream models don't read "0 months → imminent death".
+export const RUNWAY_INFINITE = 9999;
+
+export function fmtRunway(months?: number | null) {
+  const m = months ?? 0;
+  return m >= RUNWAY_INFINITE ? "∞" : `${m} mo`;
+}
+
 // Cache-aware agent runner. When `cacheKey` is supplied, results pre-loaded by the
 // launching screen (or a prior visit) are read from the shared store and rendered
 // instantly — no refetch. Without a key it behaves as a plain on-mount fetcher.

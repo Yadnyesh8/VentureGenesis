@@ -28,7 +28,6 @@ const CATS: Cat[] = [
       { href: "/failure", label: "Failure Prediction", tag: "GradientBoosting" },
       { href: "/forecast", label: "Revenue Forecast", tag: "Prophet" },
       { href: "/funding", label: "Funding Readiness", tag: "GradientBoosting" },
-      { href: "/customer", label: "Customer Sentiment", tag: "FinBERT" },
     ],
   },
   {

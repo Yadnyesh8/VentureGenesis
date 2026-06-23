@@ -7,7 +7,6 @@ from sqlalchemy.orm import Session
 from app.agents.ml.failure_prediction import predict_failure
 from app.agents.ml.revenue_forecast import forecast_revenue
 from app.agents.ml.funding_readiness import predict_funding
-from app.agents.ml.sentiment import analyze_sentiment
 from app.agents.ml.health import compute_health
 from app.agents.ml.risk_detection import detect_risks
 from app.agents.intelligence import agents as intel
@@ -91,14 +90,6 @@ def api_funding(ref: StartupRef, db: Session = Depends(get_db)):
     result = predict_funding(m)
     _persist_prediction(db, ref.startup_id, funding_probability=result["funding_probability"])
     return {"ok": True, "data": result}
-
-
-@router.post("/customer")
-def api_customer(ref: StartupRef, db: Session = Depends(get_db)):
-    """Customer sentiment analysis (FinBERT)."""
-    m = resolve_metrics(ref, db)
-    sentiment = analyze_sentiment(ref.customer_reviews)
-    return {"ok": True, "data": {"sentiment": sentiment}}
 
 
 @router.post("/risk")
@@ -206,7 +197,7 @@ def api_pivots(ref: StartupRef, db: Session = Depends(get_db)):
 @router.post("/board")
 def api_board(ref: StartupRef, db: Session = Depends(get_db)):
     m = resolve_metrics(ref, db)
-    result = board_decision(m, ref.customer_reviews, ref.revenue_series)
+    result = board_decision(m, ref.revenue_series)
     return {"ok": True, "data": result}
 
 

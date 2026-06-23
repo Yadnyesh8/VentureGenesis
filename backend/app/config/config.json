@@ -83,8 +83,8 @@
     "delta_max": 0.45
   },
   "failure_horizons": {
-    "six_month_multiplier": 1.12,
-    "two_year_multiplier": 0.88
+    "six_month_multiplier": 0.6,
+    "two_year_multiplier": 1.5
   },
   "funding_adjustment": {
     "growth_weight": 0.15,

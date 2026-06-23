@@ -53,11 +53,12 @@ export default function UncertaintyPage() {
               <Card
                 key={i}
                 title={it.field}
-                right={it.worth_fetching ? <Pill tone="good">FETCH</Pill> : <Pill tone="neutral">SKIP — LOW VOI</Pill>}
+                right={it.worth_fetching ? <Pill tone="good">FETCH</Pill> : <Pill tone="neutral">SKIP — BELOW THRESHOLD</Pill>}
               >
                 <div className="grid grid-cols-2 gap-2 text-xs mb-3">
                   <div>VOI: <b className="text-aqua">{(it.voi ?? 0).toFixed(4)}</b></div>
-                  <div>Cost: <b className="text-coral">${it.cost_usd}</b></div>
+                  <div>Threshold: <b className="text-coral">{(it.fetch_threshold ?? 0).toFixed(4)}</b></div>
+                  <div>Cost: <b>${it.cost_usd}</b></div>
                   <div>Source: <b>{it.source}</b></div>
                   <div>Basis: <b>{it.basis === "model_perturbation" ? "model" : "prior"}</b></div>
                 </div>
@@ -66,7 +67,7 @@ export default function UncertaintyPage() {
                     ? "✓ acquired"
                     : it.worth_fetching
                       ? (it.fetch_reason || "connector unavailable (would have been worth buying)")
-                      : "VOI below cost — not worth buying"}
+                      : `VOI ${(it.voi ?? 0).toFixed(4)} below fetch threshold ${(it.fetch_threshold ?? 0).toFixed(4)} (cost × margin) — not worth buying`}
                 </p>
               </Card>
             ))}

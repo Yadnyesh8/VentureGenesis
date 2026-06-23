@@ -103,7 +103,11 @@ def assess(metrics: dict[str, Any], *, allow_fetch: bool = False,
         source = field_source.get(field, "web_search")
         cost = knowledge.cost_of(source)
         cost_in_voi = cost * scale
-        worth_it = voi > cost_in_voi * (1 + margin)
+        # Fetch only when VOI clears cost plus the safety margin — expose the exact
+        # threshold so the UI can explain a SKIP (VOI below threshold) rather than
+        # mislabeling a non-trivial VOI as "low".
+        threshold = cost_in_voi * (1 + margin)
+        worth_it = voi > threshold
 
         ledger.append({
             "field": field,
@@ -113,6 +117,7 @@ def assess(metrics: dict[str, Any], *, allow_fetch: bool = False,
             "source": source,
             "cost_usd": cost,
             "cost_in_voi_units": round(cost_in_voi, 4),
+            "fetch_threshold": round(threshold, 4),
             "worth_fetching": worth_it,
             "fetched": False,
         })

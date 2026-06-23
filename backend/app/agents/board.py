@@ -14,7 +14,6 @@ from app.agents.startup_understanding import understand
 from app.agents.ml.failure_prediction import predict_failure
 from app.agents.ml.revenue_forecast import forecast_revenue
 from app.agents.ml.funding_readiness import predict_funding
-from app.agents.ml.sentiment import analyze_sentiment
 from app.agents.ml.health import compute_health
 from app.agents.ml.risk_detection import detect_risks
 from app.agents.intelligence import agents as intel
@@ -24,7 +23,7 @@ from app.agents.debate_engine import run_debate_blocking
 from app.simulation.pivot import run_pivot_pipeline
 
 
-def gather_all(metrics: dict[str, Any], reviews: list[str] | None = None,
+def gather_all(metrics: dict[str, Any],
                revenue_series: list[float] | None = None) -> dict[str, Any]:
     """Run every agent and collect outputs. Each wrapped so one failure can't break the board."""
     out: dict[str, Any] = {}
@@ -39,7 +38,6 @@ def gather_all(metrics: dict[str, Any], reviews: list[str] | None = None,
     safe("failure", lambda: predict_failure(metrics))
     safe("forecast", lambda: forecast_revenue(metrics, revenue_series))
     safe("funding", lambda: predict_funding(metrics))
-    safe("sentiment", lambda: analyze_sentiment(reviews))
 
     funding_prob = out.get("funding", {}).get("funding_probability")
     safe("health", lambda: compute_health(metrics, funding_prob))
@@ -70,7 +68,6 @@ def _compact(aggregate: dict[str, Any]) -> dict[str, Any]:
         "risk_level": a.get("risk", {}).get("risk_level"),
         "top_risks": [f.get("message") for f in a.get("risk", {}).get("top_risks", [])][:4],
         "forecast_12m": a.get("forecast", {}).get("forecast_12m"),
-        "sentiment": a.get("sentiment", {}).get("sentiment"),
         "root_causes": [c.get("cause") for c in a.get("root_cause", {}).get("causes", [])][:4],
         "founder_actions": [r.get("action") for r in a.get("founder_strategy", {}).get("recommendations", [])][:4],
         "investor": {k: a.get("investor", {}).get(k) for k in ("would_invest", "confidence", "thesis")},
@@ -89,8 +86,8 @@ def _compact(aggregate: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def board_decision(metrics: dict[str, Any], reviews: list[str] | None = None,
+def board_decision(metrics: dict[str, Any],
                    revenue_series: list[float] | None = None) -> dict[str, Any]:
-    aggregate = gather_all(metrics, reviews, revenue_series)
+    aggregate = gather_all(metrics, revenue_series)
     decision = llm.complete(render_prompt("board_decision", aggregate=_compact(aggregate)))
     return {"board_decision_obj": decision, "full_report": aggregate}
