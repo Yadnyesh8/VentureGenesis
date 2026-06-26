@@ -4,8 +4,8 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { SignedIn, SignedOut, useClerk } from "@clerk/nextjs";
+import Image from "next/image";
 import { useStore } from "@/lib/store";
-import { TraceGlyph } from "./instrument";
 
 type Item = { href: string; label: string; tag?: string };
 type Cat = { label: string; blurb: string; items: Item[] };
@@ -67,8 +67,8 @@ export default function TopNav() {
       <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-aqua/30 to-transparent" />
       <div className="max-w-[1500px] mx-auto px-5 h-16 flex items-center gap-6">
         <Link href="/dashboard" className="flex items-center gap-2.5 shrink-0 group">
-          <span className="grid place-items-center w-9 h-9 rounded-xl border border-line bg-surface2 group-hover:border-aqua/50 transition-colors">
-            <TraceGlyph size={20} />
+          <span className="grid place-items-center w-9 h-9 rounded-xl border border-line bg-surface2 group-hover:border-aqua/50 transition-colors overflow-hidden">
+            <Image src="/logo.png" alt="VentureGenesis" width={28} height={28} className="object-contain" />
           </span>
           <div className="leading-none">
             <div className="title-display text-[17px]">VENTURE<span className="text-aqua">GENESIS</span></div>

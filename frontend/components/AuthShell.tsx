@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
-import { TraceGlyph, RegCross } from "@/components/instrument";
+import Image from "next/image";
+import { RegCross } from "@/components/instrument";
 
 // Shared full-bleed shell for /sign-in and /sign-up. Left = one large brand
 // name; right = a roomy glass card holding the form.
@@ -9,7 +10,7 @@ export default function AuthShell({ children }: { children: React.ReactNode }) {
     <div className="min-h-screen grid lg:grid-cols-2 gap-12 max-w-6xl w-full mx-auto px-6 py-10 items-center">
       {/* Brand — a single oversized wordmark, no supporting copy */}
       <div className="hidden lg:flex flex-col justify-center">
-        <TraceGlyph size={44} />
+        <Image src="/logo.png" alt="VentureGenesis" width={64} height={64} className="object-contain" />
         <h1 className="display-hero text-[clamp(56px,8vw,108px)] leading-[0.84] mt-7">
           VENTURE
           <br />
@@ -21,7 +22,7 @@ export default function AuthShell({ children }: { children: React.ReactNode }) {
       <div className="w-full max-w-[480px] mx-auto lg:mx-0 lg:justify-self-end">
         {/* Compact brand for small screens (the big one is hidden there) */}
         <div className="lg:hidden flex items-center gap-2.5 mb-6">
-          <TraceGlyph size={26} />
+          <Image src="/logo.png" alt="VentureGenesis" width={32} height={32} className="object-contain" />
           <div className="title-display text-[19px]">
             VENTURE<span className="text-aqua">GENESIS</span>
           </div>
