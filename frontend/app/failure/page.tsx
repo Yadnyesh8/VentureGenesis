@@ -1,7 +1,7 @@
 "use client";
 import { api } from "@/lib/api";
 import { useStore } from "@/lib/store";
-import { Card, Metric, Loading, ErrorBox, PageHeader, Pill, fmtPct, useAgent } from "@/components/ui";
+import { Card, Metric, Loading, ErrorBox, PageHeader, Pill, fmtPct, useAgent, ConfidenceMeter } from "@/components/ui";
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Cell, ReferenceLine } from "recharts";
 import { CHART, axisProps, ANIM, riskColor } from "@/lib/chartTheme";
 import { InstrumentTooltip } from "@/components/instrument";
@@ -24,6 +24,11 @@ export default function FailurePage() {
             <Metric label="12-month" value={fmtPct(d.failure_12m)} tone={d.failure_12m < 0.35 ? "good" : d.failure_12m < 0.6 ? "warn" : "bad"} />
             <Metric label="24-month" value={fmtPct(d.failure_24m)} tone={d.failure_24m < 0.35 ? "good" : d.failure_24m < 0.6 ? "warn" : "bad"} />
           </div>
+          {d.model_confidence != null && (
+            <div className="mb-6">
+              <ConfidenceMeter confidence={d.model_confidence} components={d.confidence_components} />
+            </div>
+          )}
           <Card title="SHAP feature importance" right={<Pill tone={d.shap_available ? "good" : "neutral"}>{d.shap_available ? "SHAP" : "FEATURE WEIGHTS"}</Pill>}>
             <ResponsiveContainer width="100%" height={340}>
               <BarChart data={shap} layout="vertical" margin={{ left: 30, right: 20 }}>

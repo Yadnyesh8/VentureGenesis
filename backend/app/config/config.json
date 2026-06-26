@@ -185,5 +185,39 @@
     "death_node": "death",
     "base_time_to_event_months": 3.0,
     "intervention_min_leverage": 0.2
+  },
+  "specialists": {
+    "industry_tam_usd": {
+      "Fintech": 3.0e11, "Finances": 3.0e11, "Healthcare": 4.0e11, "Health": 4.0e11,
+      "Education": 1.0e11, "B2B": 2.0e11, "Consumer": 2.5e11, "Industrials": 1.5e11,
+      "default": 1.0e11
+    },
+    "stage_peer_funding_usd": {
+      "idea": 1.0e5, "pre-seed": 5.0e5, "seed": 3.0e6, "early": 3.0e6,
+      "series a": 1.5e7, "series b": 4.0e7, "growth": 1.0e8, "late": 2.0e8, "public": 5.0e8
+    },
+    "competitive_density": {
+      "Fintech": 0.8, "Consumer": 0.85, "B2B": 0.6, "Healthcare": 0.55,
+      "Education": 0.5, "default": 0.6
+    },
+    "sam_fraction_of_tam": 0.15,
+    "som_fraction_of_sam": 0.05,
+    "target_runway_months": 18.0
+  },
+  "confidence": {
+    "weights": {
+      "discrimination": 0.35,
+      "calibration": 0.30,
+      "stability": 0.15,
+      "completeness": 0.20
+    },
+    "brier_reference": 0.25,
+    "cv_std_reference": 0.10,
+    "floor": 0.30,
+    "ceiling": 0.98,
+    "decision_fields": [
+      "runway", "churn_rate", "customer_growth", "revenue",
+      "expenses", "burn_rate", "employee_count", "funding_amount"
+    ]
   }
 }

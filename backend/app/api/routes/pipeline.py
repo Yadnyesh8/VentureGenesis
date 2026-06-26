@@ -106,19 +106,31 @@ def board_stream(ref: StartupRef, db: Session = Depends(get_db)):
         yield _sse({"type": "agent_start", "key": "debate", "label": "Boardroom Debate", "kind": "llm"})
         transcript = []
         consensus = "neutral"
+        metrics_consensus = None
+        metrics_tally = None
         audit: list[dict] = []
         t0 = time.time()
         try:
             for ev in run_debate(ctx):
                 if ev["type"] == "message":
-                    transcript.append({k: ev[k] for k in ("round", "role", "message", "stance") if k in ev})
-                    yield _sse({"type": "debate_message", **{k: ev[k] for k in ("round", "role", "message", "stance") if k in ev}})
+                    # `lens` carries each agent's specialist quantitative inputs (dilution math
+                    # for the Investor, burn-multiple for the CFO, …) and `computed_stance` is
+                    # the code-derived verdict the LLM had to argue — so the UI can show that
+                    # agents reason over different numbers AND own a real decision function,
+                    # not just different prompts.
+                    keep = ("round", "role", "message", "stance", "lens", "computed_stance", "computed_why")
+                    transcript.append({k: ev[k] for k in keep if k in ev})
+                    yield _sse({"type": "debate_message", **{k: ev[k] for k in keep if k in ev}})
                 elif ev["type"] in ("info_request", "info_fetched", "info_skipped_low_voi", "info_unavailable"):
                     audit.append(ev)
                     yield _sse(ev)
                 elif ev["type"] == "consensus":
                     consensus = ev["consensus"]
-            out["debate"] = {"consensus": consensus, "transcript": transcript, "uncertainty_audit": audit}
+                    metrics_consensus = ev.get("metrics_consensus")
+                    metrics_tally = ev.get("metrics_tally")
+            out["debate"] = {"consensus": consensus, "metrics_consensus": metrics_consensus,
+                             "metrics_tally": metrics_tally, "transcript": transcript,
+                             "uncertainty_audit": audit}
             yield _sse({"type": "agent_done", "key": "debate", "label": "Boardroom Debate",
                         "ms": int((time.time() - t0) * 1000), "result": {"consensus": consensus, "messages": len(transcript)}})
         except Exception as exc:

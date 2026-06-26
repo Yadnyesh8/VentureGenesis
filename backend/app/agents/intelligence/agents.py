@@ -14,6 +14,7 @@ from typing import Any
 
 from app.core import llm
 from app.core.config import render_prompt
+from app.agents import specialists
 
 
 def root_cause(shap_importance: list[dict], metrics: dict[str, Any]) -> dict[str, Any]:
@@ -24,17 +25,24 @@ def founder_strategy(context: dict[str, Any]) -> dict[str, Any]:
     return llm.complete(render_prompt("founder_strategy", context=context))
 
 
+def _lens_with_verdict(role: str, context: dict[str, Any]) -> dict[str, Any]:
+    """Specialist lens plus the role's code-computed prior stance (decision function)."""
+    lens = specialists.lens_for(role, context)
+    v = specialists.verdict_for(role, context)
+    return {**lens, "prior_stance": v["stance"], "prior_basis": v["rationale"]}
+
+
 def investor(context: dict[str, Any]) -> dict[str, Any]:
-    return llm.complete(render_prompt("investor", context=context))
+    return llm.complete(render_prompt("investor", context=context, lens=_lens_with_verdict("investor", context)))
 
 
 def financial_risk(context: dict[str, Any]) -> dict[str, Any]:
-    return llm.complete(render_prompt("financial_risk", context=context))
+    return llm.complete(render_prompt("financial_risk", context=context, lens=_lens_with_verdict("financial_risk", context)))
 
 
 def competitor(context: dict[str, Any]) -> dict[str, Any]:
-    return llm.complete(render_prompt("competitor", context=context))
+    return llm.complete(render_prompt("competitor", context=context, lens=_lens_with_verdict("competitor", context)))
 
 
 def market_opportunity(context: dict[str, Any]) -> dict[str, Any]:
-    return llm.complete(render_prompt("market", context=context))
+    return llm.complete(render_prompt("market", context=context, lens=_lens_with_verdict("market", context)))

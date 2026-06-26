@@ -105,15 +105,11 @@ export default function TopNav() {
                             key={it.href}
                             href={it.href}
                             onClick={() => setOpen(null)}
-                            className={`flex items-center justify-between gap-3 px-3 py-2.5 rounded-xl transition-colors group ${
+                            className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-colors group ${
                               isActive ? "bg-surface3 text-text" : "text-text-dim hover:bg-surface2 hover:text-text"
                             }`}
                           >
-                            <span className="flex items-center gap-2.5 text-sm">
-                              <span className={`w-1.5 h-1.5 rounded-full ${isActive ? "bg-aqua" : "bg-line-strong group-hover:bg-aqua"} transition-colors`} />
-                              {it.label}
-                            </span>
-                            {it.tag && <span className="label-mono text-[8px] text-text-faint">{it.tag}</span>}
+                            <span className="text-sm">{it.label}</span>
                           </Link>
                         );
                       })}

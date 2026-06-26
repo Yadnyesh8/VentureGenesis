@@ -82,9 +82,20 @@ export default function BoardPage() {
                         <div className="flex items-center gap-2 mb-1.5">
                           <span className="font-semibold text-sm">{m.role}</span>
                           <Pill tone={m.stance} dot>{m.stance}</Pill>
+                          {m.computed_stance && m.computed_stance !== m.stance && (
+                            <span className="label-mono text-[9px] text-amber" title={m.computed_why}>
+                              ↳ MOVED OFF {m.computed_stance.toUpperCase()}
+                            </span>
+                          )}
+                          {m.computed_stance && m.computed_stance === m.stance && (
+                            <span className="label-mono text-[9px] text-text-faint" title={m.computed_why}>
+                              ✓ COMPUTED
+                            </span>
+                          )}
                           <span className="label-mono text-[9px] ml-auto text-text-faint">ROUND {m.round}</span>
                         </div>
                         <div className="text-sm text-text-dim leading-relaxed">{m.message}</div>
+                        {m.lens && m.lens.focus && <LensChips lens={m.lens} hex={hex} />}
                       </div>
                     </div>
                   );
@@ -114,6 +125,48 @@ export default function BoardPage() {
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+// Renders an agent's specialist lens — the distinct quantitative inputs it reasoned over —
+// as compact chips, so the boardroom visibly shows each agent works from different numbers.
+const LENS_SKIP = new Set(["focus", "read", "basis", "industry", "stage"]);
+const LENS_LABELS: Record<string, string> = {
+  capital_efficiency_arr_per_$: "cap. efficiency", valuation_to_revenue_multiple: "val/rev ×",
+  implied_dilution_pct: "dilution %", burn_multiple: "burn ×", net_margin: "net margin",
+  runway_months: "runway mo", default_alive: "default-alive", tam_usd: "TAM",
+  current_share_of_sam_pct: "share of SAM %", moat_proxy: "moat", funding_vs_stage_peer_x: "funding vs peers ×",
+  competitive_density: "density", hiring_velocity_per_year: "hires/yr", arpu_annual_usd: "ARPU",
+  churn_implied_lifetime_months: "lifetime mo", nrr_proxy: "NRR", ltv_usd: "LTV",
+  age_vs_stage_gap_years: "stage gap yr", yoy_growth_pct: "growth %",
+};
+const fmtLensVal = (v: any): string => {
+  if (typeof v === "boolean") return v ? "yes" : "no";
+  if (typeof v !== "number") return String(v);
+  const a = Math.abs(v);
+  if (a >= 1e9) return `$${(v / 1e9).toFixed(1)}B`;
+  if (a >= 1e6) return `$${(v / 1e6).toFixed(1)}M`;
+  if (a >= 1e4) return `$${(v / 1e3).toFixed(0)}K`;
+  return `${v}`;
+};
+
+function LensChips({ lens, hex }: { lens: Record<string, any>; hex: string }) {
+  const entries = Object.entries(lens)
+    .filter(([k, v]) => !LENS_SKIP.has(k) && v != null)
+    .slice(0, 4);
+  return (
+    <div className="mt-2.5 pt-2.5 border-t border-line/60">
+      <div className="label-mono text-[9px] text-text-faint mb-1.5">SPECIALIST LENS · {String(lens.focus).toUpperCase()}</div>
+      <div className="flex flex-wrap gap-1.5">
+        {entries.map(([k, v]) => (
+          <span key={k} className="inline-flex items-center gap-1 rounded-md border px-1.5 py-0.5 text-[10px]"
+                style={{ borderColor: `${hex}40`, background: `${hex}10` }}>
+            <span className="text-text-faint">{LENS_LABELS[k] || k.replace(/_/g, " ")}</span>
+            <b style={{ color: hex }}>{fmtLensVal(v)}</b>
+          </span>
+        ))}
+      </div>
     </div>
   );
 }

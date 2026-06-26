@@ -45,10 +45,16 @@ def predict_funding(metrics: dict[str, Any]) -> dict[str, Any]:
     x = np.array([metrics_to_features(metrics, bundle["industry_map"])])
     base = float(model.predict_proba(x)[0][1])
     prob = max(0.02, min(0.98, base + _traction_adjustment(metrics)))
+
+    from app.agents.ml.confidence import model_confidence
+    conf = model_confidence(metrics, bundle.get("metrics"))
+
     return {
         "funding_probability": round(prob, 3),
         "investor_score": round(prob * 100, 1),
         "model_base_probability": round(base, 3),
         "method": f"{bundle['model_type']} (trained on {bundle['n_samples']} real companies, AUC {bundle['metrics']['auc']})",
+        "model_confidence": conf["model_confidence"],
+        "confidence_components": conf["components"],
         "trained": True,
     }

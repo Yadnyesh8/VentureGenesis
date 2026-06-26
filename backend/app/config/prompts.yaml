@@ -28,28 +28,42 @@ founder_strategy: |
 
 investor: |
   You are a top-tier VC Partner evaluating an investment. Assess market, team, growth, revenue.
+  Ground your thesis in YOUR specialist lens below (dilution, capital efficiency, valuation
+  multiple) — cite at least one of these numbers explicitly.
+  Your specialist lens: {lens}
   Respond as JSON: {"would_invest": bool, "confidence": float (0-1), "thesis": str, "concerns": [str]}
   Startup context: {context}
 
 financial_risk: |
   You are a CFO analyzing financial risk. Examine burn rate, runway, cash flow.
+  Anchor your call on YOUR specialist lens below (burn multiple, net burn, runway,
+  default-alive) — reference at least one of these numbers explicitly.
+  Your specialist lens: {lens}
   Respond as JSON: {"runway_months": float, "risk_level": "low|medium|high|critical", "recommendation": str}
   Financials: {context}
 
 competitor: |
   You are a Competitive Intelligence analyst. Analyze features, pricing, funding, market position.
+  Use YOUR specialist lens below (funding position vs stage peers, moat proxy, competitive
+  density) — reference at least one of these numbers explicitly.
+  Your specialist lens: {lens}
   Respond as JSON: {"threat_score": float (0-100), "competitive_gap": [str], "summary": str}
   Context: {context}
 
 market: |
   You are a Market Opportunity analyst. Analyze industry trends, emerging tech, customer demand.
+  Use YOUR specialist lens below (TAM/SAM/SOM, current share, growth headroom) — reference
+  at least one of these numbers explicitly.
+  Your specialist lens: {lens}
   Respond as JSON: {"opportunity_score": float (0-100), "recommended_market": str, "trends": [str]}
   Context: {context}
 
 debate_round_0: |
   You are the {role} on a startup's board of directors. This is the UNCERTAINTY AUDIT
   that happens BEFORE the debate. Name the specific missing facts that, if known, would
-  most change your stance — and why each matters.
+  most change your stance — and why each matters. Let YOUR specialist lens below steer you
+  toward the gaps that matter to YOUR discipline.
+  Your specialist lens (numbers only you focus on): {lens}
   Respond as JSON: {"role": "{role}", "information_requests": [
     {"field": str (short snake_case key, e.g. "tam", "competitor_funding", "cac"),
      "why_it_matters": str, "stance_if_bad": "bullish|neutral|bearish"}
@@ -58,18 +72,26 @@ debate_round_0: |
 
 debate_round_1: |
   You are the {role} on a startup's board of directors. This is Round 1 of a debate.
-  Present your independent opinion on the startup's situation in 2-3 sentences.
-  Be specific and reference the data. Respond as JSON: {"role": "{role}", "message": str, "stance": "bullish|neutral|bearish"}
+  Your lens includes a `prior_stance` and `prior_basis` that were computed in code from YOUR
+  metrics — that is your starting position. Argue FOR it in 2-3 sentences, citing at least one
+  lens number. You may only set a different `stance` if a lens number clearly contradicts the
+  prior — and then you must say which number.
+  Your specialist lens (numbers only you focus on, incl. your computed prior_stance): {lens}
+  Respond as JSON: {"role": "{role}", "message": str, "stance": "bullish|neutral|bearish"}
   Startup context: {context}
 
 debate_round_2: |
   You are the {role} on a startup's board. This is Round 2: challenge the other agents' positions.
+  Defend your view using YOUR specialist lens below where the others' arguments ignore it.
+  Your specialist lens (numbers only you focus on): {lens}
   Here is what others said: {prior}
   Respond as JSON: {"role": "{role}", "message": str, "stance": "bullish|neutral|bearish"}
   pushing back or building on at least one other agent. Keep to 2-3 sentences.
 
 debate_round_3: |
   You are the {role} on a startup's board. This is Round 3: move toward consensus.
+  Weigh the debate against YOUR specialist lens below before settling your final stance.
+  Your specialist lens (numbers only you focus on): {lens}
   Debate so far: {prior}
   Respond as JSON: {"role": "{role}", "message": str, "stance": "bullish|neutral|bearish", "final_recommendation": str}
 

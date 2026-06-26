@@ -14,6 +14,7 @@ from typing import Any, Iterator
 
 from app.core import llm
 from app.core.config import render_prompt
+from app.agents import specialists
 
 ROLES = ["Founder", "Investor", "Financial", "Customer", "Market", "Competitor"]
 
@@ -26,16 +27,31 @@ except Exception:  # pragma: no cover
 
 
 def _agent_turn(role: str, rnd: int, context: dict[str, Any], prior: str) -> dict[str, Any]:
+    # Each agent gets its OWN specialist quantitative lens (dilution math for the Investor,
+    # burn-multiple for the CFO, TAM/share for Market, …) — so it argues from numbers no
+    # other agent is looking at. This is the specialization, not just a different prompt.
+    lens = specialists.lens_for(role, context)
+    # The agent's STANCE is decided in code (a per-role decision function over the lens), not
+    # by the LLM. We hand the LLM its computed prior stance and make it argue/justify that —
+    # so a role is a genuine agent with a decision function, not a free-form model.
+    verdict = specialists.verdict_for(role, context)
+    lens_with_prior = {**lens, "prior_stance": verdict["stance"], "prior_basis": verdict["rationale"]}
     if rnd == 1:
-        prompt = render_prompt("debate_round_1", role=role, context=context)
+        prompt = render_prompt("debate_round_1", role=role, context=context, lens=lens_with_prior)
     elif rnd == 2:
-        prompt = render_prompt("debate_round_2", role=role, prior=prior)
+        prompt = render_prompt("debate_round_2", role=role, prior=prior, lens=lens_with_prior)
     else:
-        prompt = render_prompt("debate_round_3", role=role, prior=prior)
+        prompt = render_prompt("debate_round_3", role=role, prior=prior, lens=lens_with_prior)
     result = llm.complete(prompt)
     result.setdefault("role", role)
-    result.setdefault("stance", "neutral")
+    result.setdefault("stance", verdict["stance"])  # fall back to the computed stance
     result.setdefault("message", "")
+    if lens:
+        result["lens"] = lens  # carried through to the UI so the specialization is visible
+    # Surface the code-derived verdict alongside the LLM's, so the UI can show when the
+    # debate moved an agent off its metrics-based prior (and when it didn't).
+    result["computed_stance"] = verdict["stance"]
+    result["computed_why"] = verdict["rationale"]
     return result
 
 
@@ -50,7 +66,8 @@ def _uncertainty_audit(context: dict[str, Any], allow_fetch: bool) -> Iterator[d
     requests: list[dict[str, Any]] = []
     for role in ROLES:
         try:
-            res = llm.complete(render_prompt("debate_round_0", role=role, context=context))
+            lens = specialists.lens_for(role, context)
+            res = llm.complete(render_prompt("debate_round_0", role=role, context=context, lens=lens))
             for r in res.get("information_requests", []) or []:
                 if r.get("field"):
                     requests.append({"role": role, **r})
@@ -108,10 +125,16 @@ def run_debate(context: dict[str, Any], allow_fetch: bool = False) -> Iterator[d
             yield {"type": "message", "round": rnd, **msg}
         yield {"type": "round_end", "round": rnd}
 
-    # Consensus tally
+    # Consensus tally — the LLM debate outcome (final-round stances)…
     stances = [m["stance"] for m in transcript if m["round"] == 3]
     consensus = max(set(stances), key=stances.count) if stances else "neutral"
-    yield {"type": "consensus", "consensus": consensus, "transcript": transcript}
+    # …and the purely code-derived board stance (the six decision functions, no LLM), so the
+    # UI can show where the live debate diverged from the deterministic baseline.
+    metrics_cons = specialists.metrics_consensus(context)
+    yield {"type": "consensus", "consensus": consensus,
+           "metrics_consensus": metrics_cons["consensus"],
+           "metrics_tally": metrics_cons["tally"],
+           "transcript": transcript}
 
 
 def run_debate_blocking(context: dict[str, Any]) -> dict[str, Any]:

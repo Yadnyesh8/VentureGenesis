@@ -1,7 +1,7 @@
 "use client";
 import { api } from "@/lib/api";
 import { useStore } from "@/lib/store";
-import { Card, Metric, Loading, ErrorBox, PageHeader, Pill, fmtPct, useAgent } from "@/components/ui";
+import { Card, Metric, Loading, ErrorBox, PageHeader, Pill, fmtPct, useAgent, ConfidenceMeter } from "@/components/ui";
 import Gauge from "@/components/Gauge";
 import { gradeColor } from "@/lib/chartTheme";
 
@@ -27,6 +27,11 @@ export default function FundingPage() {
             <div className="text-center text-text-dim text-sm mt-3 flex items-center justify-center gap-2">
               Funding probability {fmtPct(d.funding_probability)} <Pill tone={d.trained ? "good" : "neutral"}>{d.trained ? "TRAINED" : "RULE-BASED"}</Pill>
             </div>
+            {d.model_confidence != null && (
+              <div className="mt-4">
+                <ConfidenceMeter confidence={d.model_confidence} components={d.confidence_components} />
+              </div>
+            )}
           </Card>
           <Card title="What investors want to see next">
             {invest.loading ? <Loading /> : invest.error ? <ErrorBox error={invest.error} /> : recs.length === 0 ? (

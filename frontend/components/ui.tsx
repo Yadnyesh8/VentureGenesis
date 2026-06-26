@@ -111,6 +111,50 @@ export function Metric({ label, value, sub, tone = "default" }: any) {
   );
 }
 
+// ---- Model confidence meter ----
+// A predicted probability ("72% risk") is not the same as how much to trust it. This shows
+// the model's self-reported confidence and the four signals behind it (held-out AUC,
+// Brier calibration, CV stability, and how complete the founder's inputs were).
+const CONF_LABELS: Record<string, string> = {
+  discrimination: "Discrimination (AUC)",
+  calibration: "Calibration (Brier)",
+  stability: "CV stability",
+  input_completeness: "Input completeness",
+};
+
+export function ConfidenceMeter({ confidence, components }: { confidence?: number | null; components?: Record<string, number> }) {
+  if (confidence == null) return null;
+  const tone = confidence >= 80 ? "good" : confidence >= 60 ? "accent" : confidence >= 45 ? "warn" : "bad";
+  const hex = TONE_HEX[tone] || TONE_HEX.default;
+  const comps = components || {};
+  return (
+    <div className="card relative overflow-hidden">
+      <span className="absolute left-0 top-0 bottom-0 w-[3px]" style={{ background: `linear-gradient(180deg, ${hex}, transparent)`, opacity: 0.7 }} />
+      <div className="flex items-baseline justify-between">
+        <div className="card-h !mb-0">Model confidence</div>
+        <div className={`display-stat text-[clamp(20px,2.4vw,30px)] ${TEXT_TONE[tone]}`}>
+          <CountUp value={`${confidence}%`} />
+        </div>
+      </div>
+      <div className="tick-ruler mt-2 mb-3 w-full" />
+      <div className="grid grid-cols-2 gap-x-5 gap-y-2.5">
+        {Object.entries(comps).map(([k, v]) => (
+          <div key={k}>
+            <div className="flex justify-between text-[11px] text-text-dim mb-1">
+              <span>{CONF_LABELS[k] || k}</span>
+              <span className="label-mono">{Math.round((v as number) * 100)}</span>
+            </div>
+            <div className="h-1.5 rounded-full bg-surface3 overflow-hidden">
+              <div className="h-full rounded-full" style={{ width: `${Math.min(100, Math.max(0, (v as number) * 100))}%`, background: hex }} />
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="label-mono mt-3 text-text-dim">HOW MUCH TO TRUST THE PREDICTION ABOVE — NOT THE PREDICTION ITSELF</div>
+    </div>
+  );
+}
+
 export function Pill({ children, tone = "brand", dot = false }: any) {
   const hex = TONE_HEX[tone === "bullish" ? "good" : tone === "bearish" ? "bad" : tone === "neutral" ? "default" : tone] || TONE_HEX.brand;
   return (
@@ -201,7 +245,6 @@ export function PageHeader({ title, desc, action, coord }: any) {
         {action && <div className="flex gap-2 shrink-0">{action}</div>}
       </div>
       <div className="mt-5 flex items-center gap-3">
-        <span className="h-1.5 w-1.5 rounded-full bg-aqua" style={{ boxShadow: "0 0 8px #34E1D2" }} />
         <div className="h-px flex-1 bg-gradient-to-r from-line-strong via-line to-transparent" />
         <TraceGlyph size={16} />
       </div>

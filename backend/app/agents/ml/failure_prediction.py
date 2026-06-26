@@ -112,6 +112,11 @@ def predict_failure(metrics: dict[str, Any]) -> dict[str, Any]:
     six_m = horizons.get("six_month_multiplier", 0.6)
     two_y = horizons.get("two_year_multiplier", 1.5)
 
+    # How much to trust this prediction (model quality + how complete the founder's inputs
+    # were) — surfaced separately so a 72% risk reads alongside "model confidence 91%".
+    from app.agents.ml.confidence import model_confidence
+    conf = model_confidence(metrics, bundle.get("metrics"))
+
     return {
         "failure_6m": round(min(base * six_m, 0.99), 3),
         "failure_12m": round(base, 3),
@@ -121,5 +126,7 @@ def predict_failure(metrics: dict[str, Any]) -> dict[str, Any]:
         "financial_adjustment": round(delta, 3),
         "feature_importance": feature_importance,
         "shap_available": shap_ok,
+        "model_confidence": conf["model_confidence"],
+        "confidence_components": conf["components"],
         "trained": True,
     }

@@ -43,7 +43,6 @@ export default function AgentPipeline({ steps }: { steps: StepState[] }) {
       <div className="space-y-1.5">
         {steps.map((s) => {
           const active = s.status === "running";
-          const kindCls = s.kind === "llm" ? "text-violet border-violet/40 bg-violet/10" : "text-aqua border-aqua/40 bg-aqua/10";
           return (
             <motion.div
               key={s.key}
@@ -57,7 +56,6 @@ export default function AgentPipeline({ steps }: { steps: StepState[] }) {
             >
               <span className="grid place-items-center w-4 h-4 shrink-0"><StatusGlyph status={s.status} /></span>
               <span className={`text-sm flex-1 truncate ${s.status === "pending" ? "text-text-mute" : "text-text"}`}>{s.label}</span>
-              <span className={`pill ${kindCls}`}>{s.kind === "llm" ? "LLM" : "MODEL"}</span>
               {s.ms != null && s.status !== "running" && (
                 <span className="label-mono text-[9px] w-12 text-right tabular-nums">{(s.ms / 1000).toFixed(1)}s</span>
               )}
