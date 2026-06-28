@@ -1,5 +1,7 @@
 "use client";
+import { useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
 import { useStore } from "@/lib/store";
 import { Card, Metric, Loading, PageHeader, fmtMoney, fmtPct, fmtRunway, useAgent, Pill } from "@/components/ui";
@@ -22,7 +24,15 @@ const TONE_HEX: Record<string, string> = {
 };
 
 export default function Dashboard() {
-  const { ref, metrics, clearProfile } = useStore();
+  const router = useRouter();
+  const { ref, metrics, clearProfile, hydrated, ready } = useStore();
+
+  // First-run users land here with no profile — send them straight to onboarding
+  // so the post-login path is sign-in → onboarding → board, never a blank dashboard.
+  useEffect(() => {
+    if (hydrated && !ready) router.replace("/onboarding");
+  }, [hydrated, ready, router]);
+
   const r = ref();
   const key = JSON.stringify(r);
   const health = useAgent(() => api.health(r), [key], "health");
@@ -33,6 +43,8 @@ export default function Dashboard() {
   const f12 = failure.data?.data?.failure_12m ?? 0;
   const fp = funding.data?.data?.funding_probability ?? 0;
   const trained = failure.data?.data?.trained;
+
+  if (!hydrated || !ready) return null; // redirecting first-run users to onboarding
 
   return (
     <div>

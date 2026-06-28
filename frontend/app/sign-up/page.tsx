@@ -88,21 +88,30 @@ export default function SignUpPage() {
         <div className="label-mono">VERIFY EMAIL</div>
         <h1 className="title-display text-3xl mt-1.5">Check your inbox</h1>
         <p className="text-sm text-text-dim mt-1 mb-6">
-          We sent a code to <span className="text-text">{email}</span>.
+          We sent a 6-digit code to <span className="text-text">{email}</span>.
         </p>
 
-        <form onSubmit={handleVerify} className="space-y-4">
-          <AuthField label="Verification code" value={code} onChange={setCode} placeholder="123456" autoComplete="one-time-code" autoFocus inputMode="numeric" />
+        <form onSubmit={handleVerify} className="space-y-4" noValidate>
+          <AuthField label="Verification code" value={code} onChange={(v) => { setCode(v); setError(""); }} placeholder="123456" autoComplete="one-time-code" autoFocus inputMode="numeric" disabled={busy} />
           <AuthError>{error}</AuthError>
           <button className="btn w-full !py-3" disabled={busy || !code}>{busy ? "Verifying…" : "Verify & continue →"}</button>
         </form>
 
-        <button
-          className="mt-5 label-mono text-text-mute hover:text-aqua transition-colors"
-          onClick={() => signUp?.prepareEmailAddressVerification({ strategy: "email_code" })}
-        >
-          RESEND CODE
-        </button>
+        <div className="mt-5 flex items-center gap-3">
+          <button
+            className="label-mono text-text-mute hover:text-aqua transition-colors"
+            onClick={() => { setError(""); signUp?.prepareEmailAddressVerification({ strategy: "email_code" }); }}
+          >
+            RESEND CODE
+          </button>
+          <span className="text-text-faint">·</span>
+          <button
+            className="label-mono text-text-mute hover:text-aqua transition-colors"
+            onClick={() => { setStep("register"); setError(""); setCode(""); }}
+          >
+            CHANGE EMAIL
+          </button>
+        </div>
       </AuthShell>
     );
   }
@@ -117,10 +126,10 @@ export default function SignUpPage() {
       <GoogleButton onClick={handleGoogle} disabled={busy} label="Sign up with Google" />
       <div className="my-4"><OrDivider /></div>
 
-      <form onSubmit={handleRegister} className="space-y-4">
-        <AuthField label="Name" value={name} onChange={setName} placeholder="Jane Founder" autoComplete="name" />
-        <AuthField label="Email" type="email" value={email} onChange={setEmail} placeholder="you@startup.com" autoComplete="email" inputMode="email" />
-        <AuthField label="Password" type="password" value={password} onChange={setPassword} placeholder="At least 8 characters" autoComplete="new-password" />
+      <form onSubmit={handleRegister} className="space-y-4" noValidate>
+        <AuthField label="Name" value={name} onChange={(v) => { setName(v); setError(""); }} placeholder="Jane Founder" autoComplete="name" autoFocus disabled={busy} />
+        <AuthField label="Email" type="email" value={email} onChange={(v) => { setEmail(v); setError(""); }} placeholder="you@startup.com" autoComplete="email" inputMode="email" disabled={busy} />
+        <AuthField label="Password" type="password" value={password} onChange={(v) => { setPassword(v); setError(""); }} placeholder="At least 8 characters" autoComplete="new-password" disabled={busy} />
         <AuthError>{error}</AuthError>
         {/* Clerk bot-protection mounts here (enabled by default for sign-ups). */}
         <div id="clerk-captcha" />

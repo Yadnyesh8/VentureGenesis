@@ -1,7 +1,7 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { api, Metrics } from "@/lib/api";
 import { useStore } from "@/lib/store";
 import { TraceGlyph, RegCross } from "@/components/instrument";
@@ -19,7 +19,9 @@ type Field = {
   required?: boolean;
 };
 
-const STEPS: { title: string; blurb: string; fields: Field[] }[] = [
+// One screen, four labeled sections. Only the three starred fields are required —
+// everything else has a safe default so the founder can reach the board in one click.
+const SECTIONS: { title: string; blurb: string; fields: Field[] }[] = [
   {
     title: "Company",
     blurb: "The basics — these feed models trained on 6,089 real YC companies.",
@@ -61,46 +63,51 @@ const STEPS: { title: string; blurb: string; fields: Field[] }[] = [
   },
 ];
 
+const REQUIRED: Field[] = SECTIONS.flatMap((s) => s.fields).filter((f) => f.required);
+
 export default function Onboarding() {
   const router = useRouter();
   const { setProfile, ready, hydrated, metrics } = useStore();
-  const [step, setStep] = useState(0);
   const [form, setForm] = useState<Record<string, any>>({});
   const [industries, setIndustries] = useState<string[]>([]);
   const [saving, setSaving] = useState(false);
   const [touched, setTouched] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     api.config().then((c) => setIndustries(c.config?.industries || [])).catch(() => {});
   }, []);
 
+  // Prefill when an existing profile is present (returning user updating their numbers).
   useEffect(() => {
     if (hydrated && ready && metrics?.startup_name) setForm((f) => ({ ...metrics, ...f }));
   }, [hydrated, ready]); // eslint-disable-line
-
-  const reviewStep = step === STEPS.length;
-  const s = STEPS[step];
 
   function set(key: string, val: any) {
     setForm((f) => ({ ...f, [key]: val }));
   }
 
-  const missing = (s?.fields || []).filter((f) => f.required && !String(form[f.key] ?? "").trim());
-  const canNext = missing.length === 0;
-
-  function next() {
-    if (!canNext) { setTouched(true); return; }
-    setTouched(false);
-    setStep((x) => x + 1);
-  }
+  const missing = REQUIRED.filter((f) => !String(form[f.key] ?? "").trim());
+  const isInvalid = (f: Field) => touched && !!f.required && !String(form[f.key] ?? "").trim();
 
   const cash = Number(form.cash_reserves) || 0;
   const burn = Number(form.burn_rate) || 0;
   // Zero monthly burn ⇒ no cash-out ⇒ effectively unbounded runway (a profitable company).
-  // Carry it as a sentinel so the backend never reads "0 months → imminent death".
   const runway = burn > 0 ? Math.round((cash / burn) * 10) / 10 : RUNWAY_INFINITE;
 
-  async function finish() {
+  async function finish(e: React.FormEvent) {
+    e.preventDefault();
+    if (saving) return;
+    if (missing.length > 0) {
+      setTouched(true);
+      // Bring the first unfilled required field into view and focus it.
+      requestAnimationFrame(() => {
+        const el = formRef.current?.querySelector<HTMLElement>('[aria-invalid="true"]');
+        el?.scrollIntoView({ behavior: "smooth", block: "center" });
+        el?.focus({ preventScroll: true });
+      });
+      return;
+    }
     setSaving(true);
     try {
       const m: Metrics = {
@@ -133,115 +140,100 @@ export default function Onboarding() {
   if (!hydrated) return null;
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <div className="px-6 py-6 flex items-center gap-2.5">
+    <div className="min-h-[100dvh] flex flex-col">
+      <div className="px-4 sm:px-6 py-5 flex items-center gap-2.5">
         <TraceGlyph size={22} />
         <div className="title-display text-[17px]">VENTURE<span className="text-aqua">GENESIS</span></div>
       </div>
 
-      <div className="flex-1 grid lg:grid-cols-[300px_1fr] gap-8 max-w-5xl w-full mx-auto px-6 pb-16">
-        <div>
-          <div className="display-hero text-[clamp(30px,4vw,46px)] leading-[0.95]">
+      <div className="flex-1 grid lg:grid-cols-[280px_1fr] gap-6 lg:gap-10 max-w-5xl w-full mx-auto px-4 sm:px-6 pb-16">
+        {/* Intro rail — compact on mobile, sticky beside the form on desktop */}
+        <div className="lg:sticky lg:top-8 lg:self-start">
+          <div className="display-hero text-[clamp(26px,4vw,46px)] leading-[0.95]">
             {ready ? "UPDATE" : "PROFILE"}<br />{ready ? "PROFILE" : "YOUR STARTUP"}
           </div>
           <p className="label-mono mt-3 leading-relaxed">NO DEMO DATA · EVERY ANSWER FEEDS A REAL MODEL OR AGENT</p>
 
-          {(() => {
-            const total = STEPS.length + 1;
-            const pct = Math.round((step / (total - 1)) * 100);
-            return (
-              <div className="mt-7 mb-4">
-                <div className="flex items-center justify-between label-mono text-text-faint mb-2">
-                  <span>PROGRESS</span><span>{pct}%</span>
-                </div>
-                <div className="h-[3px] bg-surface3 rounded-full overflow-hidden">
-                  <motion.div className="h-full rounded-full" style={{ background: "linear-gradient(90deg,#7C6CFF,#34E1D2)" }}
-                    animate={{ width: `${pct}%` }} transition={{ ease: [0.16, 1, 0.3, 1], duration: 0.4 }} />
+          {/* Feature bullets — hidden on mobile to surface the form faster */}
+          <div className="hidden lg:block mt-6 space-y-2.5">
+            {[
+              ["One screen", "no multi-step wizard"],
+              ["3 required fields", "the rest are optional"],
+              ["One click to launch", "straight to your live board"],
+            ].map(([h, d]) => (
+              <div key={h} className="flex items-start gap-2.5">
+                <span className="mt-0.5 w-4 h-4 rounded-md grid place-items-center shrink-0 bg-violet/20 border border-violet/40">
+                  <svg width="9" height="9" viewBox="0 0 12 12" aria-hidden><path d="M2.5 6.5 L5 9 L9.5 3.5" fill="none" stroke="var(--violet)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                </span>
+                <div className="text-sm leading-tight">
+                  <span className="text-text font-medium">{h}</span>
+                  <span className="text-text-mute"> — {d}</span>
                 </div>
               </div>
-            );
-          })()}
-
-          <div className="space-y-1.5">
-            {[...STEPS.map((x) => x.title), "Review"].map((label, i) => {
-              const done = i < step;
-              const active = i === step;
-              return (
-                <button
-                  key={label}
-                  onClick={() => i <= step && setStep(i)}
-                  className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl border text-left transition-colors ${
-                    active ? "border-violet/60 bg-violet/10" : done ? "border-line hover:bg-surface2 cursor-pointer" : "border-transparent opacity-45 cursor-default"
-                  }`}
-                >
-                  <span className="w-6 h-6 rounded-lg grid place-items-center label-mono text-[10px] shrink-0 border"
-                    style={{ borderColor: i <= step ? "var(--violet)" : "var(--line)", background: done ? "var(--violet)" : "transparent", color: done ? "#07080c" : i <= step ? "var(--text)" : "var(--text-mute)" }}>
-                    {done ? (
-                      <svg width="11" height="11" viewBox="0 0 12 12" aria-hidden><path d="M2.5 6.5 L5 9 L9.5 3.5" fill="none" stroke="#07080c" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                    ) : i + 1}
-                  </span>
-                  <span className={`text-sm ${active ? "text-text font-medium" : "text-text-dim"}`}>{label}</span>
-                </button>
-              );
-            })}
+            ))}
           </div>
         </div>
 
-        <div className="card relative min-h-[460px] flex flex-col">
+        {/* Single-screen form */}
+        <motion.form
+          ref={formRef}
+          onSubmit={finish}
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          className="card relative flex flex-col"
+        >
           <RegCross className="absolute top-3 right-3 opacity-60" />
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={step}
-              initial={{ opacity: 0, x: 24 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -24 }}
-              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-              className="flex-1"
-            >
-              {!reviewStep ? (
-                <>
-                  <div className="label-mono">STEP {step + 1} / {STEPS.length}</div>
-                  <h2 className="title-display text-2xl mt-1">{s.title}</h2>
-                  <p className="text-sm text-text-dim mt-1 mb-6">{s.blurb}</p>
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    {s.fields.map((f) => (
-                      <FieldInput
-                        key={f.key}
-                        f={f}
-                        value={form[f.key]}
-                        industries={industries}
-                        invalid={touched && f.required && !String(form[f.key] ?? "").trim()}
-                        onChange={(v: any) => set(f.key, v)}
-                      />
-                    ))}
-                  </div>
-                  {step === 1 && (
-                    <div className="mt-4 text-sm text-text-dim">
-                      Computed runway:{" "}
-                      <span className="text-aqua font-semibold">
-                        {runway >= RUNWAY_INFINITE ? "∞ (profitable — no monthly burn)" : `${runway} months`}
-                      </span>
-                    </div>
-                  )}
-                </>
-              ) : (
-                <ReviewPane form={form} runway={runway} />
-              )}
-            </motion.div>
-          </AnimatePresence>
 
-          <div className="flex justify-between items-center mt-6 pt-4 border-t border-line">
-            <button className="btn-ghost" onClick={() => setStep((x) => Math.max(0, x - 1))} disabled={step === 0}>← Back</button>
-            {touched && !canNext && <span className="label-mono text-coral">FILL REQUIRED FIELDS</span>}
-            {reviewStep ? (
-              <button className="btn" onClick={finish} disabled={saving}>{saving ? "Building…" : "Build my board →"}</button>
-            ) : step === STEPS.length - 1 ? (
-              <button className="btn" onClick={next}>Review →</button>
-            ) : (
-              <button className="btn" onClick={next}>Next →</button>
-            )}
+          {touched && missing.length > 0 && (
+            <div role="alert" className="flex items-start gap-2 rounded-md border border-coral/40 bg-coral/10 px-3 py-2.5 text-[13px] text-coral mb-6">
+              <span aria-hidden className="mt-px">!</span>
+              <span>Add your {missing.map((f) => f.label.toLowerCase()).join(", ")} to build your board.</span>
+            </div>
+          )}
+
+          <div className="space-y-8">
+            {SECTIONS.map((sec, i) => (
+              <section key={sec.title}>
+                <div className="flex items-baseline gap-2">
+                  <span className="label-mono text-text-faint">{String(i + 1).padStart(2, "0")}</span>
+                  <h2 className="title-display text-xl">{sec.title}</h2>
+                </div>
+                <p className="text-sm text-text-dim mt-1 mb-4">{sec.blurb}</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {sec.fields.map((f) => (
+                    <FieldInput
+                      key={f.key}
+                      f={f}
+                      value={form[f.key]}
+                      industries={industries}
+                      invalid={isInvalid(f)}
+                      onChange={(v: any) => set(f.key, v)}
+                    />
+                  ))}
+                </div>
+                {sec.title === "Finance" && (
+                  <div className="mt-4 text-sm text-text-dim">
+                    Computed runway:{" "}
+                    <span className="text-aqua font-semibold">
+                      {runway >= RUNWAY_INFINITE ? "∞ (profitable — no monthly burn)" : `${runway} months`}
+                    </span>
+                  </div>
+                )}
+              </section>
+            ))}
           </div>
-        </div>
+
+          {/* Single action — full-width on mobile, inline on desktop */}
+          <div className="flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-3 mt-8 pt-5 border-t border-line">
+            <span className="label-mono text-text-mute">
+              <span className="text-coral">*</span> required · everything else optional
+            </span>
+            <button className="btn w-full sm:w-auto !py-3" disabled={saving} aria-busy={saving}>
+              {saving ? "Building…" : "Build my board →"}
+            </button>
+          </div>
+        </motion.form>
       </div>
     </div>
   );
@@ -254,7 +246,13 @@ function FieldInput({ f, value, onChange, industries, invalid }: any) {
     <label className={`text-xs text-text-dim ${full ? "sm:col-span-2" : ""}`}>
       <span className="flex items-center gap-1">{f.label}{f.required && <span className="text-coral">*</span>}</span>
       {f.type === "select" ? (
-        <select className={`input-field mt-1 ${invalid ? "!border-coral" : ""}`} value={value || ""} onChange={(e) => onChange(e.target.value)}>
+        <select
+          className={`input-field mt-1 ${invalid ? "!border-coral" : ""}`}
+          value={value || ""}
+          aria-invalid={invalid || undefined}
+          aria-required={f.required || undefined}
+          onChange={(e) => onChange(e.target.value)}
+        >
           <option value="">Select…</option>
           {opts.map((o: string) => <option key={o} value={o}>{o}</option>)}
         </select>
@@ -270,46 +268,18 @@ function FieldInput({ f, value, onChange, industries, invalid }: any) {
             className={`input-field ${f.unit ? "pr-12" : ""} ${invalid ? "!border-coral" : ""}`}
             placeholder={f.placeholder}
             value={value ?? ""}
+            aria-invalid={invalid || undefined}
+            aria-required={f.required || undefined}
             onChange={(e) => onChange(e.target.value)}
           />
           {f.unit && <span className="absolute right-3 top-1/2 -translate-y-1/2 label-mono text-[9px] pointer-events-none">{f.unit}</span>}
         </div>
       )}
-      {f.hint && <span className="block text-[10px] text-text-mute mt-1">{f.hint}</span>}
+      {invalid ? (
+        <span className="block text-[10px] text-coral mt-1">{f.label} is required.</span>
+      ) : f.hint ? (
+        <span className="block text-[10px] text-text-mute mt-1">{f.hint}</span>
+      ) : null}
     </label>
-  );
-}
-
-function ReviewPane({ form, runway }: any) {
-  const row = (k: string, v: any) => (
-    <div className="flex justify-between py-1.5 border-b border-line/60 text-sm">
-      <span className="text-text-mute">{k}</span>
-      <span className="text-text font-medium">{v || "—"}</span>
-    </div>
-  );
-  return (
-    <div>
-      <div className="label-mono">FINAL STEP</div>
-      <h2 className="title-display text-2xl mt-1">Review &amp; launch</h2>
-      <p className="text-sm text-text-dim mt-1 mb-5">Confirm your profile. You can edit anything later.</p>
-      <div className="grid sm:grid-cols-2 gap-x-8 gap-y-0">
-        <div>
-          {row("Name", form.startup_name)}
-          {row("Industry", form.industry)}
-          {row("Model", form.business_model)}
-          {row("Stage", form.stage)}
-          {row("Founded", form.founding_year)}
-          {row("Team", form.employee_count)}
-        </div>
-        <div>
-          {row("Revenue", form.revenue ? fmtMoney(Number(form.revenue)) : "—")}
-          {row("Expenses", form.expenses ? fmtMoney(Number(form.expenses)) : "—")}
-          {row("Monthly burn", form.burn_rate ? fmtMoney(Number(form.burn_rate)) : "—")}
-          {row("Runway", runway >= RUNWAY_INFINITE ? "∞ (profitable)" : `${runway} mo`)}
-          {row("Growth", form.customer_growth ? fmtPct(Number(form.customer_growth)) : "—")}
-          {row("Churn", form.churn_rate ? fmtPct(Number(form.churn_rate)) : "—")}
-        </div>
-      </div>
-    </div>
   );
 }

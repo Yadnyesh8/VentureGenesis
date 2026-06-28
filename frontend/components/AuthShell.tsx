@@ -7,7 +7,7 @@ import { RegCross } from "@/components/instrument";
 // name; right = a roomy glass card holding the form.
 export default function AuthShell({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen grid lg:grid-cols-2 gap-12 max-w-6xl w-full mx-auto px-6 py-10 items-center">
+    <div className="min-h-[100dvh] grid lg:grid-cols-2 gap-8 lg:gap-12 max-w-6xl w-full mx-auto px-4 sm:px-6 py-8 sm:py-10 items-center">
       {/* Brand — a single oversized wordmark, no supporting copy */}
       <div className="hidden lg:flex flex-col justify-center">
         <Image src="/logo.png" alt="VentureGenesis" width={64} height={64} className="object-contain" />
@@ -21,14 +21,14 @@ export default function AuthShell({ children }: { children: React.ReactNode }) {
       {/* Form card */}
       <div className="w-full max-w-[480px] mx-auto lg:mx-0 lg:justify-self-end">
         {/* Compact brand for small screens (the big one is hidden there) */}
-        <div className="lg:hidden flex items-center gap-2.5 mb-6">
-          <Image src="/logo.png" alt="VentureGenesis" width={32} height={32} className="object-contain" />
-          <div className="title-display text-[19px]">
+        <div className="lg:hidden flex items-center gap-2.5 mb-5">
+          <Image src="/logo.png" alt="VentureGenesis" width={28} height={28} className="object-contain" />
+          <div className="title-display text-[17px]">
             VENTURE<span className="text-aqua">GENESIS</span>
           </div>
         </div>
 
-        <div className="card relative p-8 sm:p-10">
+        <div className="card relative p-6 sm:p-9">
           <RegCross className="absolute top-3.5 right-3.5 opacity-60" />
           {children}
         </div>
@@ -48,6 +48,8 @@ export function AuthField({
   autoComplete,
   autoFocus,
   inputMode,
+  error,
+  disabled,
 }: {
   label: string;
   type?: string;
@@ -57,29 +59,39 @@ export function AuthField({
   autoComplete?: string;
   autoFocus?: boolean;
   inputMode?: "text" | "email" | "numeric";
+  error?: string;
+  disabled?: boolean;
 }) {
+  const id = React.useId();
   return (
-    <label className="block text-[13px] text-text-dim">
-      <span>{label}</span>
+    <div className="block">
+      <label htmlFor={id} className="text-[13px] text-text-dim">{label}</label>
       <input
-        className="input-field mt-1.5 !py-3 !text-[15px]"
+        id={id}
+        className={`input-field mt-1.5 !py-3 !text-[15px] ${error ? "!border-coral focus:!border-coral" : ""}`}
         type={type}
         value={value}
         placeholder={placeholder}
         autoComplete={autoComplete}
         autoFocus={autoFocus}
         inputMode={inputMode}
+        disabled={disabled}
+        aria-invalid={!!error || undefined}
+        aria-describedby={error ? `${id}-err` : undefined}
         onChange={(e) => onChange(e.target.value)}
       />
-    </label>
+      {error && (
+        <span id={`${id}-err`} className="block text-[11px] text-coral mt-1">{error}</span>
+      )}
+    </div>
   );
 }
 
 export function AuthError({ children }: { children?: React.ReactNode }) {
   if (!children) return null;
   return (
-    <div className="flex items-start gap-2 rounded-md border border-coral/40 bg-coral/10 px-3 py-2.5 text-[13px] text-coral">
-      <span aria-hidden className="mt-px">!</span>
+    <div role="alert" className="flex items-start gap-2 rounded-md border border-coral/40 bg-coral/10 px-3 py-2.5 text-[13px] text-coral">
+      <span aria-hidden className="mt-px shrink-0">!</span>
       <span>{children}</span>
     </div>
   );

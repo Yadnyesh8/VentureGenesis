@@ -105,19 +105,21 @@ export default function SignInPage() {
         <div className="label-mono">ACCOUNT RECOVERY</div>
         <h1 className="title-display text-3xl mt-1.5">Reset password</h1>
         <p className="text-sm text-text-dim mt-1 mb-6">
-          {codeSent ? "Enter the code we emailed you and choose a new password." : "We'll email you a verification code."}
+          {codeSent ? (
+            <>Enter the code we emailed to <span className="text-text">{email}</span> and choose a new password.</>
+          ) : "We'll email you a one-time code."}
         </p>
 
         {!codeSent ? (
-          <form onSubmit={sendResetCode} className="space-y-4">
-            <AuthField label="Email" type="email" value={email} onChange={setEmail} placeholder="you@startup.com" autoComplete="email" autoFocus inputMode="email" />
+          <form onSubmit={sendResetCode} className="space-y-4" noValidate>
+            <AuthField label="Email" type="email" value={email} onChange={(v) => { setEmail(v); setError(""); }} placeholder="you@startup.com" autoComplete="email" autoFocus inputMode="email" disabled={busy} />
             <AuthError>{error}</AuthError>
             <button className="btn w-full !py-3" disabled={busy || !email}>{busy ? "Sending…" : "Send reset code →"}</button>
           </form>
         ) : (
-          <form onSubmit={submitReset} className="space-y-4">
-            <AuthField label="Verification code" value={code} onChange={setCode} placeholder="123456" autoComplete="one-time-code" autoFocus inputMode="numeric" />
-            <AuthField label="New password" type="password" value={newPassword} onChange={setNewPassword} placeholder="••••••••" autoComplete="new-password" />
+          <form onSubmit={submitReset} className="space-y-4" noValidate>
+            <AuthField label="Verification code" value={code} onChange={(v) => { setCode(v); setError(""); }} placeholder="123456" autoComplete="one-time-code" autoFocus inputMode="numeric" disabled={busy} />
+            <AuthField label="New password" type="password" value={newPassword} onChange={(v) => { setNewPassword(v); setError(""); }} placeholder="At least 8 characters" autoComplete="new-password" disabled={busy} />
             <AuthError>{error}</AuthError>
             <button className="btn w-full !py-3" disabled={busy || !code || !newPassword}>{busy ? "Updating…" : "Update password →"}</button>
           </form>
@@ -143,10 +145,10 @@ export default function SignInPage() {
       <GoogleButton onClick={handleGoogle} disabled={busy} label="Continue with Google" />
       <div className="my-4"><OrDivider /></div>
 
-      <form onSubmit={handleSignIn} className="space-y-4">
-        <AuthField label="Email" type="email" value={email} onChange={setEmail} placeholder="you@startup.com" autoComplete="email" inputMode="email" />
+      <form onSubmit={handleSignIn} className="space-y-4" noValidate>
+        <AuthField label="Email" type="email" value={email} onChange={(v) => { setEmail(v); setError(""); }} placeholder="you@startup.com" autoComplete="email" inputMode="email" disabled={busy} />
         <div>
-          <AuthField label="Password" type="password" value={password} onChange={setPassword} placeholder="••••••••" autoComplete="current-password" />
+          <AuthField label="Password" type="password" value={password} onChange={(v) => { setPassword(v); setError(""); }} placeholder="••••••••" autoComplete="current-password" disabled={busy} />
           <button
             type="button"
             className="mt-1.5 label-mono text-[9px] text-text-mute hover:text-aqua transition-colors"
@@ -156,7 +158,9 @@ export default function SignInPage() {
           </button>
         </div>
         <AuthError>{error}</AuthError>
-        <button className="btn w-full !py-3" disabled={busy || !email || !password}>{busy ? "Signing in…" : "Sign in →"}</button>
+        <button className="btn w-full !py-3" disabled={busy || !email || !password}>
+          {busy ? "Signing in…" : "Sign in →"}
+        </button>
       </form>
 
       <p className="text-xs text-text-mute mt-6">

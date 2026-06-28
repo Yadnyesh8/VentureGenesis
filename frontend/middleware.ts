@@ -1,7 +1,7 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
-// Public: the cinematic landing, the auth pages, the OAuth callback, and the
-// /api proxy (the backend is the FastAPI service, not gated by Clerk here).
+// Public: the auth pages, the OAuth callback, and the /api proxy.
+// /onboarding requires authentication — unauthenticated users are redirected to sign-in.
 const isPublic = createRouteMatcher([
   "/",
   "/sign-in(.*)",
