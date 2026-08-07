@@ -32,7 +32,19 @@ services:
           type: web
           property: url
       # ── LLM (required for reasoning agents) ──────────────────────────────
-      # Set OPENROUTER_API_KEY in the Render dashboard after first deploy.
+      # Secrets are sync:false — set them in the Render dashboard. They are
+      # declared here so a blueprint re-sync preserves them instead of dropping
+      # values that only exist in the dashboard.
+      - key: LLM_PROVIDER
+        sync: false
+      # Featherless (currently the active provider in this environment)
+      - key: FEATHERLESS_API_KEY
+        sync: false
+      - key: FEATHERLESS_MODEL
+        sync: false
+      - key: FEATHERLESS_BASE_URL
+        sync: false
+      # OpenRouter (fallback provider)
       - key: OPENROUTER_API_KEY
         sync: false
       - key: OPENROUTER_MODEL
