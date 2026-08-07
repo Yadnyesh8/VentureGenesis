@@ -6,10 +6,15 @@ services:
     region: oregon
     plan: free
     rootDir: backend
+    # Only the dependency install is allowed to fail the deploy. Training and
+    # seeding are best-effort: training needs headroom the free instance may not
+    # have, and seeding needs a reachable database — neither is required to
+    # serve traffic. models/ ships with trained bundles, and the API falls back
+    # to its rule-based path if they can't be loaded.
     buildCommand: >-
-      pip install -r requirements-min.txt psycopg2-binary python-dotenv &&
-      python -m app.ml_training.train &&
-      python seed.py
+      pip install -r requirements-min.txt &&
+      (python -m app.ml_training.train || echo "WARN: training skipped, using committed model bundles") &&
+      (python seed.py || echo "WARN: seeding skipped, database not reachable at build time")
     startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
     healthCheckPath: /
     envVars:
@@ -69,6 +74,13 @@ services:
         sync: false
       - key: CLERK_SECRET_KEY
         sync: false
+      # This app builds its whole auth flow on Clerk's headless hooks
+      # (app/sign-in, app/sign-up). Without these, protected routes redirect to
+      # Clerk's hosted account portal instead of the app's own screens.
+      - key: NEXT_PUBLIC_CLERK_SIGN_IN_URL
+        value: /sign-in
+      - key: NEXT_PUBLIC_CLERK_SIGN_UP_URL
+        value: /sign-up
 
 databases:
   - name: venturegenesis-db
