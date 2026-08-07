@@ -1,31 +1,9 @@
-import { Almarai, Instrument_Serif, JetBrains_Mono, Big_Shoulders_Display } from "next/font/google";
+// No webfonts. The interface runs on the platform UI stack — the same choice the
+// reference design makes — so type paints on the first frame with no FOUT and no
+// swap reflow. The mono is used sparingly, only for small tracked section labels.
 
-export const almarai = Almarai({
-  subsets: ["arabic"],
-  weight: ["300", "400", "700", "800"],
-  variable: "--font-sans",
-  display: "swap",
-});
+export const SANS_STACK =
+  'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"';
 
-export const instrumentSerif = Instrument_Serif({
-  subsets: ["latin"],
-  weight: ["400"],
-  style: ["italic"],
-  variable: "--font-serif",
-  display: "swap",
-});
-
-// Clinical apparatus — labels, ticks, units, coordinates.
-export const mono = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
-  variable: "--font-mono",
-  display: "swap",
-});
-
-export const display = Big_Shoulders_Display({
-  subsets: ["latin"],
-  weight: ["500", "700", "800", "900"],
-  variable: "--font-display",
-  display: "swap",
-});
+export const MONO_STACK =
+  'ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace';

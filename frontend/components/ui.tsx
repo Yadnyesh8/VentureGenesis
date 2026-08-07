@@ -1,47 +1,49 @@
 "use client";
 import React from "react";
-import { motion, animate, useReducedMotion } from "framer-motion";
-import { RegCross, CoordTag, TraceGlyph } from "./instrument";
+import { animate, useReducedMotion } from "framer-motion";
 import { useStore } from "@/lib/store";
 
-const EASE = [0.16, 1, 0.3, 1] as const;
-
-// ---- tone maps ----
+// ---- tone maps ----------------------------------------------------------
+// Fixed meaning, one family. Emphasis is a value shift, not a sprayed-on colour.
 const TEXT_TONE: Record<string, string> = {
   default: "text-text",
   good: "text-signal",
   warn: "text-amber",
   bad: "text-coral",
-  brand: "text-violet",
+  brand: "text-aqua",
   accent: "text-aqua",
 };
 
+// Solid fills carry white text; neutral stays a quiet outline.
 const PILL_TONE: Record<string, string> = {
-  brand: "text-violet border-violet/40 bg-violet/10",
-  good: "text-signal border-signal/40 bg-signal/10",
-  bullish: "text-signal border-signal/40 bg-signal/10",
-  warn: "text-amber border-amber/40 bg-amber/10",
-  bad: "text-coral border-coral/40 bg-coral/10",
-  bearish: "text-coral border-coral/40 bg-coral/10",
-  neutral: "text-text-dim border-line-strong bg-surface3",
-  aqua: "text-aqua border-aqua/40 bg-aqua/10",
+  brand: "bg-aqua text-white",
+  accent: "bg-aqua text-white",
+  aqua: "bg-aqua text-white",
+  good: "bg-signal text-white",
+  bullish: "bg-signal text-white",
+  warn: "bg-amber text-white",
+  bad: "bg-coral text-white",
+  bearish: "bg-coral text-white",
+  neutral: "border-line bg-surface3 text-text-dim",
 };
 
 const TONE_HEX: Record<string, string> = {
-  default: "#8A95AA",
-  good: "#C2F24A",
-  warn: "#FFB13C",
-  bad: "#FF5D5D",
-  brand: "#7C6CFF",
-  accent: "#34E1D2",
+  default: "var(--text-mute)",
+  good: "var(--signal)",
+  warn: "var(--amber)",
+  bad: "var(--coral)",
+  brand: "var(--aqua)",
+  accent: "var(--aqua)",
 };
 
-// ---- Count-up: animates the numeric portion of any value (kinetic signature) ----
+// ---- Count-up -----------------------------------------------------------
+// The true value renders on the first frame; the animation only replays the
+// approach to it. If JS never runs, the real number is already on screen.
 export function CountUp({ value, className = "" }: { value: React.ReactNode; className?: string }) {
   const reduce = useReducedMotion();
   const str = typeof value === "number" ? String(value) : String(value ?? "");
   const match = str.match(/-?[\d,]*\.?\d+/);
-  const [shown, setShown] = React.useState(reduce ? str : null as string | null);
+  const [shown, setShown] = React.useState<string | null>(null);
 
   React.useEffect(() => {
     if (reduce || !match) {
@@ -50,12 +52,16 @@ export function CountUp({ value, className = "" }: { value: React.ReactNode; cla
     }
     const raw = match[0];
     const target = parseFloat(raw.replace(/,/g, ""));
+    if (!isFinite(target)) {
+      setShown(str);
+      return;
+    }
     const decimals = raw.includes(".") ? raw.split(".")[1].length : 0;
     const hasComma = raw.includes(",");
     const prefix = str.slice(0, match.index);
     const suffix = str.slice((match.index || 0) + raw.length);
     const controls = animate(0, target, {
-      duration: 0.9,
+      duration: 0.7,
       ease: "easeOut",
       onUpdate(v) {
         const formatted = hasComma
@@ -66,23 +72,18 @@ export function CountUp({ value, className = "" }: { value: React.ReactNode; cla
     });
     return () => controls.stop();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [str]);
+  }, [str, reduce]);
 
   return <span className={className}>{shown ?? str}</span>;
 }
 
-export function Card({ title, children, className = "", right, hover = true }: any) {
+// ---- Card ---------------------------------------------------------------
+export function Card({ title, children, className = "", right, hover = false }: any) {
   return (
-    <div className={`card ${hover ? "card-hover" : ""} relative ${className}`}>
-      <RegCross className="absolute top-2.5 right-2.5 opacity-50" />
+    <div className={`card ${hover ? "card-hover" : ""} ${className}`}>
       {(title || right) && (
-        <div className="flex items-center justify-between gap-3 mb-3.5">
-          {title && (
-            <div className="flex items-center gap-2 min-w-0">
-              <span className="w-1.5 h-1.5 rounded-full bg-line-strong shrink-0" />
-              <div className="card-h !mb-0 truncate">{title}</div>
-            </div>
-          )}
+        <div className="mb-4 flex items-center justify-between gap-3">
+          {title ? <h2 className="card-h !mb-0 min-w-0 truncate">{title}</h2> : <span />}
           {right && <div className="shrink-0">{right}</div>}
         </div>
       )}
@@ -91,30 +92,22 @@ export function Card({ title, children, className = "", right, hover = true }: a
   );
 }
 
+// ---- Metric -------------------------------------------------------------
+// A quiet label, the figure at real scale, one line of context. The tone lives
+// in the value's colour only.
 export function Metric({ label, value, sub, tone = "default" }: any) {
-  const hex = TONE_HEX[tone] || TONE_HEX.default;
   return (
-    <div className="card card-hover relative overflow-hidden">
-      {/* tone accent rail */}
-      <span className="absolute left-0 top-0 bottom-0 w-[3px]" style={{ background: `linear-gradient(180deg, ${hex}, transparent)`, opacity: 0.7 }} />
-      <RegCross className="absolute top-2.5 right-2.5 opacity-50" />
-      <div className="flex items-center gap-2">
-        <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: hex, boxShadow: `0 0 8px ${hex}` }} />
-        <div className="card-h !mb-0">{label}</div>
-      </div>
-      <div className={`display-stat text-[clamp(22px,2.6vw,34px)] mt-2.5 ${TEXT_TONE[tone] || TEXT_TONE.default}`}>
+    <div className="card">
+      <div className="text-sm text-text-mute">{label}</div>
+      <div className={`stat mt-2 ${TEXT_TONE[tone] || TEXT_TONE.default}`}>
         <CountUp value={value} />
       </div>
-      <div className="tick-ruler mt-2.5 mb-1 w-2/3" />
-      {sub && <div className="text-sm text-text-dim mt-1">{sub}</div>}
+      {sub && <div className="mt-1.5 text-xs text-text-faint">{sub}</div>}
     </div>
   );
 }
 
-// ---- Model confidence meter ----
-// A predicted probability ("72% risk") is not the same as how much to trust it. This shows
-// the model's self-reported confidence and the four signals behind it (held-out AUC,
-// Brier calibration, CV stability, and how complete the founder's inputs were).
+// ---- Model confidence ---------------------------------------------------
 const CONF_LABELS: Record<string, string> = {
   discrimination: "Discrimination (AUC)",
   calibration: "Calibration (Brier)",
@@ -128,76 +121,74 @@ export function ConfidenceMeter({ confidence, components }: { confidence?: numbe
   const hex = TONE_HEX[tone] || TONE_HEX.default;
   const comps = components || {};
   return (
-    <div className="card relative overflow-hidden">
-      <span className="absolute left-0 top-0 bottom-0 w-[3px]" style={{ background: `linear-gradient(180deg, ${hex}, transparent)`, opacity: 0.7 }} />
-      <div className="flex items-baseline justify-between">
-        <div className="card-h !mb-0">Model confidence</div>
-        <div className={`display-stat text-[clamp(20px,2.4vw,30px)] ${TEXT_TONE[tone]}`}>
+    <div className="card">
+      <div className="flex items-baseline justify-between gap-4">
+        <h2 className="card-h !mb-0">Model confidence</h2>
+        <div className={`stat !text-[28px] ${TEXT_TONE[tone]}`}>
           <CountUp value={`${confidence}%`} />
         </div>
       </div>
-      <div className="tick-ruler mt-2 mb-3 w-full" />
-      <div className="grid grid-cols-2 gap-x-5 gap-y-2.5">
+      <div className="mt-4 grid gap-x-6 gap-y-3 sm:grid-cols-2">
         {Object.entries(comps).map(([k, v]) => (
           <div key={k}>
-            <div className="flex justify-between text-[11px] text-text-dim mb-1">
+            <div className="mb-1.5 flex justify-between text-xs text-text-mute">
               <span>{CONF_LABELS[k] || k}</span>
-              <span className="label-mono">{Math.round((v as number) * 100)}</span>
+              <span className="tabular-nums text-text-dim">{Math.round((v as number) * 100)}</span>
             </div>
-            <div className="h-1.5 rounded-full bg-surface3 overflow-hidden">
-              <div className="h-full rounded-full" style={{ width: `${Math.min(100, Math.max(0, (v as number) * 100))}%`, background: hex }} />
+            <div className="h-1.5 overflow-hidden rounded-full bg-surface3">
+              <div
+                className="h-full rounded-full"
+                style={{ width: `${Math.min(100, Math.max(0, (v as number) * 100))}%`, background: hex }}
+              />
             </div>
           </div>
         ))}
       </div>
-      <div className="label-mono mt-3 text-text-dim">HOW MUCH TO TRUST THE PREDICTION ABOVE — NOT THE PREDICTION ITSELF</div>
+      <p className="mt-4 text-xs text-text-faint">
+        How much to trust the prediction above — not the prediction itself.
+      </p>
     </div>
   );
 }
 
-export function Pill({ children, tone = "brand", dot = false }: any) {
-  const hex = TONE_HEX[tone === "bullish" ? "good" : tone === "bearish" ? "bad" : tone === "neutral" ? "default" : tone] || TONE_HEX.brand;
+// ---- Pill ---------------------------------------------------------------
+export function Pill({ children, tone = "neutral", dot = false }: any) {
+  const solid = tone !== "neutral";
   return (
-    <span className={`pill ${PILL_TONE[tone] || PILL_TONE.brand}`}>
-      {dot && <span className="w-1.5 h-1.5 rounded-full" style={{ background: hex }} />}
+    <span className={`pill ${PILL_TONE[tone] || PILL_TONE.neutral}`}>
+      {dot && (
+        <span
+          className="h-1.5 w-1.5 shrink-0 rounded-full"
+          style={{ background: solid ? "currentColor" : "var(--text-mute)" }}
+        />
+      )}
       {children}
     </span>
   );
 }
 
-export function Loading({ label = "RUNNING AGENTS" }: { label?: string }) {
+// ---- Loading ------------------------------------------------------------
+export function Loading({ label = "Running agents" }: { label?: string }) {
   return (
-    <div className="flex items-center gap-3 py-8">
-      <svg width="22" height="22" viewBox="0 0 22 22" className="[animation:sweep_1s_linear_infinite]">
-        <defs>
-          <linearGradient id="vg-load" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#7C6CFF" />
-            <stop offset="100%" stopColor="#34E1D2" />
-          </linearGradient>
-        </defs>
-        <circle cx="11" cy="11" r="9" fill="none" stroke="#1B1F2B" strokeWidth="2" />
-        <path d="M11 2 a9 9 0 0 1 9 9" fill="none" stroke="url(#vg-load)" strokeWidth="2" strokeLinecap="round" />
+    <div className="flex items-center gap-3 py-8" role="status" aria-live="polite">
+      <svg width="18" height="18" viewBox="0 0 18 18" className="[animation:sweep_0.9s_linear_infinite]" aria-hidden>
+        <circle cx="9" cy="9" r="7" fill="none" stroke="var(--line-strong)" strokeWidth="2" />
+        <path d="M9 2 a7 7 0 0 1 7 7" fill="none" stroke="var(--text)" strokeWidth="2" strokeLinecap="round" />
       </svg>
-      <span className="label-mono">{label}</span>
-      <span className="flex gap-1 items-center" aria-hidden>
-        {[0, 1, 2].map((i) => (
-          <motion.span key={i} className="w-1 h-1 rounded-full bg-text-mute"
-            animate={{ opacity: [0.3, 1, 0.3] }} transition={{ repeat: Infinity, duration: 1.2, delay: i * 0.2 }} />
-        ))}
-      </span>
+      <span className="text-sm text-text-mute">{label}</span>
     </div>
   );
 }
 
-// Skeleton placeholder grid — reserves space so content doesn't jump in.
+// Reserves the real card footprint so nothing jumps when data lands.
 export function SkeletonCards({ count = 3 }: { count?: number }) {
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {Array.from({ length: count }).map((_, i) => (
-        <div key={i} className="card !p-5">
-          <div className="skeleton h-3 w-24 mb-4" />
-          <div className="skeleton h-9 w-32 mb-3" />
-          <div className="skeleton h-2 w-2/3" />
+        <div key={i} className="card">
+          <div className="skeleton h-3 w-24" />
+          <div className="skeleton mt-3 h-8 w-32" />
+          <div className="skeleton mt-3 h-2 w-2/3" />
         </div>
       ))}
     </div>
@@ -206,52 +197,34 @@ export function SkeletonCards({ count = 3 }: { count?: number }) {
 
 export function ErrorBox({ error }: { error: string }) {
   return (
-    <div className="card !border-coral/50 mb-4 relative overflow-hidden" style={{ background: "var(--coral-12)" }}>
-      <span className="absolute left-0 top-0 bottom-0 w-[3px] bg-coral" />
-      <div className="flex items-center gap-2 mb-1">
-        <span className="w-1.5 h-1.5 rounded-full bg-coral" style={{ boxShadow: "0 0 8px #FF5D5D" }} />
-        <div className="label-mono text-coral !mb-0">FALLBACK ENGAGED</div>
+    <div className="mb-4 rounded-2xl border border-coral/40 p-4" style={{ background: "var(--coral-12)" }}>
+      <div className="mb-1 flex items-center gap-2">
+        <span className="h-1.5 w-1.5 rounded-full bg-coral" />
+        <span className="text-sm font-semibold text-coral">Fallback engaged</span>
       </div>
-      <div className="text-coral text-sm">{error}</div>
+      <p className="text-sm text-text-dim">{error}</p>
     </div>
   );
 }
 
-export function PageHeader({ title, desc, action, coord }: any) {
-  const reduce = useReducedMotion();
-  const tag = coord || title?.toString().toUpperCase();
+// ---- Page header --------------------------------------------------------
+// `coord` is still accepted so no existing page breaks, but it is intentionally
+// not rendered: it was decorative, and the title carries the page on its own.
+export function PageHeader({ title, desc, action }: any) {
   return (
-    <div className="mb-9">
-      <motion.div
-        className="mb-3"
-        initial={reduce ? false : { opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, ease: EASE }}
-      >
-        <CoordTag><span className="text-text-dim">{tag}</span></CoordTag>
-      </motion.div>
-      <div className="flex items-end justify-between gap-5 flex-wrap">
+    <header className="mb-8">
+      <div className="flex flex-wrap items-end justify-between gap-4">
         <div className="min-w-0">
-          <motion.h1
-            className="display-hero text-[clamp(34px,5.4vw,68px)]"
-            initial={reduce ? false : { y: 24, opacity: 0, filter: "blur(8px)" }}
-            animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
-            transition={{ duration: 0.6, ease: EASE }}
-          >
-            {title}
-          </motion.h1>
-          {desc && <p className="text-base text-text-dim mt-3 max-w-2xl leading-relaxed">{desc}</p>}
+          <h1 className="display-hero text-[clamp(28px,4vw,40px)]">{title}</h1>
+          {desc && <p className="mt-2.5 max-w-2xl text-[15px] leading-relaxed text-text-mute">{desc}</p>}
         </div>
-        {action && <div className="flex gap-2 shrink-0">{action}</div>}
+        {action && <div className="flex shrink-0 flex-wrap gap-2">{action}</div>}
       </div>
-      <div className="mt-5 flex items-center gap-3">
-        <div className="h-px flex-1 bg-gradient-to-r from-line-strong via-line to-transparent" />
-        <TraceGlyph size={16} />
-      </div>
-    </div>
+    </header>
   );
 }
 
+// ---- formatting ---------------------------------------------------------
 export function fmtMoney(n: number) {
   if (n == null || isNaN(n as any)) return "—";
   const a = Math.abs(n);
@@ -275,9 +248,7 @@ export function fmtRunway(months?: number | null) {
   return m >= RUNWAY_INFINITE ? "∞" : `${m} mo`;
 }
 
-// Cache-aware agent runner. When `cacheKey` is supplied, results pre-loaded by the
-// launching screen (or a prior visit) are read from the shared store and rendered
-// instantly — no refetch. Without a key it behaves as a plain on-mount fetcher.
+// ---- agent runner -------------------------------------------------------
 export function useAgent<T = any>(fn: () => Promise<T>, deps: any[] = [], cacheKey?: string) {
   const { cache, setCache } = useStore();
   const cached = cacheKey ? (cache[cacheKey] as T | undefined) : undefined;

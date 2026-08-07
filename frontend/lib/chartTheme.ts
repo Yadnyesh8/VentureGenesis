@@ -1,21 +1,42 @@
-// Centralized Kinetic Instrument chart palette + shared Recharts config.
+// Chart palette. One disciplined family shared with the interface: a blue
+// reference, a green positive, an orange watch, a red negative, and a neutral
+// grey. Values read from CSS variables at call time so charts follow the theme.
+
+function cssVar(name: string, fallback: string): string {
+  if (typeof window === "undefined") return fallback;
+  const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  return v || fallback;
+}
 
 export const CHART = {
-  series: ["#7C6CFF", "#34E1D2", "#C2F24A", "#FF4FA3", "#FFB13C"], // violet, aqua, lime, magenta, amber
-  violet: "#7C6CFF",
-  aqua: "#34E1D2",
-  good: "#C2F24A",
-  warn: "#FFB13C",
-  bad: "#FF5D5D",
-  magenta: "#FF4FA3",
-  grid: "#232838",
-  axis: "#8A95AA", // mono-tick slate
-  track: "#1B1F2B",
-  tooltipBg: "#181C27",
-  text: "#F4F6FB",
+  series: ["#60a5fa", "#22c55e", "#f97316", "#ef4444", "#a3a3a3"],
+  violet: "#60a5fa", // retired hue → info blue
+  aqua: "#60a5fa",
+  good: "#22c55e",
+  warn: "#f97316",
+  bad: "#ef4444",
+  magenta: "#a3a3a3",
+  grid: "#292929",
+  axis: "#a3a3a3",
+  track: "#1f1f1f",
+  tooltipBg: "#171717",
+  text: "#e8e8e8",
 };
 
-// Grade an arc/score color the instrument way.
+// Live (theme-aware) reads for canvas/SVG drawn at runtime.
+export const chartColors = () => ({
+  grid: cssVar("--line", CHART.grid),
+  axis: cssVar("--text-mute", CHART.axis),
+  track: cssVar("--surface-3", CHART.track),
+  tooltipBg: cssVar("--surface-2", CHART.tooltipBg),
+  text: cssVar("--text", CHART.text),
+  good: cssVar("--signal", CHART.good),
+  warn: cssVar("--amber", CHART.warn),
+  bad: cssVar("--coral", CHART.bad),
+  info: cssVar("--aqua", CHART.aqua),
+});
+
+// Grade a score into the fixed meaning scale.
 export function gradeColor(score: number): string {
   if (score >= 75) return CHART.good;
   if (score >= 45) return CHART.aqua;
@@ -28,17 +49,16 @@ export function riskColor(p: number): string {
   return CHART.bad;
 }
 
-// Shared axis props (no axis lines, mono ticks).
 export const axisProps = {
   stroke: CHART.axis,
-  fontSize: 14,
+  fontSize: 12,
   tickLine: false,
   axisLine: false,
-  style: { fontFamily: "var(--font-sans)", letterSpacing: "0.06em" },
+  style: { fontFamily: "var(--font-sans)" },
 } as const;
 
 export const ANIM = {
   isAnimationActive: true as const,
   animationEasing: "ease-out" as const,
-  animationDuration: 900,
+  animationDuration: 700,
 };

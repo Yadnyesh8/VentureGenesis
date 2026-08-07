@@ -62,8 +62,7 @@ export default function TrajectoryPage() {
                   </div>
                 ))}
               </div>
-              <div className="tick-ruler mt-4 mb-2 w-2/3" />
-              <div className="text-xs text-text-dim">
+              <div className="mt-5 text-xs text-text-dim">
                 {d.months_to_death != null
                   ? <>Full cascade unfolds over <b className="text-coral">{d.months_to_death} months</b> if left uninterrupted.</>
                   : "Cascade timeline unbounded."}

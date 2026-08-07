@@ -10,7 +10,7 @@ const ROLE_CODE: any = {
   Founder: "FND", Investor: "INV", Financial: "CFO", Customer: "CX", Market: "MKT", Competitor: "CMP",
 };
 const ROLE_HEX: Record<string, string> = {
-  Founder: "#34E1D2", Investor: "#7C6CFF", Financial: "#C2F24A", Customer: "#FF4FA3", Market: "#FFB13C", Competitor: "#FF5D5D",
+  Founder: "var(--aqua)", Investor: "var(--signal)", Financial: "var(--amber)", Customer: "var(--coral)", Market: "var(--text-mute)", Competitor: "var(--text-faint)",
 };
 
 export default function BoardPage() {
@@ -71,7 +71,7 @@ export default function BoardPage() {
               <div ref={scrollRef} className="space-y-3.5 max-h-[440px] overflow-y-auto pr-1.5 -mr-1">
                 {messages.length === 0 && <div className="text-text-mute text-sm label-mono py-6 text-center">AWAITING DEBATE…</div>}
                 {messages.map((m, i) => {
-                  const hex = ROLE_HEX[m.role] || "#34E1D2";
+                  const hex = ROLE_HEX[m.role] || "var(--aqua)";
                   return (
                     <div key={i} className="flex gap-3 animate-fadeIn">
                       <div className="w-11 h-11 shrink-0 rounded-xl border bg-surface grid place-items-center" style={{ borderColor: `${hex}55` }}>
@@ -104,14 +104,13 @@ export default function BoardPage() {
             </Card>
 
             {decision && (
-              <Card title="Board verdict" className="glow-aqua">
+              <Card title="Board verdict">
                 <div className="text-center mb-5 py-2">
-                  <div className="display-hero !bg-none text-aqua text-[clamp(38px,5.4vw,64px)]" style={{ WebkitTextFillColor: "#34E1D2", textShadow: "0 0 40px rgba(52,225,210,0.35)" }}>{decision.board_decision}</div>
+                  <div className="display-hero text-aqua text-[clamp(38px,5.4vw,64px)]">{decision.board_decision}</div>
                   <div className="inline-flex items-center gap-2 mt-3 px-3 py-1 rounded-full border border-line bg-surface2">
                     <span className="label-mono text-text-faint">CONFIDENCE</span>
                     <span className="label-mono text-aqua">{Math.round((decision.confidence || 0) * 100)}%</span>
                   </div>
-                  <div className="tick-ruler mt-4 mx-auto w-1/2" />
                 </div>
                 <Section title="Strategic actions" items={decision.strategic_actions} />
                 <Section title="Growth roadmap" items={decision.growth_roadmap} />

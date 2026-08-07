@@ -8,6 +8,10 @@ __pycache__/
 frontend/node_modules/
 frontend/.next/
 frontend/out/
+frontend/tsconfig.tsbuildinfo
+
+# Local dev tooling (machine-specific paths)
+.claude/
 
 # Env / secrets
 .env

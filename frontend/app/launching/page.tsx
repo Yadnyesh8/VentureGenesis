@@ -66,8 +66,10 @@ export default function Launching() {
             <AnimatePresence mode="wait">
               <motion.p
                 key={done ? "done" : phrase}
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
+                // Enters on position alone so a stalled engine can't leave the
+                // status line invisible; only the outgoing message fades.
+                initial={{ y: 8 }}
+                animate={{ y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.3 }}
                 className="text-text-dim mt-3 text-sm h-5"
@@ -94,7 +96,7 @@ export default function Launching() {
                 <span>{pct}%</span>
               </div>
               <div className="h-[3px] bg-surface2 rounded-full overflow-hidden">
-                <motion.div className="h-full rounded-full" style={{ background: "linear-gradient(90deg,#FF5D5D,#FF8A3D,#FFC83D)" }}
+                <motion.div className="h-full rounded-full" style={{ background: "var(--text)" }}
                   animate={{ width: `${done ? 100 : pct}%` }} transition={{ ease: "easeOut", duration: 0.4 }} />
               </div>
             </div>

@@ -18,17 +18,11 @@ export default function ProfileGuard({ children }: { children: React.ReactNode }
     return (
       <div className="min-h-[60vh] grid place-items-center">
         <div className="flex flex-col items-center gap-4">
-          <svg width="34" height="34" viewBox="0 0 22 22" className="[animation:sweep_1s_linear_infinite]">
-            <defs>
-              <linearGradient id="pg-load" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stopColor="#7C6CFF" />
-                <stop offset="100%" stopColor="#34E1D2" />
-              </linearGradient>
-            </defs>
-            <circle cx="11" cy="11" r="9" fill="none" stroke="#1B1F2B" strokeWidth="2" />
-            <path d="M11 2 a9 9 0 0 1 9 9" fill="none" stroke="url(#pg-load)" strokeWidth="2" strokeLinecap="round" />
+          <svg width="28" height="28" viewBox="0 0 18 18" className="[animation:sweep_0.9s_linear_infinite]" aria-hidden>
+            <circle cx="9" cy="9" r="7" fill="none" stroke="var(--line-strong)" strokeWidth="2" />
+            <path d="M9 2 a7 7 0 0 1 7 7" fill="none" stroke="var(--text)" strokeWidth="2" strokeLinecap="round" />
           </svg>
-          <div className="label-mono text-text-mute">{!hydrated ? "CALIBRATING" : "REDIRECTING TO ONBOARDING"}</div>
+          <p className="text-sm text-text-mute">{!hydrated ? "Loading your workspace" : "Redirecting to onboarding"}</p>
         </div>
       </div>
     );

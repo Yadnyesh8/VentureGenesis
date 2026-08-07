@@ -14,7 +14,7 @@ export default function AuthShell({ children }: { children: React.ReactNode }) {
         <h1 className="display-hero text-[clamp(56px,8vw,108px)] leading-[0.84] mt-7">
           VENTURE
           <br />
-          <span style={{ WebkitTextFillColor: "#34E1D2", color: "#34E1D2" }}>GENESIS</span>
+          <span className="text-text-mute">GENESIS</span>
         </h1>
       </div>
 

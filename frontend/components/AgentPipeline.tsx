@@ -14,16 +14,16 @@ function StatusGlyph({ status }: { status: StepState["status"] }) {
   if (status === "running")
     return (
       <svg width="16" height="16" viewBox="0 0 16 16" className="[animation:sweep_0.9s_linear_infinite]" aria-label="running">
-        <circle cx="8" cy="8" r="6" fill="none" stroke="#1B1F2B" strokeWidth="2" />
-        <path d="M8 2 a6 6 0 0 1 6 6" fill="none" stroke="#FFB13C" strokeWidth="2" strokeLinecap="round" />
+        <circle cx="8" cy="8" r="6" fill="none" stroke="var(--line-strong)" strokeWidth="2" />
+        <path d="M8 2 a6 6 0 0 1 6 6" fill="none" stroke="var(--amber)" strokeWidth="2" strokeLinecap="round" />
       </svg>
     );
   if (status === "done")
     return (
-      <svg width="16" height="16" viewBox="0 0 16 16" aria-label="done"><path d="M3 8.5 L6.5 12 L13 4" fill="none" stroke="#C2F24A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+      <svg width="16" height="16" viewBox="0 0 16 16" aria-label="done"><path d="M3 8.5 L6.5 12 L13 4" fill="none" stroke="var(--signal)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
     );
   if (status === "error")
-    return <svg width="16" height="16" viewBox="0 0 16 16" aria-label="error"><path d="M4 4 L12 12 M12 4 L4 12" stroke="#FF5D5D" strokeWidth="2" strokeLinecap="round" /></svg>;
+    return <svg width="16" height="16" viewBox="0 0 16 16" aria-label="error"><path d="M4 4 L12 12 M12 4 L4 12" stroke="var(--coral)" strokeWidth="2" strokeLinecap="round" /></svg>;
   return <span className="w-2 h-2 rounded-full bg-line-strong" />;
 }
 
@@ -37,7 +37,7 @@ export default function AgentPipeline({ steps }: { steps: StepState[] }) {
         <div className="label-mono tabular-nums">{done}/{steps.length} <span className="text-text-faint">·</span> {pct}%</div>
       </div>
       <div className="h-[4px] bg-surface3 rounded-full mb-5 overflow-hidden">
-        <motion.div className="h-full rounded-full" style={{ background: "linear-gradient(90deg,#FF5D5D,#FFB13C,#C2F24A)", boxShadow: "0 0 12px rgba(255,177,60,0.5)" }}
+        <motion.div className="h-full rounded-full" style={{ background: "var(--text)" }}
           animate={{ width: `${pct}%` }} transition={{ ease: "easeOut", duration: 0.4 }} />
       </div>
       <div className="space-y-1.5">

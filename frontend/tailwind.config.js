@@ -1,5 +1,12 @@
 /** @type {import('tailwindcss').Config} */
+
+// Every colour resolves through an RGB channel variable defined in globals.css.
+// That keeps utilities theme-aware (light/dark) while still accepting an alpha
+// modifier — `bg-signal/10` and `border-coral/40` both still work.
+const ch = (name) => `rgb(var(--${name}-rgb) / <alpha-value>)`;
+
 module.exports = {
+  darkMode: ["class", ':root[data-theme="dark"]'],
   content: [
     "./app/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
@@ -7,62 +14,68 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#F4F6FB",
         // Ground
-        ink: { 900: "#07080C", 850: "#0B0D13" },
-        surface: "#12151D",
-        surface2: "#181C27",
-        surface3: "#1F2433",
+        ink: { 900: ch("ink-900"), 850: ch("ink-850") },
+        surface: ch("surface"),
+        surface2: ch("surface-2"),
+        surface3: ch("surface-3"),
         // Structure
-        line: "#232838",
-        "line-soft": "#1B1F2B",
-        "line-strong": "#303749",
-        grid: "#141823",
+        line: ch("line"),
+        "line-soft": ch("line-soft"),
+        "line-strong": ch("line-strong"),
+        grid: ch("line-soft"),
         // Type
-        text: "#F4F6FB",
-        "text-dim": "#C3CCDB",
-        "text-mute": "#8A95AA",
-        "text-faint": "#5C6679",
+        text: ch("text"),
+        "text-dim": ch("text-dim"),
+        "text-mute": ch("text-mute"),
+        "text-faint": ch("text-faint"),
+        primary: ch("text"),
         // Signals (fixed meaning)
-        signal: "#C2F24A",
-        aqua: "#34E1D2",
-        violet: "#7C6CFF",
-        coral: "#FF5D5D",
-        amber: "#FFB13C",
-        magenta: "#FF4FA3",
-        // legacy aliases (kept so any stray class still resolves)
-        bg: "#07080C",
-        panel: "#12151D",
-        panel2: "#181C27",
-        edge: "#232838",
-        brand: "#7C6CFF",
-        brand2: "#7C6CFF",
-        accent: "#34E1D2",
-        good: "#C2F24A",
-        warn: "#FFB13C",
-        bad: "#FF5D5D",
-        muted: "#8A95AA",
+        signal: ch("signal"),
+        aqua: ch("aqua"),
+        violet: ch("violet"),
+        coral: ch("coral"),
+        amber: ch("amber"),
+        magenta: ch("magenta"),
+        // Legacy aliases — kept so no stray class in the older pages goes unstyled.
+        bg: ch("ink-900"),
+        panel: ch("surface"),
+        panel2: ch("surface-2"),
+        edge: ch("line"),
+        brand: ch("aqua"),
+        brand2: ch("aqua"),
+        accent: ch("aqua"),
+        good: ch("signal"),
+        warn: ch("amber"),
+        bad: ch("coral"),
+        muted: ch("text-mute"),
       },
       fontFamily: {
-        serif: ['"Instrument Serif"', 'serif'],
-        display: ["var(--font-display)", "Impact", "sans-serif"],
-        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
-        mono: ["var(--font-mono)", "ui-monospace", "monospace"],
+        sans: ["var(--font-sans)"],
+        mono: ["var(--font-mono)"],
+        // Retired faces resolve to the system stack rather than 404-ing.
+        display: ["var(--font-sans)"],
+        serif: ["var(--font-sans)"],
       },
       letterSpacing: {
-        clinical: "0.14em",
+        clinical: "0.2em",
       },
       borderRadius: {
         md: "12px",
         lg: "16px",
-        xl: "20px",
+        xl: "16px",
+        "2xl": "20px",
       },
       boxShadow: {
-        soft: "0 1px 2px rgba(0,0,0,0.4)",
-        card: "0 1px 0 rgba(255,255,255,0.03), 0 8px 24px -8px rgba(0,0,0,0.55)",
-        lift: "0 1px 0 rgba(255,255,255,0.04), 0 24px 60px -18px rgba(0,0,0,0.7)",
-        "glow-violet": "0 0 0 1px #232838, 0 24px 60px -28px rgba(124,108,255,0.35)",
-        "glow-aqua": "0 0 0 1px #232838, 0 24px 60px -28px rgba(52,225,210,0.35)",
+        soft: "var(--shadow-sm)",
+        card: "var(--shadow-md)",
+        lift: "var(--shadow-lg)",
+        // Retired glow tokens flatten out.
+        "glow-violet": "none",
+        "glow-aqua": "none",
+      },
+      maxWidth: {
+        shell: "1280px",
       },
       keyframes: {
         fadeIn: {
