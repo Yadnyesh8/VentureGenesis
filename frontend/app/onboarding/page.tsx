@@ -19,6 +19,20 @@ type Field = {
   required?: boolean;
 };
 
+// Industry is the one field whose options come from the backend's config, so the
+// list stays in step with what the models were trained on. It is mirrored here as
+// a fallback: the API is the source of truth when it answers, but a sleeping free
+// instance can take a minute to wake or fail outright, and an empty dropdown makes
+// a REQUIRED field impossible to complete. Keep in sync with
+// backend/app/config/config.json.
+const FALLBACK_INDUSTRIES = [
+  "B2B", "Consumer", "Fintech", "Finances", "Healthcare", "Health", "Education",
+  "Industrials", "e-Commerce", "Entertainment", "Social Media", "Marketing",
+  "Analytics", "Productivity", "Design", "Food & Beverage", "Transportation",
+  "Travel", "Music", "Software & Hardware", "Real Estate and Construction",
+  "Government", "Unspecified",
+];
+
 // One screen, four labeled sections. Only the three starred fields are required —
 // everything else has a safe default so the founder can reach the board in one click.
 const SECTIONS: { title: string; blurb: string; fields: Field[] }[] = [
@@ -69,13 +83,32 @@ export default function Onboarding() {
   const router = useRouter();
   const { setProfile, ready, hydrated, metrics } = useStore();
   const [form, setForm] = useState<Record<string, any>>({});
-  const [industries, setIndustries] = useState<string[]>([]);
+  const [industries, setIndustries] = useState<string[]>(FALLBACK_INDUSTRIES);
   const [saving, setSaving] = useState(false);
   const [touched, setTouched] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
 
+  // Prefer the server's list, but never let a failure clear the bundled one.
+  // Free instances sleep, so the first request after idle can hang or fail;
+  // back off and retry a couple of times before settling for the fallback.
   useEffect(() => {
-    api.config().then((c) => setIndustries(c.config?.industries || [])).catch(() => {});
+    let cancelled = false;
+    (async () => {
+      for (let attempt = 0; attempt < 3; attempt++) {
+        try {
+          const c = await api.config();
+          const list = c?.config?.industries;
+          if (!cancelled && Array.isArray(list) && list.length > 0) setIndustries(list);
+          return;
+        } catch {
+          if (cancelled) return;
+          if (attempt < 2) await new Promise((r) => setTimeout(r, 2000 * (attempt + 1)));
+        }
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   // Prefill when an existing profile is present (returning user updating their numbers).
@@ -242,7 +275,10 @@ export default function Onboarding() {
 }
 
 function FieldInput({ f, value, onChange, industries, invalid }: any) {
-  const opts = f.key === "industry" ? industries : f.options || [];
+  const opts =
+    f.key === "industry"
+      ? (industries?.length ? industries : FALLBACK_INDUSTRIES)
+      : f.options || [];
   const full = f.type === "textarea";
   return (
     <label className={`text-xs text-text-dim ${full ? "sm:col-span-2" : ""}`}>
