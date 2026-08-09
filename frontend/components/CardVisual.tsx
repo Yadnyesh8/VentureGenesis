@@ -30,7 +30,7 @@ export type Visual =
   | { kind: "pipeline"; done: number; total: number; label: string; tone: string }
   | { kind: "glyph"; glyph: GlyphName; label: string };
 
-export type GlyphName = "compass" | "field" | "twin" | "doc" | "horizon" | "split" | "chain" | "council";
+export type GlyphName = "compass" | "field" | "twin" | "doc" | "horizon" | "split" | "council";
 
 function Frame({ children }: { children: React.ReactNode }) {
   return (
@@ -275,8 +275,6 @@ const GLYPH_PATHS: Record<GlyphName, { d: string[]; nodes: [number, number][] }>
   horizon: { d: ["M3 18 C8 18 9 8 21 8", "M3 21 H21"], nodes: [[21, 8]] },
   // Spin-out: a body separating from its parent.
   split: { d: ["M4 4 H12 V12 H4 Z", "M14 14 H21 V21 H14 Z", "M12 12 L14 14"], nodes: [[21, 21]] },
-  // Causal chain: linked antecedents.
-  chain: { d: ["M4 16 L9 11", "M9 11 L14 15", "M14 15 L20 6"], nodes: [[20, 6]] },
   // Council: four seated voices, each with a short spoke into one decision at
   // the centre. Kept as separated members so it never reads as a plain cross.
   council: {

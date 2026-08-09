@@ -73,7 +73,6 @@ export const api = {
   // Frontier agents
   voi: (ref: Ref & { allow_fetch?: boolean }) => post("/voi", ref),
   agi: (ref: Ref & { moats?: Record<string, number> }) => post("/agi", ref),
-  causal: (ref: Ref) => post("/causal", ref),
   spinout: (req: SpinoutReq) => post("/spinout", req),
 };
 

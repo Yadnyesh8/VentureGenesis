@@ -34,7 +34,6 @@ const GROUPS: Group[] = [
       { href: "/uncertainty", label: "Epistemic Uncertainty", note: "Value of information" },
       { href: "/agi", label: "AGI Pre-Conditioner", note: "Disruption stress test" },
       { href: "/spinout", label: "Spin-out Viability", note: "Expected value" },
-      { href: "/trajectory", label: "Causal Trajectory", note: "Causal inference" },
     ],
   },
 ];

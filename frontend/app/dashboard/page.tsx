@@ -277,16 +277,6 @@ export default function Dashboard() {
         reading: "—",
         visual: idle("split", "Open to run"),
       },
-      {
-        href: "/trajectory",
-        title: "Causal Trajectory",
-        blurb: "Separates the drivers that move outcomes from those that merely correlate.",
-        engine: "Causal inference",
-        family: "Frontier",
-        verdict: { label: "Not run", tone: "idle" },
-        reading: "—",
-        visual: idle("chain", "Open to run"),
-      },
     ];
   }, [hs, f12, fp, series, board.ran, boardDone, boardTotal, metrics.runway, runwaySeries]);
 

@@ -20,7 +20,6 @@ from app.agents.ml.funding_readiness import predict_funding
 from app.agents.ml.health import compute_health
 from app.agents.intelligence import agents as intel
 from app.agents.intelligence import agi as agi_intel
-from app.agents.intelligence import causal as causal_intel
 from app.agents.debate_engine import run_debate
 from app.agents.board import _compact
 from app.core import llm
@@ -50,7 +49,6 @@ STEPS = [
     ("competitor", "Competitor Intelligence", "llm"),
     ("market", "Market Opportunity", "llm"),
     ("agi", "AGI Pre-Conditioner", "llm"),
-    ("causal", "Causal Trajectory", "llm"),
     ("debate", "Boardroom Debate", "llm"),
     ("board", "Board Verdict", "llm"),
 ]
@@ -98,7 +96,6 @@ def board_stream(ref: StartupRef, db: Session = Depends(get_db)):
         yield from step("competitor", "Competitor Intelligence", "llm", lambda: intel.competitor(ctx))
         yield from step("market", "Market Opportunity", "llm", lambda: intel.market_opportunity(ctx))
         yield from step("agi", "AGI Pre-Conditioner", "llm", lambda: agi_intel.precondition(metrics))
-        yield from step("causal", "Causal Trajectory", "llm", lambda: causal_intel.narrate(metrics))
 
         # Debate — stream each message (and the Round 0 VOI uncertainty audit) as produced.
         yield _sse({"type": "agent_start", "key": "debate", "label": "Boardroom Debate", "kind": "llm"})

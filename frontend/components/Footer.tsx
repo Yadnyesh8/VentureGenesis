@@ -25,7 +25,6 @@ const COLUMNS: { head: string; items: { href: string; label: string }[] }[] = [
       { href: "/uncertainty", label: "Epistemic Uncertainty" },
       { href: "/agi", label: "AGI Pre-Conditioner" },
       { href: "/spinout", label: "Spin-out Viability" },
-      { href: "/trajectory", label: "Causal Trajectory" },
     ],
   },
 ];
