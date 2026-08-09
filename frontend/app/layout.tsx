@@ -4,10 +4,14 @@ import { ClerkProvider } from "@clerk/nextjs";
 import Chrome from "@/components/Chrome";
 import { StoreProvider } from "@/lib/store";
 
+// No `icons` field here on purpose. Declaring it overrides Next's file
+// convention, which was pointing the favicon at the full-resolution
+// public/logo.png — a 289 KB, non-square image fetched on every page load and
+// squashed to fit. app/icon.png and app/apple-icon.png are picked up
+// automatically and served hashed, correctly sized and square.
 export const metadata: Metadata = {
   title: "VentureGenesis",
   description: "AI-native startup intelligence platform — metrics in, predictions out.",
-  icons: { icon: "/logo.png", apple: "/logo.png" },
 };
 
 // Resolve the theme before first paint so the surface never flashes the wrong
