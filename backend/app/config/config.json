@@ -6,7 +6,8 @@
     "max_tokens": 1024
   },
   "idea_validation": {
-    "max_rounds": 2
+    "max_rounds": 2,
+    "max_search_queries": 2
   },
   "health_weights": {
     "revenue_strength": 0.25,

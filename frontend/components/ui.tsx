@@ -277,14 +277,16 @@ export function useAgent<T = any>(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
   React.useEffect(() => {
-    if (!enabled) {
-      setLoading(false);
-      return;
-    }
+    // Cache is checked before the gate: a run that already happened should show
+    // its result even when the agent is not allowed to start a new one.
     if (cacheKey && cache[cacheKey]) {
       setData(cache[cacheKey]);
       setLoading(false);
       setError(null);
+      return;
+    }
+    if (!enabled) {
+      setLoading(false);
       return;
     }
     run();

@@ -193,8 +193,14 @@ idea_analysis: |
     "risks": [str]
   }
 
+  WEB EVIDENCE below is the result of live searches. When it is present, prefer it
+  over recall and raise your confidence for products it corroborates. When it says
+  no search was available, say so through lower confidence rather than guessing
+  harder — do not present recalled products as if they were verified.
+
   Idea: {idea}
   Company context: {metrics}
+  Web evidence (may say unavailable): {evidence}
   Prior analysis (may be empty): {prior}
   Reviewer gaps to close (may be empty): {gaps}
 

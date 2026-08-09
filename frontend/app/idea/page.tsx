@@ -60,21 +60,25 @@ export default function IdeaPage() {
   const r = ref();
   const hasIdea = Boolean((metrics.description || "").trim());
 
-  // Only run the loop when there is something to assess. Hooks can't sit behind
-  // the early return below, so without `enabled` this would still fire and the
-  // page would render a 422 as an error instead of the empty state.
-  const { data, loading, error } = useAgent(
+  // This is the most call-hungry agent in the app — several sequential model
+  // calls plus live search — so it never starts on its own. `enabled: false`
+  // holds it until the founder asks for it; a cached result from an earlier run
+  // still shows immediately.
+  const { data, loading, error, refetch } = useAgent(
     () => api.idea(r),
     [JSON.stringify(r)],
     "idea",
-    { enabled: hasIdea }
+    { enabled: false }
   );
 
   const d = hasIdea ? data?.data : null;
   const analysis = d?.analysis ?? {};
   const loop = d?.loop;
+  const evidence = d?.evidence;
   const scores: Record<string, number> = d?.scores ?? {};
   const verdict = String(d?.verdict ?? "");
+  // Anything other than the untouched state means the run has been asked for.
+  const started = loading || Boolean(d) || Boolean(error);
 
   if (!hasIdea) {
     return (
@@ -106,8 +110,39 @@ export default function IdeaPage() {
 
       {error && <ErrorBox error={error} />}
 
-      {loading ? (
-        <Loading label="Running the analyse / review loop — this takes a few minutes on the free tier" />
+      {!started ? (
+        <div className="rounded-2xl border border-line bg-surface p-6 sm:p-8">
+          <h2 className="text-lg font-semibold text-text">Run idea diligence</h2>
+          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-text-mute">
+            The agent analyses your idea, searches for products that already do it, then reviews
+            its own work and refines until the review passes. You will get comparable products,
+            what is genuinely differentiated, the assumptions the idea rests on, and a verdict.
+          </p>
+
+          <div className="mt-5 rounded-xl border border-amber/40 p-4" style={{ background: "var(--amber-12)" }}>
+            <div className="flex items-center gap-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-amber" />
+              <span className="text-sm font-semibold text-amber">This one is slow</span>
+            </div>
+            <p className="mt-1.5 text-sm leading-relaxed text-text-dim">
+              It makes several model calls in sequence rather than one, so expect{" "}
+              <strong className="text-text">two to four minutes</strong> — longer if the backend is
+              waking up. Leave the tab open. The result is kept, so you only pay this once per
+              profile.
+            </p>
+          </div>
+
+          <button type="button" onClick={refetch} className="btn mt-5">
+            Run idea diligence
+          </button>
+        </div>
+      ) : loading ? (
+        <div className="rounded-2xl border border-line bg-surface p-6">
+          <Loading label="Analysing, searching, then reviewing its own work" />
+          <p className="max-w-xl text-sm leading-relaxed text-text-mute">
+            Several model calls run in sequence. Two to four minutes is normal — this is not stuck.
+          </p>
+        </div>
       ) : d ? (
         <div className="space-y-4">
           {/* Verdict */}
@@ -121,6 +156,9 @@ export default function IdeaPage() {
                       {loop.rounds_run} of {loop.max_rounds} rounds · {loop.stopped_because}
                     </span>
                   )}
+                  <button type="button" onClick={refetch} className="btn-ghost !px-2.5 !py-1 text-xs">
+                    Run again
+                  </button>
                 </div>
                 <p className="max-w-2xl text-[15px] leading-relaxed text-text-dim">{d.summary}</p>
               </div>
@@ -140,6 +178,39 @@ export default function IdeaPage() {
               </div>
             )}
           </Card>
+
+          {/* Where the comparables came from. A verdict grounded in live search
+              is a different thing from one drawn out of recall, and the founder
+              should be able to tell which they are holding. */}
+          {evidence && (
+            <Card title="What this was based on">
+              {evidence.available ? (
+                <p className="text-sm leading-relaxed text-text-dim">
+                  Grounded in <strong className="text-text">{evidence.results_count} live search result
+                  {evidence.results_count === 1 ? "" : "s"}</strong>
+                  {evidence.spend_usd > 0 && <> · ${evidence.spend_usd.toFixed(3)} spent</>}.
+                </p>
+              ) : (
+                <p className="text-sm leading-relaxed text-text-dim">
+                  <strong className="text-amber">No live search ran</strong>, so the comparables below
+                  come from the model&apos;s own knowledge and may be out of date or incomplete. Treat the
+                  confidence figures as the model&apos;s self-assessment, not verification.
+                  {evidence.reason && (
+                    <span className="mt-1.5 block text-xs text-text-faint">Reason: {evidence.reason}</span>
+                  )}
+                </p>
+              )}
+              {evidence.queries?.length > 0 && (
+                <div className="mt-3 flex flex-wrap gap-1.5">
+                  {evidence.queries.map((q: string, i: number) => (
+                    <span key={i} className="rounded-full border border-line bg-surface2 px-2.5 py-1 text-xs text-text-mute">
+                      {q}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </Card>
+          )}
 
           {/* What already exists */}
           <Card title="Products that already do this">
