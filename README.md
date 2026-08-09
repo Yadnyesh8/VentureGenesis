@@ -12,12 +12,12 @@ Enter your startup metrics once and instantly get:
 - **Health score** — composite signal across burn, churn, growth, and funding
 - **Board debate** — multi-agent LLM pipeline (Chairperson, Investor, Strategist, Risk Analyst, Competitor Scout) delivers a structured board decision
 - **AGI Pre-Conditioner** — scores disruption exposure across AGI milestones and proposes AGI-resistant redesigns
-- **Digital Twin** — Monte Carlo engine for stress-testing pivots and runway scenarios
+- **Digital Twin** — Monte Carlo engine for stress-testing burn and runway scenarios
 - **Executive report** — one-click board memo synthesizing all outputs
 
 ## Tech Stack
 
-**Frontend** — Next.js 15, React, TypeScript, Tailwind CSS, Framer Motion, Recharts, Three.js
+**Frontend** — Next.js 14, React, TypeScript, Tailwind CSS, Framer Motion, Recharts, Three.js
 
 **Backend** — Python, FastAPI, SQLAlchemy, PostgreSQL
 
@@ -39,14 +39,33 @@ Enter your startup metrics once and instantly get:
 
 ## Running locally
 
-```bash
-# Backend
-cd backend
-python -m uvicorn app.main:app --reload
+One-time setup — creates the backend virtualenv and installs both dependency sets:
 
-# Frontend
-cd frontend
-npm install && npm run dev
+```bash
+npm run setup
 ```
 
-Set `ANTHROPIC_API_KEY`, `CLERK_PUBLISHABLE_KEY`, `CLERK_SECRET_KEY`, and `DATABASE_URL` in your environment.
+Then run the whole stack with a single command:
+
+```bash
+npm run dev
+```
+
+That starts the FastAPI backend on **:8000** and the Next.js frontend on **:3000**,
+with each side's output labelled. Stopping one stops the other.
+
+Run a side on its own with `npm run dev:backend` or `npm run dev:frontend`.
+
+### Environment
+
+Copy `.env.example` to `.env` for the backend. The reasoning agents need
+`OPENROUTER_API_KEY`; `DATABASE_URL` is optional and falls back to SQLite.
+
+Clerk keys go in `frontend/.env.local`:
+
+```
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+CLERK_SECRET_KEY=
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+```
