@@ -32,23 +32,16 @@ services:
           type: web
           property: url
       # ── LLM (required for reasoning agents) ──────────────────────────────
-      # Secrets are sync:false — set them in the Render dashboard. They are
-      # declared here so a blueprint re-sync preserves them instead of dropping
-      # values that only exist in the dashboard.
       - key: LLM_PROVIDER
-        sync: false
-      # Featherless (currently the active provider in this environment)
-      - key: FEATHERLESS_API_KEY
-        sync: false
-      - key: FEATHERLESS_MODEL
-        sync: false
-      - key: FEATHERLESS_BASE_URL
-        sync: false
-      # OpenRouter (fallback provider)
+        value: openrouter
+      # Set the key in the Render dashboard; it is declared here so a blueprint
+      # re-sync preserves it rather than dropping a dashboard-only value.
       - key: OPENROUTER_API_KEY
         sync: false
+      # Largest free model that supports response_format, which the client
+      # requires. See backend/app/core/llm.py for the fallback chain.
       - key: OPENROUTER_MODEL
-        value: openai/gpt-oss-20b:free
+        value: nvidia/nemotron-3-super-120b-a12b:free
       - key: OPENROUTER_RPM
         value: "18"
       # ── Clerk webhook ────────────────────────────────────────────────────

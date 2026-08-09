@@ -17,7 +17,6 @@ const COLUMNS: { head: string; items: { href: string; label: string }[] }[] = [
       { href: "/board", label: "Board of Directors" },
       { href: "/competitor", label: "Competitor Intelligence" },
       { href: "/market", label: "Market Opportunity" },
-      { href: "/pivots", label: "Pivot Engine" },
     ],
   },
   {

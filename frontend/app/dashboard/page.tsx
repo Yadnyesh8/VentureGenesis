@@ -226,19 +226,9 @@ export default function Dashboard() {
         visual: idle("field", "Open to run"),
       },
       {
-        href: "/pivots",
-        title: "Pivot Engine",
-        blurb: "Generates and ranks alternative directions against the current trajectory.",
-        engine: "Reasoning agent",
-        family: "Agents",
-        verdict: { label: "Not run", tone: "idle" },
-        reading: "—",
-        visual: idle("branch", "Open to run"),
-      },
-      {
         href: "/simulation",
         title: "Digital Twin",
-        blurb: "Monte Carlo stress tests across pivots, burn changes and runway scenarios.",
+        blurb: "Monte Carlo stress tests across burn changes and runway scenarios.",
         engine: "Simulation",
         family: "Workspace",
         verdict: runwayVerdict,
@@ -435,11 +425,8 @@ export default function Dashboard() {
       </div>
 
       {/* Grid */}
-      <div className="mb-5 mt-9 flex items-center justify-between gap-4">
+      <div className="mb-5 mt-9">
         <h2 className="section-h">Your board</h2>
-        <Link href="/board" className="btn">
-          Convene the board
-        </Link>
       </div>
 
       {visible.length > 0 ? (

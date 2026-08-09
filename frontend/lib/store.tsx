@@ -148,7 +148,6 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
               ["competitor", report.competitor],
               ["market", report.market],
               ["strategy", report.founder_strategy],
-              ["pivots", report.pivots],
               ["understand", report.understanding],
               ["agi", report.agi],
               ["causal", report.causal],

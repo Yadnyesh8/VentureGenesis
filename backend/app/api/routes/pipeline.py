@@ -22,7 +22,6 @@ from app.agents.intelligence import agents as intel
 from app.agents.intelligence import agi as agi_intel
 from app.agents.intelligence import causal as causal_intel
 from app.agents.debate_engine import run_debate
-from app.simulation.pivot import run_pivot_pipeline
 from app.agents.board import _compact
 from app.core import llm
 from app.core.config import render_prompt
@@ -53,7 +52,6 @@ STEPS = [
     ("agi", "AGI Pre-Conditioner", "llm"),
     ("causal", "Causal Trajectory", "llm"),
     ("debate", "Boardroom Debate", "llm"),
-    ("pivots", "Pivot Engine", "llm"),
     ("board", "Board Verdict", "llm"),
 ]
 
@@ -136,8 +134,6 @@ def board_stream(ref: StartupRef, db: Session = Depends(get_db)):
         except Exception as exc:
             out["debate"] = {"error": str(exc)}
             yield _sse({"type": "agent_error", "key": "debate", "label": "Boardroom Debate", "error": str(exc)})
-
-        yield from step("pivots", "Pivot Engine", "llm", lambda: run_pivot_pipeline(ctx))
 
         # Final board synthesis
         yield _sse({"type": "agent_start", "key": "board", "label": "Board Verdict", "kind": "llm"})

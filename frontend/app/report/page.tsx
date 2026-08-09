@@ -59,12 +59,6 @@ function ReportDocument({ report, decision, metrics }: any) {
   const hist = (fc.series || []).map((v: number, i: number) => ({ x: `H${i + 1}`, history: v }));
   const proj = (fc.projection || []).map((v: number, i: number) => ({ x: `+${i + 1}`, forecast: v }));
   const fcChart = [...hist, ...proj];
-  const pivots = report.pivots || {};
-  const pivotChart = (pivots.all_pivots || []).slice(0, 4).map((p: any) => ({
-    name: (p.pivot_name || "").slice(0, 16),
-    success: Math.round((p.success_probability || 0) * 100),
-    roi: Math.round(p.roi || 0),
-  }));
   const fail = report.failure || {};
 
   return (
@@ -222,22 +216,6 @@ function ReportDocument({ report, decision, metrics }: any) {
         <h2 className="text-3xl">Strategy &amp; Verdict</h2>
         <div className="doc-strong-rule" />
 
-        <h3 className="text-xl mb-1">Recommended pivot — {pivots.recommended_pivot || "—"}</h3>
-        <p className="text-sm text-gray-600 mb-3">Success {fmtPct(pivots.success_probability)} · ROI {pivots.roi}% · Risk {pivots.risk_score}</p>
-        {pivotChart.length > 0 && (
-          <ResponsiveContainer width="100%" height={200}>
-            <BarChart data={pivotChart} margin={{ left: 10, right: 10 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" vertical={false} />
-              <XAxis dataKey="name" {...lightAxis} />
-              <YAxis {...lightAxis} />
-              <Tooltip cursor={{ fill: "rgba(0,0,0,0.04)" }} />
-              <Bar name="success %" dataKey="success" fill={RC.good} radius={[4, 4, 0, 0]} isAnimationActive={false} />
-              <Bar name="ROI %" dataKey="roi" fill={RC.violet} radius={[4, 4, 0, 0]} isAnimationActive={false} />
-            </BarChart>
-          </ResponsiveContainer>
-        )}
-
-        <div className="doc-rule" />
         <div className="grid grid-cols-2 gap-8">
           <DocList title="Strategic actions" items={decision?.strategic_actions} />
           <DocList title="Growth roadmap" items={decision?.growth_roadmap} />

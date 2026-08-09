@@ -36,14 +36,18 @@ class LLMError(RuntimeError):
     pass
 
 
-# Known-good free models OpenRouter serves, used only as a resilience chain for that
-# provider. Featherless runs a single configured model (no free-tier fan-out).
+# Resilience chain for OpenRouter: when the primary is rate-limited or dropped,
+# fall through these in order.
+#
+# Every entry must currently exist on the free tier AND advertise
+# `response_format`, because the OpenRouter path below sets json_mode=True. The
+# previous list had gone stale — four of its five models are no longer served
+# free, so the chain silently collapsed to a single option. Checked against
+# https://openrouter.ai/api/v1/models; re-verify when models are swapped in.
 _OPENROUTER_FALLBACKS = [
+    "nvidia/nemotron-3-super-120b-a12b:free",
     "openai/gpt-oss-20b:free",
-    "openai/gpt-oss-120b:free",
-    "meta-llama/llama-3.3-70b-instruct:free",
-    "qwen/qwen3-next-80b-a3b-instruct:free",
-    "z-ai/glm-4.5-air:free",
+    "google/gemma-4-31b-it:free",
 ]
 
 

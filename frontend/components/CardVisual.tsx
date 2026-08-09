@@ -30,7 +30,7 @@ export type Visual =
   | { kind: "pipeline"; done: number; total: number; label: string; tone: string }
   | { kind: "glyph"; glyph: GlyphName; label: string };
 
-export type GlyphName = "compass" | "field" | "branch" | "twin" | "doc" | "horizon" | "split" | "chain" | "council";
+export type GlyphName = "compass" | "field" | "twin" | "doc" | "horizon" | "split" | "chain" | "council";
 
 function Frame({ children }: { children: React.ReactNode }) {
   return (
@@ -267,8 +267,6 @@ const GLYPH_PATHS: Record<GlyphName, { d: string[]; nodes: [number, number][] }>
   compass: { d: ["M4 20 L20 4", "M4 12 H20", "M12 4 V20"], nodes: [[17, 7]] },
   // Market field: nested opportunity boundaries.
   field: { d: ["M12 3 L21 12 L12 21 L3 12 Z", "M12 8 L16 12 L12 16 L8 12 Z"], nodes: [[12, 12]] },
-  // Pivot: one path forking to alternatives.
-  branch: { d: ["M4 20 L11 13", "M11 13 L20 4", "M11 13 L20 15"], nodes: [[20, 4], [20, 15]] },
   // Digital twin: two coupled orbits.
   twin: { d: ["M9 12 m-6 0 a6 6 0 1 0 12 0 a6 6 0 1 0 -12 0", "M15 12 m-6 0 a6 6 0 1 0 12 0 a6 6 0 1 0 -12 0"], nodes: [[12, 12]] },
   // Report: a bound sheet with ruled lines.

@@ -68,7 +68,6 @@ export const api = {
   market: (ref: Ref) => post("/market", ref),
   strategy: (ref: Ref) => post("/strategy", ref),
   simulate: (ref: Ref) => post("/simulate", ref),
-  pivots: (ref: Ref) => post("/pivots", ref),
   board: (ref: Ref) => post("/board", ref),
   debate: (ref: Ref) => post("/debate", ref),
   // Frontier agents

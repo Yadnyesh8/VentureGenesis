@@ -26,7 +26,6 @@ const GROUPS: Group[] = [
       { href: "/board", label: "Board of Directors", note: "Multi-agent debate" },
       { href: "/competitor", label: "Competitor Intelligence", note: "Reasoning agent" },
       { href: "/market", label: "Market Opportunity", note: "Reasoning agent" },
-      { href: "/pivots", label: "Pivot Engine", note: "Reasoning agent" },
     ],
   },
   {
@@ -171,9 +170,6 @@ export default function TopNav() {
           </Link>
 
           <SignedIn>
-            <Link href="/board" className="btn hidden h-10 lg:inline-flex">
-              Convene board
-            </Link>
             <button
               onClick={() => signOut(() => router.push("/"))}
               aria-label="Sign out"
