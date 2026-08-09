@@ -24,6 +24,7 @@ const GROUPS: Group[] = [
     label: "Agents",
     items: [
       { href: "/board", label: "Board of Directors", note: "Multi-agent debate" },
+      { href: "/idea", label: "Idea Diligence", note: "Analyse / review loop" },
       { href: "/competitor", label: "Competitor Intelligence", note: "Reasoning agent" },
       { href: "/market", label: "Market Opportunity", note: "Reasoning agent" },
     ],

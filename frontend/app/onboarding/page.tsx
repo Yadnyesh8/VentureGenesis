@@ -17,6 +17,7 @@ type Field = {
   step?: number;
   unit?: string;
   required?: boolean;
+  maxLength?: number;
 };
 
 // Industry is the one field whose options come from the backend's config, so the
@@ -46,6 +47,14 @@ const SECTIONS: { title: string; blurb: string; fields: Field[] }[] = [
       { key: "stage", label: "Stage", type: "select", options: ["Idea", "Pre-Seed", "Seed", "Early", "Series A", "Series B", "Growth", "Late"], required: true },
       { key: "founding_year", label: "Founding year", type: "number", placeholder: "2023", hint: "Used to compute company age." },
       { key: "employee_count", label: "Team size", type: "number", placeholder: "12", unit: "ppl" },
+      {
+        key: "description",
+        label: "What are you building?",
+        type: "textarea",
+        placeholder: "One or two sentences. What it does, and who it is for.",
+        hint: "Optional, but this is the only thing the idea diligence agent reads.",
+        maxLength: 2000,
+      },
     ],
   },
   {
@@ -145,6 +154,7 @@ export default function Onboarding() {
     try {
       const m: Metrics = {
         startup_name: form.startup_name || "My Startup",
+        description: String(form.description ?? "").trim() || undefined,
         industry: form.industry,
         business_model: form.business_model,
         stage: form.stage,
@@ -295,7 +305,20 @@ function FieldInput({ f, value, onChange, industries, invalid }: any) {
           {opts.map((o: string) => <option key={o} value={o}>{o}</option>)}
         </select>
       ) : f.type === "textarea" ? (
-        <textarea className="input-field mt-1 h-24" placeholder={f.placeholder} value={value || ""} onChange={(e) => onChange(e.target.value)} />
+        <div className="mt-1">
+          <textarea
+            className="input-field h-24"
+            placeholder={f.placeholder}
+            value={value || ""}
+            maxLength={f.maxLength}
+            onChange={(e) => onChange(e.target.value)}
+          />
+          {f.maxLength && (
+            <div className="mt-1 text-right text-[11px] text-text-faint tabular-nums">
+              {String(value || "").length} / {f.maxLength}
+            </div>
+          )}
+        </div>
       ) : (
         <div className="relative mt-1">
           <input

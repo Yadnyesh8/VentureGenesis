@@ -2,6 +2,8 @@
 
 export type Metrics = {
   startup_name?: string;
+  /** The founder's own summary of the idea. Read by the idea diligence loop. */
+  description?: string;
   industry?: string;
   business_model?: string;
   stage?: string;
@@ -60,6 +62,7 @@ export const api = {
     return res.json();
   },
   understand: (ref: Ref) => post("/understand", ref),
+  idea: (ref: Ref) => post("/idea", ref),
   failure: (ref: Ref) => post("/failure", ref),
   forecast: (ref: Ref) => post("/forecast", ref),
   funding: (ref: Ref) => post("/funding", ref),

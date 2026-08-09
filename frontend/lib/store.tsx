@@ -99,6 +99,9 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   const ref = (): Ref => ({
     startup_id: startupId,
     metrics,
+    // StartupRef.description is a sibling of metrics on the backend, and the
+    // idea agent is the only thing that reads it.
+    description: metrics.description || undefined,
   });
 
   // Run the full board pipeline ONCE and fan the results out into the per-page cache,

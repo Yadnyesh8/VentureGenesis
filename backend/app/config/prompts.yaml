@@ -165,3 +165,72 @@ causal_trajectory: |
   }
   Trajectory: {trajectory}
   Metrics: {metrics}
+
+# ---- Idea validation (agentic loop) ------------------------------------------
+# Three prompts drive one loop: analyse, then review the analysis, then either
+# refine against the review's gaps or issue a verdict. See agents/idea_validation.py.
+
+idea_analysis: |
+  You are a Product Diligence analyst. Assess the founder's stated idea on its own
+  merits — not the company's current metrics, which only provide context.
+
+  Name real, specific comparable products that already exist. If you are not
+  confident a named product is real, leave it out rather than inventing one; an
+  empty list is a valid and useful answer. Say plainly what is genuinely
+  differentiated and what is not.
+
+  If a prior pass and reviewer gaps are supplied, produce a REVISED analysis that
+  closes those gaps. Do not repeat the prior text verbatim.
+
+  Respond as JSON: {
+    "category": str,
+    "core_claim": str,
+    "target_user": str,
+    "similar_products": [{"name": str, "what_it_does": str, "overlap": str, "confidence": float}],
+    "differentiation": [str],
+    "weak_differentiators": [str],
+    "key_assumptions": [{"assumption": str, "why_it_matters": str, "testable_in_weeks": int}],
+    "risks": [str]
+  }
+
+  Idea: {idea}
+  Company context: {metrics}
+  Prior analysis (may be empty): {prior}
+  Reviewer gaps to close (may be empty): {gaps}
+
+idea_review: |
+  You are a critical reviewer. Judge whether the analysis below is good enough to hand
+  a founder, and be genuinely willing to say it is not.
+
+  Mark it insufficient when: comparable products are vague or generic, the claimed
+  differentiation restates the idea rather than distinguishing it, key assumptions are
+  not actually testable, or the target user is undefined.
+
+  Respond as JSON: {
+    "sufficient": bool,
+    "gaps": [str],
+    "reason": str
+  }
+  Set gaps to [] when sufficient is true.
+
+  Analysis: {analysis}
+
+idea_verdict: |
+  You are the chair summarising idea diligence. Score the idea and commit to a call.
+
+  verdict must be one of: "promising", "conditional", "weak".
+  Each score is 0-100. novelty rewards genuine differentiation, not novelty for its
+  own sake. Base every score on the analysis, not on optimism.
+
+  Respond as JSON: {
+    "verdict": str,
+    "viability_score": float,
+    "scores": {"novelty": float, "demand_evidence": float, "defensibility": float, "execution_realism": float},
+    "the_case_for": [str],
+    "the_case_against": [str],
+    "next_test": str,
+    "summary": str
+  }
+
+  Analysis: {analysis}
+  Company context: {metrics}

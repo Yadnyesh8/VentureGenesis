@@ -1,7 +1,7 @@
 """Agent analysis endpoints (Phases 4, 5, 7, 8)."""
 from __future__ import annotations
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from app.agents.ml.failure_prediction import predict_failure
@@ -16,6 +16,8 @@ from app.agents.intelligence import causal as causal_intel
 from app.agents.ml import voi as voi_ml
 from app.agents.ml import causal as causal_ml
 from app.agents.startup_understanding import understand
+from app.agents import idea_validation
+from app.core import llm
 from app.agents.board import board_decision
 from app.simulation import digital_twin
 from app.simulation.pivot import run_pivot_pipeline
@@ -269,4 +271,29 @@ def api_causal(ref: CausalRequest, db: Session = Depends(get_db)):
             db.commit()
         except Exception:
             db.rollback()
+    return {"ok": True, "data": result}
+
+
+@router.post("/idea")
+def api_idea(ref: StartupRef, db: Session = Depends(get_db)):
+    """Idea validation loop: comparable products, differentiation, viability.
+
+    Unlike the other agents this reads ref.description rather than the metrics —
+    it is judging the idea, not the numbers. Without a description there is
+    nothing to assess, and 422 says so rather than returning an empty verdict
+    the founder might mistake for a real one.
+    """
+    m = resolve_metrics(ref, db)
+    try:
+        result = idea_validation.validate(ref.description or "", m)
+    except idea_validation.NoIdeaError as exc:
+        raise HTTPException(status_code=422, detail=str(exc))
+    except llm.LLMError as exc:
+        # The loop is the most call-hungry agent here, so it is the one that
+        # meets the free tier's rate limit first. Say that plainly instead of
+        # returning a 500 that reads like the feature is broken.
+        raise HTTPException(
+            status_code=503,
+            detail=f"The model provider is unavailable or rate-limited right now — try again shortly. ({exc})",
+        )
     return {"ok": True, "data": result}

@@ -5,10 +5,13 @@
     "temperature": 0.4,
     "max_tokens": 1024
   },
+  "idea_validation": {
+    "max_rounds": 2
+  },
   "health_weights": {
     "revenue_strength": 0.25,
     "growth_rate": 0.25,
-    "funding_readiness": 0.20,
+    "funding_readiness": 0.2,
     "customer_health": 0.15,
     "market_position": 0.15
   },
@@ -46,19 +49,53 @@
     "Government",
     "Unspecified"
   ],
-  "business_models": ["B2B", "B2C", "B2B2C", "Marketplace", "SaaS", "Subscription", "Transactional", "Freemium"],
-  "stages": ["Idea", "Pre-Seed", "Seed", "Early", "Series A", "Series B", "Growth", "Late"],
+  "business_models": [
+    "B2B",
+    "B2C",
+    "B2B2C",
+    "Marketplace",
+    "SaaS",
+    "Subscription",
+    "Transactional",
+    "Freemium"
+  ],
+  "stages": [
+    "Idea",
+    "Pre-Seed",
+    "Seed",
+    "Early",
+    "Series A",
+    "Series B",
+    "Growth",
+    "Late"
+  ],
   "simulation_multipliers": {
-    "marketing_increase": { "revenue": 0.10, "burn_rate": 0.05, "customer_growth": 0.08 },
-    "hiring_increase": { "growth_rate": 0.07, "expenses": 0.12, "burn_rate": 0.10 },
-    "product_launch": { "customer_growth": 0.18, "revenue": 0.12, "burn_rate": 0.06 },
-    "cost_cutting": { "expenses": -0.15, "burn_rate": -0.18, "growth_rate": -0.03 }
+    "marketing_increase": {
+      "revenue": 0.1,
+      "burn_rate": 0.05,
+      "customer_growth": 0.08
+    },
+    "hiring_increase": {
+      "growth_rate": 0.07,
+      "expenses": 0.12,
+      "burn_rate": 0.1
+    },
+    "product_launch": {
+      "customer_growth": 0.18,
+      "revenue": 0.12,
+      "burn_rate": 0.06
+    },
+    "cost_cutting": {
+      "expenses": -0.15,
+      "burn_rate": -0.18,
+      "growth_rate": -0.03
+    }
   },
   "pivot_scoring": {
-    "revenue_impact_weight": 0.30,
+    "revenue_impact_weight": 0.3,
     "risk_reduction_weight": 0.25,
     "customer_growth_weight": 0.25,
-    "funding_probability_weight": 0.20
+    "funding_probability_weight": 0.2
   },
   "outlier_detection": {
     "z_score_threshold": 3.0,
@@ -73,7 +110,7 @@
     "critical_churn_rate": 0.25
   },
   "failure_adjustment": {
-    "runway_weight": 0.20,
+    "runway_weight": 0.2,
     "churn_weight": 0.12,
     "churn_cap_multiple": 1.5,
     "negative_growth_weight": 0.16,
@@ -102,7 +139,7 @@
       "financial": 0.35,
       "customer": 0.25,
       "market": 0.15,
-      "team": 0.10,
+      "team": 0.1,
       "execution": 0.15
     },
     "valuation_revenue_multiple_max": 100,
@@ -112,57 +149,137 @@
     "high_failure_probability": 0.6
   },
   "knowledge_sources": {
-    "web_search": { "usd_cost": 0.004, "latency_ms": 1500, "reliability": 0.7 },
-    "market_data": { "usd_cost": 0.02, "latency_ms": 2500, "reliability": 0.85 },
-    "competitor_db": { "usd_cost": 0.01, "latency_ms": 2000, "reliability": 0.8 },
-    "internal": { "usd_cost": 0.0, "latency_ms": 50, "reliability": 0.95 }
+    "web_search": {
+      "usd_cost": 0.004,
+      "latency_ms": 1500,
+      "reliability": 0.7
+    },
+    "market_data": {
+      "usd_cost": 0.02,
+      "latency_ms": 2500,
+      "reliability": 0.85
+    },
+    "competitor_db": {
+      "usd_cost": 0.01,
+      "latency_ms": 2000,
+      "reliability": 0.8
+    },
+    "internal": {
+      "usd_cost": 0.0,
+      "latency_ms": 50,
+      "reliability": 0.95
+    }
   },
   "voi": {
-    "candidate_fields": ["tam", "market_growth_rate", "competitor_funding", "cac", "ltv", "churn_cohort", "runway", "churn_rate", "customer_growth", "burn_rate"],
+    "candidate_fields": [
+      "tam",
+      "market_growth_rate",
+      "competitor_funding",
+      "cac",
+      "ltv",
+      "churn_cohort",
+      "runway",
+      "churn_rate",
+      "customer_growth",
+      "burn_rate"
+    ],
     "decision_value_weights": {
-      "tam": 0.9, "market_growth_rate": 0.5, "competitor_funding": 0.6,
-      "cac": 0.6, "ltv": 0.7, "churn_cohort": 0.7,
-      "runway": 0.8, "churn_rate": 0.8, "customer_growth": 0.7, "burn_rate": 0.7
+      "tam": 0.9,
+      "market_growth_rate": 0.5,
+      "competitor_funding": 0.6,
+      "cac": 0.6,
+      "ltv": 0.7,
+      "churn_cohort": 0.7,
+      "runway": 0.8,
+      "churn_rate": 0.8,
+      "customer_growth": 0.7,
+      "burn_rate": 0.7
     },
     "field_source": {
-      "tam": "market_data", "market_growth_rate": "market_data",
-      "competitor_funding": "competitor_db", "cac": "web_search",
-      "ltv": "web_search", "churn_cohort": "internal",
-      "runway": "internal", "churn_rate": "internal",
-      "customer_growth": "internal", "burn_rate": "internal"
+      "tam": "market_data",
+      "market_growth_rate": "market_data",
+      "competitor_funding": "competitor_db",
+      "cac": "web_search",
+      "ltv": "web_search",
+      "churn_cohort": "internal",
+      "runway": "internal",
+      "churn_rate": "internal",
+      "customer_growth": "internal",
+      "burn_rate": "internal"
     },
     "prior_elasticity": {
-      "tam": 0.08, "market_growth_rate": 0.05, "competitor_funding": 0.06,
-      "cac": 0.05, "ltv": 0.06, "churn_cohort": 0.07,
-      "runway": 0.10, "churn_rate": 0.09, "customer_growth": 0.07, "burn_rate": 0.06
+      "tam": 0.08,
+      "market_growth_rate": 0.05,
+      "competitor_funding": 0.06,
+      "cac": 0.05,
+      "ltv": 0.06,
+      "churn_cohort": 0.07,
+      "runway": 0.1,
+      "churn_rate": 0.09,
+      "customer_growth": 0.07,
+      "burn_rate": 0.06
     },
-    "perturbation_fields": ["runway", "churn_rate", "customer_growth", "burn_rate"],
+    "perturbation_fields": [
+      "runway",
+      "churn_rate",
+      "customer_growth",
+      "burn_rate"
+    ],
     "fetch_margin": 0.15,
     "max_fetches_per_run": 3,
     "cost_to_voi_scale": 4.0
   },
   "agi_preconditioner": {
     "vector_weights": {
-      "labor_arbitrage": 0.22, "data_moat": 0.20, "distribution": 0.18,
-      "regulatory": 0.12, "human_trust": 0.16, "capital_moat": 0.12
+      "labor_arbitrage": 0.22,
+      "data_moat": 0.2,
+      "distribution": 0.18,
+      "regulatory": 0.12,
+      "human_trust": 0.16,
+      "capital_moat": 0.12
     },
     "milestones": [
-      { "name": "Expert-level white-collar automation", "year_offset": 2, "intensity": 0.4 },
-      { "name": "Autonomous tool-using agents", "year_offset": 4, "intensity": 0.7 },
-      { "name": "Self-improving research AI", "year_offset": 7, "intensity": 0.95 }
+      {
+        "name": "Expert-level white-collar automation",
+        "year_offset": 2,
+        "intensity": 0.4
+      },
+      {
+        "name": "Autonomous tool-using agents",
+        "year_offset": 4,
+        "intensity": 0.7
+      },
+      {
+        "name": "Self-improving research AI",
+        "year_offset": 7,
+        "intensity": 0.95
+      }
     ],
     "industry_labor_exposure": {
-      "Analytics": 0.85, "Marketing": 0.8, "Productivity": 0.8, "Design": 0.75,
-      "Software & Hardware": 0.7, "Finances": 0.65, "Fintech": 0.65, "Education": 0.6,
-      "Healthcare": 0.45, "Health": 0.45, "Real Estate and Construction": 0.4,
-      "Transportation": 0.4, "Food & Beverage": 0.3, "Industrials": 0.4, "default": 0.6
+      "Analytics": 0.85,
+      "Marketing": 0.8,
+      "Productivity": 0.8,
+      "Design": 0.75,
+      "Software & Hardware": 0.7,
+      "Finances": 0.65,
+      "Fintech": 0.65,
+      "Education": 0.6,
+      "Healthcare": 0.45,
+      "Health": 0.45,
+      "Real Estate and Construction": 0.4,
+      "Transportation": 0.4,
+      "Food & Beverage": 0.3,
+      "Industrials": 0.4,
+      "default": 0.6
     },
     "resistance_floor": 0.05
   },
   "spinout": {
     "factor_weights": {
-      "market_disruption": 0.25, "cannibalization_risk": 0.20,
-      "capital_intensity": 0.15, "talent_flight_risk": 0.15,
+      "market_disruption": 0.25,
+      "cannibalization_risk": 0.2,
+      "capital_intensity": 0.15,
+      "talent_flight_risk": 0.15,
       "strategic_adjacency": 0.25
     },
     "vc_upside_multiple": 2.2,
@@ -174,13 +291,48 @@
   },
   "causal": {
     "template_edges": [
-      { "from": "churn_rate", "to": "revenue", "weight": 0.7, "lag_months": 2 },
-      { "from": "customer_growth", "to": "revenue", "weight": 0.6, "lag_months": 2 },
-      { "from": "revenue", "to": "runway", "weight": 0.8, "lag_months": 1 },
-      { "from": "burn_rate", "to": "runway", "weight": 0.7, "lag_months": 1 },
-      { "from": "runway", "to": "hiring_freeze", "weight": 0.6, "lag_months": 1 },
-      { "from": "hiring_freeze", "to": "customer_growth", "weight": 0.5, "lag_months": 3 },
-      { "from": "runway", "to": "death", "weight": 0.9, "lag_months": 1 }
+      {
+        "from": "churn_rate",
+        "to": "revenue",
+        "weight": 0.7,
+        "lag_months": 2
+      },
+      {
+        "from": "customer_growth",
+        "to": "revenue",
+        "weight": 0.6,
+        "lag_months": 2
+      },
+      {
+        "from": "revenue",
+        "to": "runway",
+        "weight": 0.8,
+        "lag_months": 1
+      },
+      {
+        "from": "burn_rate",
+        "to": "runway",
+        "weight": 0.7,
+        "lag_months": 1
+      },
+      {
+        "from": "runway",
+        "to": "hiring_freeze",
+        "weight": 0.6,
+        "lag_months": 1
+      },
+      {
+        "from": "hiring_freeze",
+        "to": "customer_growth",
+        "weight": 0.5,
+        "lag_months": 3
+      },
+      {
+        "from": "runway",
+        "to": "death",
+        "weight": 0.9,
+        "lag_months": 1
+      }
     ],
     "death_node": "death",
     "base_time_to_event_months": 3.0,
@@ -188,17 +340,34 @@
   },
   "specialists": {
     "industry_tam_usd": {
-      "Fintech": 3.0e11, "Finances": 3.0e11, "Healthcare": 4.0e11, "Health": 4.0e11,
-      "Education": 1.0e11, "B2B": 2.0e11, "Consumer": 2.5e11, "Industrials": 1.5e11,
-      "default": 1.0e11
+      "Fintech": 300000000000.0,
+      "Finances": 300000000000.0,
+      "Healthcare": 400000000000.0,
+      "Health": 400000000000.0,
+      "Education": 100000000000.0,
+      "B2B": 200000000000.0,
+      "Consumer": 250000000000.0,
+      "Industrials": 150000000000.0,
+      "default": 100000000000.0
     },
     "stage_peer_funding_usd": {
-      "idea": 1.0e5, "pre-seed": 5.0e5, "seed": 3.0e6, "early": 3.0e6,
-      "series a": 1.5e7, "series b": 4.0e7, "growth": 1.0e8, "late": 2.0e8, "public": 5.0e8
+      "idea": 100000.0,
+      "pre-seed": 500000.0,
+      "seed": 3000000.0,
+      "early": 3000000.0,
+      "series a": 15000000.0,
+      "series b": 40000000.0,
+      "growth": 100000000.0,
+      "late": 200000000.0,
+      "public": 500000000.0
     },
     "competitive_density": {
-      "Fintech": 0.8, "Consumer": 0.85, "B2B": 0.6, "Healthcare": 0.55,
-      "Education": 0.5, "default": 0.6
+      "Fintech": 0.8,
+      "Consumer": 0.85,
+      "B2B": 0.6,
+      "Healthcare": 0.55,
+      "Education": 0.5,
+      "default": 0.6
     },
     "sam_fraction_of_tam": 0.15,
     "som_fraction_of_sam": 0.05,
@@ -207,17 +376,23 @@
   "confidence": {
     "weights": {
       "discrimination": 0.35,
-      "calibration": 0.30,
+      "calibration": 0.3,
       "stability": 0.15,
-      "completeness": 0.20
+      "completeness": 0.2
     },
     "brier_reference": 0.25,
-    "cv_std_reference": 0.10,
-    "floor": 0.30,
+    "cv_std_reference": 0.1,
+    "floor": 0.3,
     "ceiling": 0.98,
     "decision_fields": [
-      "runway", "churn_rate", "customer_growth", "revenue",
-      "expenses", "burn_rate", "employee_count", "funding_amount"
+      "runway",
+      "churn_rate",
+      "customer_growth",
+      "revenue",
+      "expenses",
+      "burn_rate",
+      "employee_count",
+      "funding_amount"
     ]
   }
 }

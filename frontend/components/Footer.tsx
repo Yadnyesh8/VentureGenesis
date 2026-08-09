@@ -15,6 +15,7 @@ const COLUMNS: { head: string; items: { href: string; label: string }[] }[] = [
     head: "Agents",
     items: [
       { href: "/board", label: "Board of Directors" },
+      { href: "/idea", label: "Idea Diligence" },
       { href: "/competitor", label: "Competitor Intelligence" },
       { href: "/market", label: "Market Opportunity" },
     ],

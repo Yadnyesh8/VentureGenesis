@@ -116,6 +116,8 @@ export default function Dashboard() {
     return Array.from({ length: n + 1 }, (_, i) => Math.max(0, cash - i * burn));
   }, [metrics.runway, metrics.burn_rate]);
 
+  const hasIdea = Boolean((metrics.description || "").trim());
+
   const modules: Module[] = useMemo(() => {
     const idle = (glyph: any, label: string): Visual => ({ kind: "glyph", glyph, label });
 
@@ -206,6 +208,16 @@ export default function Dashboard() {
           : idle("council", "Convene to run"),
       },
       {
+        href: "/idea",
+        title: "Idea Diligence",
+        blurb: "Checks the idea itself: what already exists like it, and whether it holds up.",
+        engine: "Analyse / review loop",
+        family: "Agents",
+        verdict: hasIdea ? { label: "Ready to run", tone: "info" } : { label: "Needs your idea", tone: "idle" },
+        reading: "—",
+        visual: idle("prism", hasIdea ? "Open to run" : "Add an idea summary"),
+      },
+      {
         href: "/competitor",
         title: "Competitor Intelligence",
         blurb: "Maps the competitive set and where this position is defensible.",
@@ -278,7 +290,7 @@ export default function Dashboard() {
         visual: idle("split", "Open to run"),
       },
     ];
-  }, [hs, f12, fp, series, board.ran, boardDone, boardTotal, metrics.runway, runwaySeries]);
+  }, [hs, f12, fp, series, board.ran, boardDone, boardTotal, metrics.runway, runwaySeries, hasIdea]);
 
   const visible = useMemo(() => {
     const q = query.trim().toLowerCase();

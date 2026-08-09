@@ -249,11 +249,23 @@ export function fmtRunway(months?: number | null) {
 }
 
 // ---- agent runner -------------------------------------------------------
-export function useAgent<T = any>(fn: () => Promise<T>, deps: any[] = [], cacheKey?: string) {
+/**
+ * `enabled: false` holds the request entirely. Hooks can't sit behind an early
+ * return, so a page that decides "there is nothing to ask for" still reaches
+ * this call — without the gate it would fire the agent anyway and surface the
+ * rejection as an error.
+ */
+export function useAgent<T = any>(
+  fn: () => Promise<T>,
+  deps: any[] = [],
+  cacheKey?: string,
+  opts?: { enabled?: boolean }
+) {
+  const enabled = opts?.enabled ?? true;
   const { cache, setCache } = useStore();
   const cached = cacheKey ? (cache[cacheKey] as T | undefined) : undefined;
   const [data, setData] = React.useState<T | null>(cached ?? null);
-  const [loading, setLoading] = React.useState(cacheKey ? !cached : true);
+  const [loading, setLoading] = React.useState(enabled ? (cacheKey ? !cached : true) : false);
   const [error, setError] = React.useState<string | null>(null);
   const run = React.useCallback(() => {
     setLoading(true);
@@ -265,6 +277,10 @@ export function useAgent<T = any>(fn: () => Promise<T>, deps: any[] = [], cacheK
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
   React.useEffect(() => {
+    if (!enabled) {
+      setLoading(false);
+      return;
+    }
     if (cacheKey && cache[cacheKey]) {
       setData(cache[cacheKey]);
       setLoading(false);
@@ -273,6 +289,6 @@ export function useAgent<T = any>(fn: () => Promise<T>, deps: any[] = [], cacheK
     }
     run();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [run, cacheKey ? cache[cacheKey] : undefined]);
+  }, [run, enabled, cacheKey ? cache[cacheKey] : undefined]);
   return { data, loading, error, refetch: run };
 }
