@@ -13,7 +13,6 @@ from fastapi import APIRouter, Depends
 from fastapi.responses import StreamingResponse
 from sqlalchemy.orm import Session
 
-from app.agents.startup_understanding import understand
 from app.agents.ml.failure_prediction import predict_failure
 from app.agents.ml.revenue_forecast import forecast_revenue
 from app.agents.ml.funding_readiness import predict_funding
@@ -36,8 +35,12 @@ def _sse(event: dict) -> str:
 
 
 # Agent registry: key, human label, kind (ml = local model/stat, llm = live reasoning)
+#
+# Startup Understanding is deliberately absent: it is run on demand from the
+# dashboard (POST /understand) rather than on every board run. It classified
+# industry/business model/stage, all of which the founder already supplied in
+# onboarding, so paying an LLM call for it on each run bought little.
 STEPS = [
-    ("understanding", "Startup Understanding", "llm"),
     ("failure", "Failure Prediction", "ml"),
     ("forecast", "Revenue Forecast", "ml"),
     ("funding", "Funding Readiness", "ml"),
@@ -79,8 +82,10 @@ def board_stream(ref: StartupRef, db: Session = Depends(get_db)):
                 yield _sse({"type": "agent_error", "key": key, "label": label,
                             "ms": int((time.time() - t0) * 1000), "error": str(exc)})
 
-        yield from step("understanding", "Startup Understanding", "llm", lambda: understand(metrics))
-        ctx = {**metrics, **(out.get("understanding") if isinstance(out.get("understanding"), dict) else {})}
+        # The founder's own answers are the context now. Previously this also carried
+        # the Startup Understanding classification; that agent moved to an on-demand
+        # dashboard action, so the six agents below reason from the questionnaire.
+        ctx = {**metrics}
 
         yield from step("failure", "Failure Prediction", "ml", lambda: predict_failure(metrics))
         yield from step("forecast", "Revenue Forecast", "ml", lambda: forecast_revenue(metrics, series))

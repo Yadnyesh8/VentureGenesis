@@ -6,6 +6,7 @@ import {
   ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Cell, LabelList,
   AreaChart, Area, CartesianGrid, Tooltip, ReferenceLine,
 } from "recharts";
+import { buildForecastSeries, moneyAxis } from "@/lib/forecastSeries";
 
 // Print-safe palette — darker/saturated so it stays legible on the white PDF page.
 // (The app's neon signal hues are tuned for dark glass and wash out on paper.)
@@ -52,13 +53,14 @@ export default function ReportPage() {
   );
 }
 
+// Local to this route: an App Router page may only export a default plus the
+// framework's own fields, so a named export here fails the build.
 function ReportDocument({ report, decision, metrics }: any) {
   const health = report.health || {};
   const pillars = Object.entries(health.components || {}).map(([k, v]) => ({ name: k.replace(/_/g, " "), value: v as number }));
   const fc = report.forecast || {};
-  const hist = (fc.series || []).map((v: number, i: number) => ({ x: `H${i + 1}`, history: v }));
-  const proj = (fc.projection || []).map((v: number, i: number) => ({ x: `+${i + 1}`, forecast: v }));
-  const fcChart = [...hist, ...proj];
+  const { data: fcChart, values: fcValues, historyLength } = buildForecastSeries(fc.series, fc.projection);
+  const fcAxis = moneyAxis(fcValues);
   const fail = report.failure || {};
 
   return (
@@ -143,7 +145,12 @@ function ReportDocument({ report, decision, metrics }: any) {
         <p className="text-xs text-gray-500">{fail.method}</p>
 
         <div className="doc-rule" />
-        <h3 className="text-xl mb-1">Revenue Forecast</h3>
+        <div className="flex items-baseline justify-between gap-4">
+          <h3 className="text-xl mb-1">Revenue Forecast</h3>
+          {/* A log axis flattens exponential growth into a straight line. On paper
+              there is no tooltip to fall back on, so the axis states its own scale. */}
+          {fcAxis.scale === "log" && <span className="text-[11px] text-gray-500">vertical axis: log scale</span>}
+        </div>
         <p className="text-sm text-gray-600 mb-3">3m {fmtMoney(fc.forecast_3m)} · 6m {fmtMoney(fc.forecast_6m)} · 12m {fmtMoney(fc.forecast_12m)}</p>
         {fcChart.length > 0 ? (
           <ResponsiveContainer width="100%" height={220}>
@@ -154,10 +161,20 @@ function ReportDocument({ report, decision, metrics }: any) {
               </defs>
               <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" vertical={false} />
               <XAxis dataKey="x" {...lightAxis} />
-              <YAxis {...lightAxis} tickFormatter={fmtMoney} width={54} />
-              <ReferenceLine x={`H${hist.length}`} stroke="#9ca3af" strokeDasharray="3 3" label={{ value: "NOW", fill: "#6b7280", fontSize: 10, position: "top" }} />
-              <Area type="monotone" dataKey="history" stroke={RC.aqua} fill="url(#rh)" strokeWidth={2.5} isAnimationActive={false} />
-              <Area type="monotone" dataKey="forecast" stroke={RC.violet} fill="url(#rf)" strokeWidth={2.5} strokeDasharray="5 4" isAnimationActive={false} />
+              <YAxis
+                {...lightAxis}
+                tickFormatter={fmtMoney}
+                width={54}
+                scale={fcAxis.scale}
+                domain={fcAxis.domain}
+                ticks={fcAxis.ticks}
+                allowDataOverflow
+              />
+              <ReferenceLine x={`H${historyLength}`} stroke="#9ca3af" strokeDasharray="3 3" label={{ value: "NOW", fill: "#6b7280", fontSize: 10, position: "top" }} />
+              {/* On a log axis the area under the curve has no meaning, so the
+                  fill drops back and the stroke carries the reading. */}
+              <Area type="monotone" dataKey="history" stroke={RC.aqua} fill="url(#rh)" fillOpacity={fcAxis.scale === "log" ? 0.35 : 1} strokeWidth={2.5} isAnimationActive={false} />
+              <Area type="monotone" dataKey="forecast" stroke={RC.violet} fill="url(#rf)" fillOpacity={fcAxis.scale === "log" ? 0.35 : 1} strokeWidth={2.5} strokeDasharray="5 4" isAnimationActive={false} />
             </AreaChart>
           </ResponsiveContainer>
         ) : <p className="text-sm text-gray-400">No revenue series available.</p>}

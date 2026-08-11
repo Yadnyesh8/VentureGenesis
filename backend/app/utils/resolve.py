@@ -11,6 +11,7 @@ from sqlalchemy.orm import Session
 
 from app.db import models
 from app.db.schemas import StartupBase, StartupRef
+from app.utils.rates import normalize_rates
 
 # Numeric fields default to 0 only to avoid crashes; they are NOT demo values.
 _NUMERIC_KEYS = [
@@ -34,6 +35,13 @@ def resolve_metrics(ref: StartupRef, db: Session | None = None) -> dict[str, Any
         metrics.update({k: v for k, v in inline.items() if v is not None})
     for k in _NUMERIC_KEYS:
         metrics.setdefault(k, 0)
+
+    # Single canonical scale for the monthly rates. This is the choke point EVERY agent
+    # and model reads through, so normalizing here is what keeps the forecast page from
+    # disagreeing with health, failure and funding: they all see the same number. It
+    # also covers rows the pydantic schema never saw (CSV imports, rows written before
+    # this policy existed). normalize_rate is idempotent, so the double pass is a no-op.
+    normalize_rates(metrics)
 
     # Profitable / zero-burn guard: a company with no monthly burn has effectively
     # unbounded runway. Without this, burn=0 would leave runway at 0 and every

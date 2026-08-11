@@ -12,6 +12,7 @@ from app.agents.startup_understanding import understand
 from app.db import models
 from app.db.database import get_db
 from app.db.schemas import StartupCreate, StartupOut
+from app.utils.rates import RATE_FIELDS, normalize_rate
 
 router = APIRouter()
 
@@ -79,6 +80,10 @@ async def upload_csv(file: UploadFile = File(...), db: Session = Depends(get_db)
             val = row.get(col)
             if col in NUMERIC:
                 data[col] = _clean_money(val)
+                # Datasets state growth/churn either way ("0.14" or "14"), and these
+                # columns bypass StartupCreate entirely. Store the canonical fraction.
+                if col in RATE_FIELDS:
+                    data[col] = normalize_rate(data[col], col)
             elif col == "customer_count" or col == "employee_count":
                 data[col] = int(_clean_money(val))
             else:

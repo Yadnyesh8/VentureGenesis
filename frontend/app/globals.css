@@ -105,6 +105,75 @@
   --font-serif: var(--font-sans);
 }
 
+/* ----------------------------------------------------------------------------
+   Landing-only dark scope.
+
+   The marketing page is art-directed on the dark ground and ships without a tone
+   control, while the app keeps both themes. Rather than writing data-theme on
+   <html> (which would fight the toggle, flash on entry and have to be undone on
+   exit), the landing wrapper just redeclares the palette for its own subtree.
+
+   Both the channels AND the tokens derived from them are repeated here on
+   purpose: a derived property like `--surface: rgb(var(--surface-rgb))` is
+   resolved where it is DECLARED, so redeclaring only the channels lower down
+   would update Tailwind's utilities (which read the channels directly) while
+   leaving every raw var(--surface) still holding the light value.
+   -------------------------------------------------------------------------- */
+.theme-dark-scope {
+  color-scheme: dark;
+
+  --ink-900-rgb: 13 13 13;
+  --ink-850-rgb: 15 15 15;
+  --surface-rgb: 18 18 18;
+  --surface-2-rgb: 23 23 23;
+  --surface-3-rgb: 31 31 31;
+
+  --line-rgb: 41 41 41;
+  --line-soft-rgb: 31 31 31;
+  --line-strong-rgb: 56 56 56;
+
+  --text-rgb: 232 232 232;
+  --text-dim-rgb: 196 196 196;
+  --text-mute-rgb: 163 163 163;
+  --text-faint-rgb: 138 138 138;
+
+  --signal-rgb: 34 197 94;
+  --aqua-rgb: 96 165 250;
+  --violet-rgb: 96 165 250;
+  --coral-rgb: 239 68 68;
+  --amber-rgb: 249 115 22;
+  --magenta-rgb: 163 163 163;
+
+  --ink-900: rgb(var(--ink-900-rgb));
+  --ink-850: rgb(var(--ink-850-rgb));
+  --surface: rgb(var(--surface-rgb));
+  --surface-2: rgb(var(--surface-2-rgb));
+  --surface-3: rgb(var(--surface-3-rgb));
+  --line: rgb(var(--line-rgb));
+  --line-soft: rgb(var(--line-soft-rgb));
+  --line-strong: rgb(var(--line-strong-rgb));
+  --text: rgb(var(--text-rgb));
+  --text-dim: rgb(var(--text-dim-rgb));
+  --text-mute: rgb(var(--text-mute-rgb));
+  --text-faint: rgb(var(--text-faint-rgb));
+
+  --inverse-bg: rgb(var(--text-rgb));
+  --inverse-fg: rgb(var(--ink-900-rgb));
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 6px 14px -8px rgba(0, 0, 0, 0.55);
+  --shadow-lg: 0 12px 24px -8px rgba(232, 232, 232, 0.1);
+
+  color: var(--text);
+}
+
+/* The global rule resolves against :root, so on a light-theme session it would
+   paint a dark highlight onto the dark landing. Re-state it inside the scope. */
+.theme-dark-scope ::selection {
+  background: var(--text);
+  color: var(--ink-900);
+}
+
 /* The light theme overrides only the channels; every derived token above
    re-resolves against them on the same element. */
 :root[data-theme="light"] {
@@ -431,6 +500,21 @@ body,
 @keyframes drawIn {
   from { stroke-dashoffset: var(--dash, 400); }
   to { stroke-dashoffset: 0; }
+}
+
+/* Landing hero caret. Blinks only while the typed word rests. */
+@keyframes vg-caret {
+  0%, 52% { opacity: 1; }
+  53%, 100% { opacity: 0; }
+}
+
+/* Hero field ornaments — already-painted elements that move, never a reveal. */
+@keyframes vg-orbit {
+  to { transform: rotate(360deg); }
+}
+@keyframes vg-drift {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-16px); }
 }
 
 .skeleton {

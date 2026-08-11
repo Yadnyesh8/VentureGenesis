@@ -132,7 +132,10 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
             setAnalysis((a) => ({ ...a, done: a.done + 1 }));
             break;
           case "agent_error":
-            setBoard((b) => ({ ...b, steps: b.steps.map((s) => (s.key === ev.key ? { ...s, status: "error", ms: ev.ms } : s)) }));
+            // Keep ev.error: the stream has always carried the reason, and dropping
+            // it left the pipeline showing an anonymous red cross the founder had
+            // no way to act on. AgentPipeline renders it under the label.
+            setBoard((b) => ({ ...b, steps: b.steps.map((s) => (s.key === ev.key ? { ...s, status: "error", ms: ev.ms, note: ev.error } : s)) }));
             setAnalysis((a) => ({ ...a, done: a.done + 1 }));
             break;
           case "debate_message":
@@ -151,7 +154,6 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
               ["competitor", report.competitor],
               ["market", report.market],
               ["strategy", report.founder_strategy],
-              ["understand", report.understanding],
               ["agi", report.agi],
             ];
             for (const [k, v] of map) if (v && !v.error) derived[k] = wrap(v);

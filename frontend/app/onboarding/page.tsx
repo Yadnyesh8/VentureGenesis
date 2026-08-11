@@ -34,6 +34,44 @@ const FALLBACK_INDUSTRIES = [
   "Government", "Unspecified",
 ];
 
+// Monthly growth and churn are stored as FRACTIONS of 1 (0.14 = 14% MoM), the scale
+// every backend model reads. Founders type it both ways, so a magnitude above 1 can
+// only be a percentage and is divided by 100 exactly once — the same rule the API
+// applies on ingest (backend/app/utils/rates.py). Keep the bounds in sync with
+// RATE_FIELDS there: both stay within ±1 so normalizing twice is a no-op.
+const RATE_BOUNDS: Record<string, [number, number]> = {
+  customer_growth: [-1, 1],
+  churn_rate: [0, 1],
+};
+
+function normalizeRate(raw: number, key: string): number {
+  const [lo, hi] = RATE_BOUNDS[key];
+  const v = Math.abs(raw) > 1 ? raw / 100 : raw;
+  return Math.min(hi, Math.max(lo, Math.round(v * 1e6) / 1e6));
+}
+
+// Only complains about input that no reading can rescue, so a half-typed "-" or "0."
+// never flashes an error. Out-of-range means out of range as a percentage too.
+function rateError(key: string, value: any): string | null {
+  const s = String(value ?? "").trim();
+  if (!s) return null;
+  const raw = Number(s);
+  if (!Number.isFinite(raw)) return "Enter a number.";
+  const [lo, hi] = RATE_BOUNDS[key];
+  if (raw < lo * 100) return `Too low. ${lo * 100}% a month is the floor.`;
+  if (raw > hi * 100) return `Too high. ${hi * 100}% a month is the ceiling.`;
+  return null;
+}
+
+// Shown live under the field so a founder always sees which reading we took.
+function rateNote(key: string, value: any): string | null {
+  const s = String(value ?? "").trim();
+  if (!s || rateError(key, value)) return null;
+  const raw = Number(s);
+  if (Math.abs(raw) <= 1) return null;
+  return `Read as ${raw}% a month · stored as ${normalizeRate(raw, key)}`;
+}
+
 // One screen, four labeled sections. Only the three starred fields are required —
 // everything else has a safe default so the founder can reach the board in one click.
 const SECTIONS: { title: string; blurb: string; fields: Field[] }[] = [
@@ -72,8 +110,8 @@ const SECTIONS: { title: string; blurb: string; fields: Field[] }[] = [
     blurb: "Customer signals used by funding and health scoring.",
     fields: [
       { key: "customer_count", label: "Customers", type: "number", placeholder: "340" },
-      { key: "customer_growth", label: "Monthly growth rate", type: "number", step: 0.01, placeholder: "0.14", unit: "0–1", hint: "0.14 = 14% MoM" },
-      { key: "churn_rate", label: "Monthly churn rate", type: "number", step: 0.01, placeholder: "0.03", unit: "0–1", hint: "0.03 = 3% monthly · drives customer health" },
+      { key: "customer_growth", label: "Monthly growth rate", type: "number", step: 0.01, placeholder: "0.14", unit: "/mo", hint: "0.14 or 14: both read as 14% a month" },
+      { key: "churn_rate", label: "Monthly churn rate", type: "number", step: 0.01, placeholder: "0.03", unit: "/mo", hint: "0.03 or 3: both read as 3% a month · drives customer health" },
     ],
   },
   {
@@ -130,7 +168,15 @@ export default function Onboarding() {
   }
 
   const missing = REQUIRED.filter((f) => !String(form[f.key] ?? "").trim());
-  const isInvalid = (f: Field) => touched && !!f.required && !String(form[f.key] ?? "").trim();
+  // A rate that no reading can rescue blocks submission the same way a missing
+  // required field does, rather than being silently clamped on the server.
+  const rateErrors = Object.keys(RATE_BOUNDS)
+    .map((k) => ({ key: k, msg: rateError(k, form[k]) }))
+    .filter((e): e is { key: string; msg: string } => e.msg !== null);
+  const errorFor = (f: Field): string | null =>
+    touched && f.required && !String(form[f.key] ?? "").trim()
+      ? `${f.label} is required.`
+      : rateErrors.find((e) => e.key === f.key)?.msg ?? null;
 
   const cash = Number(form.cash_reserves) || 0;
   const burn = Number(form.burn_rate) || 0;
@@ -140,7 +186,7 @@ export default function Onboarding() {
   async function finish(e: React.FormEvent) {
     e.preventDefault();
     if (saving) return;
-    if (missing.length > 0) {
+    if (missing.length > 0 || rateErrors.length > 0) {
       setTouched(true);
       // Bring the first unfilled required field into view and focus it.
       requestAnimationFrame(() => {
@@ -164,8 +210,10 @@ export default function Onboarding() {
         burn_rate: burn,
         runway,
         customer_count: Number(form.customer_count) || 0,
-        customer_growth: Number(form.customer_growth) || 0,
-        churn_rate: Number(form.churn_rate) || 0,
+        // Normalized here as well as on the server, so the copy the store keeps and
+        // replays to every agent endpoint is the same number the backend derived.
+        customer_growth: normalizeRate(Number(form.customer_growth) || 0, "customer_growth"),
+        churn_rate: normalizeRate(Number(form.churn_rate) || 0, "churn_rate"),
         funding_amount: Number(form.funding_amount) || 0,
         employee_count: Number(form.employee_count) || 0,
         valuation: Number(form.valuation) || 0,
@@ -230,10 +278,14 @@ export default function Onboarding() {
         >
           <RegCross className="absolute top-3 right-3 opacity-60" />
 
-          {touched && missing.length > 0 && (
+          {touched && (missing.length > 0 || rateErrors.length > 0) && (
             <div role="alert" className="flex items-start gap-2 rounded-md border border-coral/40 bg-coral/10 px-3 py-2.5 text-[13px] text-coral mb-6">
               <span aria-hidden className="mt-px">!</span>
-              <span>Add your {missing.map((f) => f.label.toLowerCase()).join(", ")} to build your board.</span>
+              <span>
+                {missing.length > 0 && <>Add your {missing.map((f) => f.label.toLowerCase()).join(", ")} to build your board.</>}
+                {missing.length > 0 && rateErrors.length > 0 && " "}
+                {rateErrors.length > 0 && <>Fix your {rateErrors.length > 1 ? "growth and churn rates" : rateErrors[0].key === "churn_rate" ? "churn rate" : "growth rate"}.</>}
+              </span>
             </div>
           )}
 
@@ -252,7 +304,8 @@ export default function Onboarding() {
                       f={f}
                       value={form[f.key]}
                       industries={industries}
-                      invalid={isInvalid(f)}
+                      error={errorFor(f)}
+                      note={f.key in RATE_BOUNDS ? rateNote(f.key, form[f.key]) : null}
                       onChange={(v: any) => set(f.key, v)}
                     />
                   ))}
@@ -284,7 +337,8 @@ export default function Onboarding() {
   );
 }
 
-function FieldInput({ f, value, onChange, industries, invalid }: any) {
+function FieldInput({ f, value, onChange, industries, error, note }: any) {
+  const invalid = !!error;
   const opts =
     f.key === "industry"
       ? (industries?.length ? industries : FALLBACK_INDUSTRIES)
@@ -336,8 +390,11 @@ function FieldInput({ f, value, onChange, industries, invalid }: any) {
           {f.unit && <span className="absolute right-3 top-1/2 -translate-y-1/2 label-mono text-[9px] pointer-events-none">{f.unit}</span>}
         </div>
       )}
-      {invalid ? (
-        <span className="block text-[10px] text-coral mt-1">{f.label} is required.</span>
+      {error ? (
+        <span className="block text-[10px] text-coral mt-1">{error}</span>
+      ) : note ? (
+        // How we read what they typed, in the same aqua the computed runway uses.
+        <span className="block text-[10px] text-aqua mt-1">{note}</span>
       ) : f.hint ? (
         <span className="block text-[10px] text-text-mute mt-1">{f.hint}</span>
       ) : null}

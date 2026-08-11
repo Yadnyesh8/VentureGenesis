@@ -3,7 +3,9 @@ from __future__ import annotations
 
 from typing import Any, Optional
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
+
+from app.utils.rates import RATE_FIELDS, normalize_rate
 
 
 class StartupBase(BaseModel):
@@ -23,6 +25,15 @@ class StartupBase(BaseModel):
     employee_count: int = 0
     valuation: float = 0.0
     status: str = "Active"
+
+    # customer_growth and churn_rate are monthly FRACTIONS (0.14 = 14% MoM). A founder
+    # typing 11.4 means 11.4%, so anything above 1 is read as a percentage and divided
+    # once. See app/utils/rates.py for the policy; resolve_metrics repeats it for rows
+    # that never passed through this schema (CSV imports, pre-existing rows).
+    @field_validator(*RATE_FIELDS)
+    @classmethod
+    def _canonical_rate(cls, v: float, info) -> float:
+        return normalize_rate(v, info.field_name)
 
 
 class StartupCreate(StartupBase):

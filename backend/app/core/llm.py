@@ -111,6 +111,23 @@ def _throttle() -> None:
         time.sleep(max(wait, 0.1))
 
 
+# A 429 has two very different meanings and they need opposite handling.
+#
+# Per-MINUTE: this model is momentarily saturated. Moving to the next model in
+# the chain is exactly right, and the quota frees up seconds later.
+#
+# Per-DAY: the allowance is account-wide, so every model returns the same 429.
+# Walking the chain then costs six attempts plus the _throttle() sleeps between
+# them — observed as ~47s per agent — to arrive at the failure we already knew
+# about on the first response. Treat it as terminal and report it verbatim.
+_DAILY_QUOTA_MARKERS = ("per-day", "per day", "daily limit", "quota exceeded")
+
+
+def _is_daily_quota(body: str) -> bool:
+    low = (body or "").lower()
+    return any(marker in low for marker in _DAILY_QUOTA_MARKERS)
+
+
 def _extract_json(text: str) -> dict[str, Any]:
     """Parse a JSON object out of a model response (tolerant of prose/fences)."""
     text = (text or "").strip()
@@ -172,6 +189,12 @@ def complete(prompt: str, *, system: str | None = None, json_mode: bool = True) 
             except Exception as exc:
                 last_err = f"{model}: request failed/slow: {exc}"
                 continue  # slow upstream -> next model
+
+            if resp.status_code == 429 and _is_daily_quota(resp.text):
+                # Terminal for every model on this key — stop, don't walk the chain.
+                raise LLMError(
+                    f"{provider['name']} daily quota exhausted. {resp.text[:200]}"
+                )
 
             if resp.status_code in (404, 429) or resp.status_code >= 500:
                 last_err = f"{model}: {resp.status_code} {resp.text[:100]}"

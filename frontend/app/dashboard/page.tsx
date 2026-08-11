@@ -6,6 +6,7 @@ import { api } from "@/lib/api";
 import { useStore } from "@/lib/store";
 import { fmtMoney, fmtPct, fmtRunway, useAgent, Metric, RUNWAY_INFINITE } from "@/components/ui";
 import ModuleCard, { type Module, type Verdict } from "@/components/ModuleCard";
+import UnderstandingPanel from "@/components/UnderstandingPanel";
 import type { Visual } from "@/components/CardVisual";
 
 const FAMILIES = ["All", "Models", "Agents", "Frontier", "Workspace"] as const;
@@ -359,6 +360,9 @@ export default function Dashboard() {
           sub="Cash ÷ burn"
         />
       </div>
+
+      {/* Classifier — on demand, not part of the board run */}
+      <UnderstandingPanel r={r} cacheKey={key} />
 
       {/* Search */}
       <div className="relative mt-8 max-w-2xl">

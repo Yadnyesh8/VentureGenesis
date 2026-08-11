@@ -55,9 +55,16 @@ export default function AgentPipeline({ steps }: { steps: StepState[] }) {
               transition={active ? { repeat: Infinity, duration: 1.4 } : { duration: 0.2 }}
             >
               <span className="grid place-items-center w-4 h-4 shrink-0"><StatusGlyph status={s.status} /></span>
-              <span className={`text-sm flex-1 truncate ${s.status === "pending" ? "text-text-mute" : "text-text"}`}>{s.label}</span>
+              <span className="flex-1 min-w-0">
+                <span className={`block text-sm truncate ${s.status === "pending" ? "text-text-mute" : "text-text"}`}>{s.label}</span>
+                {/* The reason, not just the cross. Clamped so a long provider
+                    payload can't stretch the row out of the list. */}
+                {s.status === "error" && s.note && (
+                  <span className="mt-1 block text-xs leading-snug text-text-dim line-clamp-2">{s.note}</span>
+                )}
+              </span>
               {s.ms != null && s.status !== "running" && (
-                <span className="label-mono text-[9px] w-12 text-right tabular-nums">{(s.ms / 1000).toFixed(1)}s</span>
+                <span className="label-mono text-[9px] w-12 shrink-0 text-right tabular-nums">{(s.ms / 1000).toFixed(1)}s</span>
               )}
             </motion.div>
           );
