@@ -1,0 +1,76 @@
+<!doctype html>
+<!--
+  Source for public/og.png — the social unfurl card (Discord, Slack, X, iMessage).
+
+  Rendered rather than written as an app/opengraph-image.tsx because Satori, the
+  engine behind next/og, bundles a single font weight: `font-weight: 900` silently
+  fell back to regular and the card came out thin, which is the opposite of this
+  brand's hero. Screenshotting real Chrome gets the actual system UI stack at the
+  weight the site uses.
+
+  Regenerate after editing (from the frontend/ directory):
+
+    "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
+      --headless --disable-gpu --hide-scrollbars --force-device-scale-factor=2 \
+      --window-size=1200,630 --default-background-color=0d0d0dff \
+      --screenshot=/tmp/og-2x.png "file://$PWD/scripts/og-image.html"
+    sips -z 630 1200 /tmp/og-2x.png --out public/og.png
+
+  Rendering at 2x and downsampling is what keeps the type crisp. Colours are the
+  globals.css tokens; the copy must stay true to pipeline.py STEPS (4 ml, 9 llm).
+-->
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 630px; }
+  body {
+    background: #0d0d0d;
+    color: #e8e8e8;
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+                 Roboto, "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 72px 80px;
+  }
+  .wordmark { font-size: 26px; font-weight: 600; letter-spacing: -0.01em; }
+  h1 {
+    font-size: 96px;
+    font-weight: 900;
+    letter-spacing: -0.035em;
+    line-height: 0.98;
+  }
+  /* The site's hero drops its second line a step back in value rather than
+     colouring it, so the emphasis is tonal. Same move here — but at --text-faint
+     rather than the page's own RECESSED (text-text-mute/60 → #676767, ~3.4:1).
+     An unfurl is displayed at roughly a third of this size, and #676767 turns to
+     mud there; #8a8a8a holds 5.6:1 and still reads as the recessed line. */
+  h1 .recessed { color: #8a8a8a; }
+  .tagline { margin-top: 28px; font-size: 32px; font-weight: 400; letter-spacing: -0.01em; color: #a3a3a3; }
+  .ticks { display: flex; gap: 10px; }
+  .tick { width: 46px; height: 6px; border-radius: 3px; background: #3a3a3a; }
+  .tick.model { background: #22c55e; }
+  .caption { margin-top: 22px; font-size: 24px; color: #8a8a8a; letter-spacing: -0.005em; }
+</style>
+</head>
+<body>
+  <div class="wordmark">VentureGenesis</div>
+
+  <div>
+    <h1>Pressure-test<br><span class="recessed">your startup.</span></h1>
+    <div class="tagline">AI-native startup intelligence</div>
+  </div>
+
+  <div>
+    <div class="ticks">
+      <span class="tick model"></span><span class="tick model"></span><span class="tick model"></span><span class="tick model"></span>
+      <span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span>
+      <span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span>
+    </div>
+    <div class="caption">4 trained models &middot; 9 reasoning agents &middot; 1 board verdict</div>
+  </div>
+</body>
+</html>

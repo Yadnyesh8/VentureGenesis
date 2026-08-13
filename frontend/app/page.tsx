@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { Metadata } from "next";
 // Imported rather than referenced by path: Next then knows each plate's real
 // dimensions and generates a blur placeholder, so the frame is never an empty
 // box while a full-resolution capture is still on the wire.
@@ -12,11 +11,10 @@ import HeroField from "@/components/landing/HeroField";
 import TypeCycle from "@/components/landing/TypeCycle";
 import CountUp from "@/components/landing/CountUp";
 
-export const metadata: Metadata = {
-  title: "VentureGenesis — pressure-test the whole thesis",
-  description:
-    "Enter your startup's numbers once. Four trained models and nine reasoning agents run in a single pass and return one board verdict.",
-};
+// No metadata export here on purpose. This page previously set its own title and
+// description, which then disagreed with the openGraph copy inherited from the
+// root layout — Google read one sentence and Discord unfurled another. The layout
+// is the single source of truth for how the product describes itself.
 
 // Module-level so the identity is stable — a fresh array would restart the cycle
 // on every render of the hero.
@@ -38,46 +36,6 @@ const SEATS = [
   { role: "Customer", lens: "ARPU, churn-implied lifetime, net revenue retention" },
   { role: "Market", lens: "TAM, SAM, SOM and your current share" },
   { role: "Competitor", lens: "Funding against stage peers, moat proxy, density" },
-];
-
-const SURFACES = [
-  {
-    group: "Models",
-    note: "Trained, not prompted",
-    items: [
-      ["Health Score", "Weighted composite"],
-      ["Failure Prediction", "Gradient boosting + SHAP"],
-      ["Revenue Forecast", "Prophet time series"],
-      ["Funding Readiness", "Calibrated classifier"],
-    ],
-  },
-  {
-    group: "Agents",
-    note: "Reasoning over your numbers",
-    items: [
-      ["Board of Directors", "Multi-agent debate"],
-      ["Idea Diligence", "Analyse / review loop"],
-      ["Competitor Intelligence", "Positioning and density"],
-      ["Market Opportunity", "Share and headroom"],
-    ],
-  },
-  {
-    group: "Frontier",
-    note: "The questions nobody asks",
-    items: [
-      ["Epistemic Uncertainty", "Value of information"],
-      ["AGI Pre-Conditioner", "Disruption stress test"],
-      ["Spin-out Viability", "Expected value"],
-    ],
-  },
-  {
-    group: "Workspace",
-    note: "What you take away",
-    items: [
-      ["Digital Twin", "Monte Carlo scenarios"],
-      ["Executive Report", "One board memo"],
-    ],
-  },
 ];
 
 const KICKER = "font-mono text-[11px] uppercase tracking-[0.3em] text-text-mute sm:text-xs";
@@ -278,30 +236,6 @@ export default function Landing() {
               </li>
             ))}
           </ul>
-        </div>
-      </section>
-
-      {/* ── Surfaces ─────────────────────────────────────────────────────────── */}
-      <section className="px-5 py-24 sm:px-8 sm:py-32">
-        <div className="mx-auto max-w-[1180px]">
-          <h2 className={`${H2} max-w-3xl`}>Thirteen readings on one set of numbers.</h2>
-
-          <div className="mt-16 grid gap-x-10 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
-            {SURFACES.map((col) => (
-              <div key={col.group}>
-                <h3 className="text-sm font-semibold tracking-[-0.01em] text-text">{col.group}</h3>
-                <p className="mt-1 text-xs text-text-mute">{col.note}</p>
-                <ul className="mt-6 space-y-5">
-                  {col.items.map(([name, note]) => (
-                    <li key={name}>
-                      <p className="text-[15px] font-medium leading-snug text-text-dim">{name}</p>
-                      <p className="mt-0.5 text-[13px] leading-snug text-text-mute">{note}</p>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
