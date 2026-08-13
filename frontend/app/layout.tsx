@@ -11,12 +11,21 @@ const TAGLINE = "AI-native startup intelligence";
 const DESCRIPTION =
   "AI-native startup intelligence. Enter your numbers once: four trained models and nine reasoning agents run in a single pass and hand back one board verdict.";
 
-// Absolute URLs are required by every unfurler — a relative og:image is simply
-// dropped. Vercel exposes the deployment host, so previews unfurl with their own
-// URL instead of pointing at production.
+// Absolute URLs are required by every unfurler; a relative og:image is dropped.
+//
+// This must resolve to the STABLE domain, never VERCEL_URL. VERCEL_URL is the
+// per-deployment host (venture-genesis-<hash>-<scope>.vercel.app), and with
+// Deployment Protection on it answers 302 to an SSO login, so a crawler
+// following og:image gets a redirect instead of the card and renders nothing.
+// It also changes on every deploy, which churns the caches unfurlers keep.
+//
+// VERCEL_PROJECT_PRODUCTION_URL is the project's production domain and is set on
+// preview builds too, so previews advertise the production card rather than a
+// protected host they cannot serve.
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ||
-  (process.env.VERCEL_URL && `https://${process.env.VERCEL_URL}`) ||
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL &&
+    `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`) ||
   "https://venture-genesis.vercel.app";
 
 // The card is a committed PNG (public/og.png, source in scripts/og-image.html)
