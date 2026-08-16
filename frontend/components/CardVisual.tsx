@@ -28,7 +28,8 @@ export type Visual =
   | { kind: "band"; value: number; thresholds: [number, number]; label: string; tone: string }
   | { kind: "area"; series: number[]; label: string; tone: string }
   | { kind: "pipeline"; done: number; total: number; label: string; tone: string }
-  | { kind: "glyph"; glyph: GlyphName; label: string };
+  | { kind: "glyph"; glyph: GlyphName; label: string }
+  | { kind: "loading"; shape: "ring" | "band" | "area"; label: string };
 
 export type GlyphName = "compass" | "field" | "twin" | "doc" | "horizon" | "split" | "council" | "prism";
 
@@ -357,6 +358,93 @@ function Glyph({ glyph, label }: { glyph: GlyphName; label: string }) {
   );
 }
 
+/* ---- Placeholder: the frame without the figure. --------------------------
+   Every part drawn here is something we already know before the agent answers
+   — the ring's track, the failure scale's thresholds, the forecast's baseline —
+   so the card reserves its exact footprint without inventing a reading. Only
+   the slots where the numbers will land are blocked out, and those blocks are
+   the one thing that pulses. */
+function Placeholder({ shape, label }: { shape: "ring" | "band" | "area"; label: string }) {
+  const cx = VB_W / 2;
+  // Centred on (cxc, cyc) so a block sits exactly where its glyphs will. The
+  // radius is capped rather than h/2: a tall block rounded to a full pill reads
+  // as a lozenge, not as a line of type waiting to arrive.
+  const block = (cxc: number, cyc: number, w: number, h: number) => (
+    <rect
+      x={cxc - w / 2}
+      y={cyc - h / 2}
+      width={w}
+      height={h}
+      rx={Math.min(h / 2, 7)}
+      fill="var(--line-strong)"
+      className="pulse-soft"
+    />
+  );
+
+  if (shape === "ring") {
+    // Mirrors Ring exactly: the same track, and the numeral and label standing
+    // in on the same two centres. Like Ring it draws no bottom caption — the
+    // track's lower edge reaches y=138 and would run straight through one.
+    const cy = 88;
+    return (
+      <Frame>
+        <circle cx={cx} cy={cy} r={46} fill="none" stroke="var(--line-strong)" strokeWidth="8" opacity={0.55} />
+        {/* Both blocks stay inside the track's inner radius (42): at 22 units
+            off centre the clear half-width is √(42²−22²) ≈ 35.8. */}
+        {block(cx, cy - 9, 52, 24)}
+        {block(cx, cy + 18, 60, 8)}
+      </Frame>
+    );
+  }
+
+  if (shape === "band") {
+    const x0 = 34;
+    const x1 = VB_W - 34;
+    const w = x1 - x0;
+    const y = 98;
+    const seg = (from: number, to: number, colour: string) => (
+      <line
+        x1={x0 + from * w}
+        y1={y}
+        x2={x0 + to * w}
+        y2={y}
+        stroke={colour}
+        strokeWidth="7"
+        strokeLinecap="round"
+        opacity={0.18}
+      />
+    );
+    return (
+      <Frame>
+        {seg(0, 0.35, "var(--signal)")}
+        {seg(0.35, 0.6, "var(--amber)")}
+        {seg(0.6, 1, "var(--coral)")}
+        {block(cx, SAFE_TOP + 20, 62, 24)}
+        <text x={x0} y={CAPTION_Y} textAnchor="start" dominantBaseline="central" fill="var(--text-faint)" style={{ fontSize: 10 }}>
+          0
+        </text>
+        <Caption>{label}</Caption>
+        <text x={x1} y={CAPTION_Y} textAnchor="end" dominantBaseline="central" fill="var(--text-faint)" style={{ fontSize: 10 }}>
+          100
+        </text>
+      </Frame>
+    );
+  }
+
+  // area — the axis is real and known; only the plot band is reserved
+  const l = 22;
+  const w = VB_W - 44;
+  const base = SAFE_TOP + 64;
+  const plotH = 44;
+  return (
+    <Frame>
+      <line x1={l} y1={base} x2={l + w} y2={base} stroke="var(--line-strong)" strokeWidth="1" />
+      {block(VB_W / 2, base - plotH / 2, w, plotH)}
+      <Caption>{label}</Caption>
+    </Frame>
+  );
+}
+
 export default function CardVisual({ visual }: { visual: Visual }) {
   switch (visual.kind) {
     case "ring":
@@ -369,5 +457,7 @@ export default function CardVisual({ visual }: { visual: Visual }) {
       return <Pipeline done={visual.done} total={visual.total} label={visual.label} tone={visual.tone} />;
     case "glyph":
       return <Glyph glyph={visual.glyph} label={visual.label} />;
+    case "loading":
+      return <Placeholder shape={visual.shape} label={visual.label} />;
   }
 }

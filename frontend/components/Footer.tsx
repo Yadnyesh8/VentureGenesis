@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { LEGAL_DOCS } from "@/lib/legal";
 
 const COLUMNS: { head: string; items: { href: string; label: string }[] }[] = [
   {
@@ -81,9 +82,20 @@ export default function Footer() {
           </nav>
         </div>
 
-        <div className="mt-12 flex flex-wrap items-center justify-between gap-3 border-t border-line pt-6">
-          <p className="text-xs text-text-faint">© {new Date().getFullYear()} VentureGenesis</p>
-          <p className="text-xs text-text-faint">Built on your numbers</p>
+        {/* The colophon row carries the policies. They sit on the same left
+            margin as everything above rather than being flung to the far rim. */}
+        <div className="mt-12 border-t border-line pt-6">
+          <nav aria-label="Policies" className="flex flex-wrap gap-x-7 gap-y-2.5">
+            {LEGAL_DOCS.map((d) => (
+              <Link key={d.href} href={d.href} className="text-xs text-text-mute transition-colors hover:text-text">
+                {d.label}
+              </Link>
+            ))}
+          </nav>
+          <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2">
+            <p className="text-xs text-text-faint">© {new Date().getFullYear()} VentureGenesis</p>
+            <p className="text-xs text-text-faint">Built on your numbers · model estimates, not advice</p>
+          </div>
         </div>
       </div>
     </footer>

@@ -8,9 +8,16 @@ import ProfileGuard from "@/components/ProfileGuard";
 // no nav chrome, no profile gate. Every other route keeps the app shell.
 const FULL_BLEED = ["/sign-in", "/sign-up", "/sso-callback"];
 
+// The policy documents bring their own chrome (see app/(legal)/layout.tsx).
+// They must render for a signed-out visitor with no profile, so they cannot sit
+// behind ProfileGuard — that would bounce a reader to onboarding.
+const LEGAL = ["/terms", "/privacy", "/disclaimer", "/accessibility"];
+
 export default function Chrome({ children }: { children: React.ReactNode }) {
   const path = usePathname();
-  if (path === "/" || FULL_BLEED.some((p) => path.startsWith(p))) return <>{children}</>;
+  if (path === "/" || FULL_BLEED.some((p) => path.startsWith(p)) || LEGAL.includes(path)) {
+    return <>{children}</>;
+  }
 
   const onboarding = path === "/onboarding";
 

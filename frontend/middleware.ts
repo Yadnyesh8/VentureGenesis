@@ -1,6 +1,8 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
-// Public: the auth pages, the OAuth callback, and the /api proxy.
+// Public: the auth pages, the OAuth callback, the /api proxy, and the policy
+// documents. The policies have to be readable by someone who has not signed up
+// — terms you can only reach from behind the auth wall are not terms.
 // /onboarding requires authentication — unauthenticated users are redirected to sign-in.
 const isPublic = createRouteMatcher([
   "/",
@@ -8,6 +10,10 @@ const isPublic = createRouteMatcher([
   "/sign-up(.*)",
   "/sso-callback(.*)",
   "/api(.*)",
+  "/terms",
+  "/privacy",
+  "/disclaimer",
+  "/accessibility",
 ]);
 
 export default clerkMiddleware(async (auth, req) => {

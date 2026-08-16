@@ -13,6 +13,7 @@ export type Module = {
   verdict: Verdict;
   reading: string;     // the live figure, or an em dash when not yet computed
   visual: Visual;
+  loading?: boolean;   // its agent is in flight — hold the slots, show no figure
 };
 
 const VERDICT_BG: Record<Verdict["tone"], string> = {
@@ -33,7 +34,10 @@ export default function ModuleCard({
   onTogglePin: (href: string) => void;
 }) {
   return (
-    <article className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface card-hover">
+    <article
+      className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface card-hover"
+      aria-busy={m.loading || undefined}
+    >
       {/* Pin — sits in the same slot as the reference's bookmark, and works. */}
       <button
         type="button"
@@ -99,9 +103,20 @@ export default function ModuleCard({
         {/* Spacer keeps every card's bottom row on one baseline */}
         <div className="flex-1" />
 
+        {/* The placeholder is wrapped in the reading's own type, so the line
+            box — not the block's pixel height — sets the row. The row is
+            therefore the same height in both states and nothing shifts when the
+            figure lands. */}
         <div className="flex items-center justify-between gap-3 border-t border-line pt-3">
           <span className="text-xs text-text-faint">{m.family}</span>
-          <span className="text-sm font-semibold tabular-nums text-text">{m.reading}</span>
+          {m.loading ? (
+            <span className="text-sm">
+              <span className="skeleton inline-block h-[0.85em] w-16 align-middle" aria-hidden="true" />
+              <span className="sr-only">Computing</span>
+            </span>
+          ) : (
+            <span className="text-sm font-semibold tabular-nums text-text">{m.reading}</span>
+          )}
         </div>
       </div>
     </article>

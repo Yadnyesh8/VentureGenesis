@@ -10,6 +10,7 @@ import LandingNav from "@/components/landing/LandingNav";
 import HeroField from "@/components/landing/HeroField";
 import TypeCycle from "@/components/landing/TypeCycle";
 import CountUp from "@/components/landing/CountUp";
+import { LEGAL_DOCS } from "@/lib/legal";
 
 // No metadata export here on purpose. This page previously set its own title and
 // description, which then disagreed with the openGraph copy inherited from the
@@ -328,8 +329,18 @@ function LandingFooter() {
           </nav>
         </div>
 
-        <p className="mt-12 text-xs text-text-mute">
-          © {new Date().getFullYear()} VentureGenesis · Built on your numbers
+        {/* The policies get their own row rather than being crowded into the
+            product nav above — they are a different kind of link. */}
+        <nav aria-label="Policies" className="mt-10 flex flex-wrap gap-x-7 gap-y-2.5">
+          {LEGAL_DOCS.map((d) => (
+            <Link key={d.href} href={d.href} className="text-xs text-text-mute transition-colors hover:text-text">
+              {d.label}
+            </Link>
+          ))}
+        </nav>
+
+        <p className="mt-6 text-xs text-text-mute">
+          © {new Date().getFullYear()} VentureGenesis · Built on your numbers · model estimates, not advice
         </p>
       </div>
 

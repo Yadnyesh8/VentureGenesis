@@ -64,6 +64,23 @@ export default function UnderstandingPanel({ r, cacheKey }: { r: Ref; cacheKey: 
         </dl>
       )}
 
+      {/* First run only: on a re-run the previous answer stays on screen rather
+          than being replaced by placeholders it is about to replace again. The
+          real labels are kept — they are known before the model replies — so
+          only the values are stood in for. */}
+      {loading && !u && (
+        <dl className="mt-6 grid grid-cols-2 gap-x-4 gap-y-5 sm:grid-cols-4" role="status" aria-label="Classifying your business">
+          {FIELDS.map(([key, label]) => (
+            <div key={key} className="min-w-0">
+              <dt className="truncate whitespace-nowrap text-xs text-text-faint">{label}</dt>
+              <dd className="mt-1.5 text-[15px] font-medium leading-normal">
+                <span className="skeleton inline-block h-[0.9em] w-[5.5em] max-w-full align-middle" />
+              </dd>
+            </div>
+          ))}
+        </dl>
+      )}
+
       {/* ErrorBox carries its own bottom margin for stacked page-level use;
           as the last child here that would leave dead space, so it is cancelled. */}
       {error && (

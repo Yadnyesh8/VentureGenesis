@@ -95,12 +95,26 @@ export function Card({ title, children, className = "", right, hover = false }: 
 // ---- Metric -------------------------------------------------------------
 // A quiet label, the figure at real scale, one line of context. The tone lives
 // in the value's colour only.
-export function Metric({ label, value, sub, tone = "default" }: any) {
+export function Metric({ label, value, sub, tone = "default", loading = false }: any) {
   return (
-    <div className="card">
+    <div className="card" aria-busy={loading || undefined}>
       <div className="text-sm text-text-mute">{label}</div>
+      {/* The wrapper keeps the `.stat` line box in both states, so the line's
+          own strut — not the placeholder — sets the height and the card cannot
+          resize (or clip the numerals) when the reading lands. */}
       <div className={`stat mt-2 ${TEXT_TONE[tone] || TEXT_TONE.default}`}>
-        <CountUp value={value} />
+        {loading ? (
+          <>
+            {/* The bar is decoration; the state is carried as real text for a
+                screen reader. Deliberately NOT a live region — eight of those
+                firing at once on one dashboard load is noise, and aria-busy on
+                the card already tells assistive tech the value is pending. */}
+            <span className="skeleton inline-block h-[0.62em] w-[2.4em] align-middle" aria-hidden="true" />
+            <span className="sr-only">Computing</span>
+          </>
+        ) : (
+          <CountUp value={value} />
+        )}
       </div>
       {sub && <div className="mt-1.5 text-xs text-text-faint">{sub}</div>}
     </div>
@@ -191,6 +205,56 @@ export function SkeletonCards({ count = 3 }: { count?: number }) {
           <div className="skeleton mt-3 h-2 w-2/3" />
         </div>
       ))}
+    </div>
+  );
+}
+
+/**
+ * A stand-in for one feed card, laid out against ModuleCard measure for measure:
+ * the same 16/9 media block, the same two-line title and two-line blurb, the
+ * same footer row above the same rule. Swapping one for the other moves nothing.
+ */
+export function SkeletonModuleCard() {
+  return (
+    <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface">
+      <div className="aspect-[16/9] shrink-0 bg-surface2">
+        <div className="skeleton h-full w-full !rounded-none" />
+      </div>
+      <div className="flex flex-1 flex-col p-4">
+        {/* Each placeholder sits inside the element whose type it stands in for,
+            so the real line box governs the height rather than a guessed pixel
+            value. That is what makes the swap to a live card move nothing. */}
+        <h3 className="mb-2 text-lg leading-snug">
+          <span className="skeleton inline-block h-[0.62em] w-3/5 align-middle" />
+        </h3>
+        <p className="mb-4 min-h-[2.625rem] text-sm leading-relaxed">
+          <span className="skeleton inline-block h-[0.72em] w-full align-middle" />
+          <br />
+          <span className="skeleton inline-block h-[0.72em] w-4/5 align-middle" />
+        </p>
+        <div className="flex-1" />
+        <div className="flex items-center justify-between gap-3 border-t border-line pt-3">
+          <span className="text-xs">
+            <span className="skeleton inline-block h-[0.85em] w-16 align-middle" />
+          </span>
+          <span className="text-sm">
+            <span className="skeleton inline-block h-[0.85em] w-14 align-middle" />
+          </span>
+        </div>
+      </div>
+    </article>
+  );
+}
+
+/** The dashboard's headline reading, held at its real size while it computes. */
+export function SkeletonMetric() {
+  return (
+    <div className="card">
+      <div className="skeleton h-3 w-24" />
+      <div className="stat mt-2">
+        <span className="skeleton inline-block h-[0.62em] w-[2.4em] align-middle" />
+      </div>
+      <div className="skeleton mt-2.5 h-2.5 w-20" />
     </div>
   );
 }

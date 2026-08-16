@@ -4,7 +4,16 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
 import { useStore } from "@/lib/store";
-import { fmtMoney, fmtPct, fmtRunway, useAgent, Metric, RUNWAY_INFINITE } from "@/components/ui";
+import {
+  fmtMoney,
+  fmtPct,
+  fmtRunway,
+  useAgent,
+  Metric,
+  SkeletonModuleCard,
+  SkeletonMetric,
+  RUNWAY_INFINITE,
+} from "@/components/ui";
 import ModuleCard, { type Module, type Verdict } from "@/components/ModuleCard";
 import UnderstandingPanel from "@/components/UnderstandingPanel";
 import type { Visual } from "@/components/CardVisual";
@@ -43,6 +52,73 @@ function extractSeries(payload: any): number[] | null {
     }
   }
   return null;
+}
+
+/**
+ * The board's own shape, standing in while the profile is read back from
+ * storage. It traces the real page — heading, four readings, the classifier
+ * panel, the search field, the filter rail, the grid — so the layout that
+ * arrives is the layout that was already there. Deliberately six cards rather
+ * than all thirteen: enough to fill the fold, short of a wall of shimmer.
+ */
+function DashboardSkeleton() {
+  return (
+    <div role="status" aria-label="Loading your board">
+      <div className="display-hero text-[clamp(28px,4vw,40px)]">
+        <span className="skeleton inline-block h-[0.7em] w-[min(18ch,80%)] align-middle" />
+      </div>
+      <div className="mt-2.5 text-[17px]">
+        <span className="skeleton inline-block h-[0.8em] w-[min(46ch,100%)] align-middle" />
+      </div>
+
+      <div className="mt-7 grid grid-cols-2 gap-4 lg:grid-cols-4">
+        {Array.from({ length: 4 }).map((_, i) => (
+          <SkeletonMetric key={i} />
+        ))}
+      </div>
+
+      <div className="mt-4 text-sm">
+        <span className="skeleton inline-block h-[0.85em] w-[min(34ch,100%)] align-middle" />
+      </div>
+
+      <section className="card mt-4">
+        <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
+          <div className="min-w-0 flex-1">
+            <span className="skeleton block h-3.5 w-44" />
+            <span className="skeleton mt-3 block h-2.5 w-[min(48ch,100%)]" />
+          </div>
+          <span className="skeleton h-[38px] w-20 !rounded-[12px]" />
+        </div>
+      </section>
+
+      <div className="mt-8 max-w-2xl">
+        <span className="skeleton block h-[56px] w-full !rounded-[16px]" />
+      </div>
+
+      <div className="mt-5 flex gap-2">
+        {[68, 84, 78, 88, 96].map((w) => (
+          <span key={w} className="skeleton h-[38px] !rounded-full" style={{ width: w }} />
+        ))}
+      </div>
+
+      <div className="mt-4 flex items-center gap-3">
+        <span className="skeleton h-3 w-14" />
+        <span className="skeleton h-[38px] w-28 !rounded-full" />
+      </div>
+
+      <div className="mb-5 mt-9">
+        <div className="section-h">
+          <span className="skeleton inline-block h-[0.7em] w-40 align-middle" />
+        </div>
+      </div>
+
+      <div className="grid items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {Array.from({ length: 6 }).map((_, i) => (
+          <SkeletonModuleCard key={i} />
+        ))}
+      </div>
+    </div>
+  );
 }
 
 export default function Dashboard() {
@@ -119,8 +195,22 @@ export default function Dashboard() {
 
   const hasIdea = Boolean((metrics.description || "").trim());
 
+  // Whether each reading is still in flight, as opposed to computed-and-absent.
+  // The distinction matters: one deserves a held slot, the other an em dash.
+  const busy = {
+    health: health.loading,
+    failure: failure.loading,
+    funding: funding.loading,
+    forecast: forecast.loading,
+  };
+
   const modules: Module[] = useMemo(() => {
     const idle = (glyph: any, label: string): Visual => ({ kind: "glyph", glyph, label });
+    const pending = (shape: "ring" | "band" | "area"): Visual => ({
+      kind: "loading",
+      shape,
+      label: "Computing…",
+    });
 
     const healthVerdict: Verdict =
       hs == null ? { label: "Computing", tone: "idle" }
@@ -156,7 +246,10 @@ export default function Dashboard() {
         family: "Models",
         verdict: healthVerdict,
         reading: hs == null ? "—" : `${Math.round(hs)} / 100`,
-        visual: hs == null
+        loading: busy.health,
+        visual: busy.health
+          ? pending("ring")
+          : hs == null
           ? idle("field", "Awaiting computation")
           : { kind: "ring", value: hs, max: 100, label: "Health / 100", tone: hs >= 65 ? "var(--signal)" : hs >= 45 ? "var(--amber)" : "var(--coral)" },
       },
@@ -168,7 +261,10 @@ export default function Dashboard() {
         family: "Models",
         verdict: failVerdict,
         reading: f12 == null ? "—" : fmtPct(f12),
-        visual: f12 == null
+        loading: busy.failure,
+        visual: busy.failure
+          ? pending("band")
+          : f12 == null
           ? idle("horizon", "Awaiting computation")
           : { kind: "band", value: f12, thresholds: [0.35, 0.6], label: "12-month failure probability", tone: f12 < 0.35 ? "var(--signal)" : f12 < 0.6 ? "var(--amber)" : "var(--coral)" },
       },
@@ -180,7 +276,10 @@ export default function Dashboard() {
         family: "Models",
         verdict: series ? { label: "Projected", tone: "info" } : { label: "Computing", tone: "idle" },
         reading: series ? fmtMoney(series[series.length - 1]) : "—",
-        visual: series
+        loading: busy.forecast,
+        visual: busy.forecast
+          ? pending("area")
+          : series
           ? { kind: "area", series, label: "Projected revenue", tone: "var(--aqua)" }
           : idle("horizon", "Awaiting computation"),
       },
@@ -192,7 +291,10 @@ export default function Dashboard() {
         family: "Models",
         verdict: fundVerdict,
         reading: fp == null ? "—" : fmtPct(fp),
-        visual: fp == null
+        loading: busy.funding,
+        visual: busy.funding
+          ? pending("ring")
+          : fp == null
           ? idle("field", "Awaiting computation")
           : { kind: "ring", value: fp * 100, max: 100, label: "Readiness", tone: fp >= 0.5 ? "var(--signal)" : fp >= 0.3 ? "var(--amber)" : "var(--coral)" },
       },
@@ -291,7 +393,10 @@ export default function Dashboard() {
         visual: idle("split", "Open to run"),
       },
     ];
-  }, [hs, f12, fp, series, board.ran, boardDone, boardTotal, metrics.runway, runwaySeries, hasIdea]);
+  }, [
+    hs, f12, fp, series, board.ran, boardDone, boardTotal, metrics.runway, runwaySeries, hasIdea,
+    busy.health, busy.failure, busy.funding, busy.forecast,
+  ]);
 
   const visible = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -320,7 +425,9 @@ export default function Dashboard() {
     return [...list.filter(isPinned), ...list.filter((m) => !isPinned(m))];
   }, [modules, query, family, sort, pins]);
 
-  if (!hydrated || !ready) return null; // redirecting first-run users to onboarding
+  // Hydrating: the board's own shape, held until the profile is read back.
+  if (!hydrated) return <DashboardSkeleton />;
+  if (!ready) return null; // redirecting first-run users to onboarding
 
   const counts: Record<string, number> = { All: modules.length };
   for (const m of modules) counts[m.family] = (counts[m.family] || 0) + 1;
@@ -340,19 +447,24 @@ export default function Dashboard() {
           value={hs == null ? "—" : `${Math.round(hs)}`}
           tone={hs == null ? "default" : hs >= 65 ? "good" : hs >= 45 ? "warn" : "bad"}
           sub="0–100 composite"
+          loading={busy.health}
         />
         <Metric
           label="12-month failure risk"
           value={f12 == null ? "—" : fmtPct(f12)}
           tone={f12 == null ? "default" : f12 < 0.35 ? "good" : f12 < 0.6 ? "warn" : "bad"}
           sub="Calibrated model"
+          loading={busy.failure}
         />
         <Metric
           label="Funding probability"
           value={fp == null ? "—" : fmtPct(fp)}
           tone={fp == null ? "default" : fp >= 0.5 ? "good" : "warn"}
           sub="Readiness score"
+          loading={busy.funding}
         />
+        {/* Runway is the founder's own arithmetic, already in hand — it never
+            waits on an agent, so it never wears a placeholder. */}
         <Metric
           label="Runway"
           value={fmtRunway(metrics.runway)}
@@ -360,6 +472,16 @@ export default function Dashboard() {
           sub="Cash ÷ burn"
         />
       </div>
+
+      {/* The numbers above are estimates from models. Said plainly, once, next
+          to the figures it applies to — not dressed up as an alert. */}
+      <p className="mt-4 text-sm text-text-faint">
+        These are model estimates, not advice.{" "}
+        <Link href="/disclaimer" className="text-text-mute underline underline-offset-4 transition-colors hover:text-text">
+          What that means
+        </Link>
+        .
+      </p>
 
       {/* Classifier — on demand, not part of the board run */}
       <UnderstandingPanel r={r} cacheKey={key} />

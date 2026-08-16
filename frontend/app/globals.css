@@ -524,6 +524,17 @@ body,
   border-radius: var(--r-sm);
 }
 
+/* A skeleton is a PLACEHOLDER, never a curtain over real content. Both the
+   shimmer above and the pulse below are painted at full strength on frame one
+   and only modulate from there, so a skipped or throttled animation still
+   leaves the reserved footprint plainly visible rather than an empty void. */
+@keyframes vg-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+/* Used inside the card visuals, where a DOM gradient cannot reach the SVG. */
+.pulse-soft { animation: vg-pulse 1.6s ease-in-out infinite; }
+
 /* Truncation used by feed cards. Reserving the lines keeps every column's
    rows on the same baseline regardless of copy length. */
 .clamp-2 {
